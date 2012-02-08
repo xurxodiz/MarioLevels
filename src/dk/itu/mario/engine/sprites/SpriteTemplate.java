@@ -6,7 +6,7 @@ public class SpriteTemplate
 {
 	public static final int RED_TURTLE		= 0;
 	public static final int GREEN_TURTLE	= 1;
-	public static final int GOOMPA			= 2;
+	public static final int GOOMBA			= 2;
 	public static final int ARMORED_TURTLE	= 3;
 	public static final int JUMP_FLOWER		= 4;
 	public static final int CANNON_BALL		= 5;

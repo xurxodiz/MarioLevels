@@ -13,9 +13,11 @@ public class WinScene extends Scene
 {
     private int tick;
     private String scrollMessage = "Thank you for saving me, Mario!";
+    private MarioComponent component;
 
-    public WinScene()
+    public WinScene(MarioComponent component)
     {
+    	this.component = component;
     }
 
     public void init()
@@ -45,7 +47,7 @@ public class WinScene extends Scene
         tick++;
         if (!wasDown && keys[Mario.KEY_JUMP])
         {
-//            component.toTitle();
+            component.toGame();
         }
         if (keys[Mario.KEY_JUMP])
         {

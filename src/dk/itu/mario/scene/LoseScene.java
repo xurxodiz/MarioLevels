@@ -14,9 +14,11 @@ public class LoseScene extends Scene
 
     private int tick;
     private String scrollMessage = "Game over!";
+    private MarioComponent component;
 
-    public LoseScene()
+    public LoseScene(MarioComponent component)
     {
+    	this.component = component;
     }
 
     public void init()
@@ -48,7 +50,7 @@ public class LoseScene extends Scene
         tick++;
         if (!wasDown && keys[Mario.KEY_JUMP])
         {
-//            component.toTitle();
+            component.toGame();
         }
         if (keys[Mario.KEY_JUMP])
         {

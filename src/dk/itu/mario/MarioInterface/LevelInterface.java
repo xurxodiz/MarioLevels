@@ -13,7 +13,7 @@ public interface LevelInterface {
     public static final int BIT_BLOCK_UPPER = 1 << 0;
     public static final int BIT_BLOCK_ALL = 1 << 1;
     public static final int BIT_BLOCK_LOWER = 1 << 2;
-    public static final int BIT_SPECIAL = 1 << 3; //mashroom or flower
+    public static final int BIT_SPECIAL = 1 << 3; //mushroom or flower
     public static final int BIT_BUMPABLE = 1 << 4;
     public static final int BIT_BREAKABLE = 1 << 5;
     public static final int BIT_PICKUPABLE = 1 << 6;

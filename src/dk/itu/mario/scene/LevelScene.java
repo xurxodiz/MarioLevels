@@ -484,8 +484,8 @@ public class LevelScene extends Scene implements SpriteContext
         timeLeft = 200*15;
         Art.startMusic(1);
         tick = 0;
-//        recorder = new DataRecorder(this,level,keys,gametype);
-        recorder.detailedLog = "";
+        //recorder = new DataRecorder(this,level,keys,gametype);
+        //recorder.detailedLog = "";
         gameStarted = false;
 	}
 

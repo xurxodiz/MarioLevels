@@ -20,7 +20,7 @@ import dk.itu.mario.engine.sprites.FlowerEnemy;
 public class DataRecorder {
 
 	public boolean recording = true;
-	private RandomLevel level;
+	private Level level;
 	private boolean []keys, keyPressed;
 	private LevelScene levelScene;
 
@@ -104,15 +104,18 @@ public class DataRecorder {
 
 	private boolean levelWon;
 	public String detailedLog = "";
+	
+	public String playerName = "";
 
 	public String getDetailedLog(){
 		return detailedLog;
 	}
 	
-	public DataRecorder(LevelScene levelScene, RandomLevel level, boolean []keys){
+	public DataRecorder(String playerName, LevelScene levelScene, boolean []keys){
 		this.levelScene = levelScene;
-		this.level = level;
+		this.level = levelScene.level;
 		this.keys = keys;
+		this.playerName = playerName;
 
 		keyPressed = new boolean[keys.length];
 
@@ -682,8 +685,8 @@ public class DataRecorder {
 				case SpriteTemplate.GREEN_TURTLE:
 					type = "Green Koopa";
 				break;
-				case SpriteTemplate.GOOMPA:
-					type = "Goompa";
+				case SpriteTemplate.GOOMBA:
+					type = "Goomba";
 				break;
 				case SpriteTemplate.ARMORED_TURTLE:
 					type = "Spikey Turtle";
@@ -733,8 +736,8 @@ public class DataRecorder {
 				case SpriteTemplate.GREEN_TURTLE:
 					type = "Green Koopa";
 				break;
-				case SpriteTemplate.GOOMPA:
-					type = "Goompa";
+				case SpriteTemplate.GOOMBA:
+					type = "Goomba";
 				break;
 				case SpriteTemplate.ARMORED_TURTLE:
 					type = "Spikey Turtle";
@@ -786,7 +789,7 @@ public class DataRecorder {
 		System.out.print("\n");
 	}
 
-	public void fillGamePlayMetrics(RandomLevel level){
+	private void fillGamePlayMetrics(long timestamp){
         GamePlay gpm = new GamePlay();
 		gpm.completionTime = getCompletionTime();
 		gpm.totalTime = getTotalTime();////sums all the time, including from previous games if player died
@@ -822,7 +825,7 @@ public class DataRecorder {
 		gpm.timesOfDeathByFallingIntoGap = dg();//number of death by falling into a gap
 		gpm.timesOfDeathByRedTurtle = deaths[SpriteTemplate.RED_TURTLE];
 		gpm.timesOfDeathByGreenTurtle = deaths[SpriteTemplate.GREEN_TURTLE];
-		gpm.timesOfDeathByGoomba = deaths[SpriteTemplate.GOOMPA];
+		gpm.timesOfDeathByGoomba = deaths[SpriteTemplate.GOOMBA];
 		gpm.timesOfDeathByArmoredTurtle = deaths[SpriteTemplate.ARMORED_TURTLE];
 		gpm.timesOfDeathByJumpFlower = deaths[SpriteTemplate.JUMP_FLOWER];
 		gpm.timesOfDeathByCannonBall = deaths[SpriteTemplate.CANNON_BALL];
@@ -830,24 +833,32 @@ public class DataRecorder {
 
 		gpm.RedTurtlesKilled = kills[SpriteTemplate.RED_TURTLE];
 		gpm.GreenTurtlesKilled = kills[SpriteTemplate.GREEN_TURTLE];
-		gpm.GoombasKilled = kills[SpriteTemplate.GOOMPA];
+		gpm.GoombasKilled = kills[SpriteTemplate.GOOMBA];
 		gpm.ArmoredTurtlesKilled = kills[SpriteTemplate.ARMORED_TURTLE];
 		gpm.JumpFlowersKilled = kills[SpriteTemplate.JUMP_FLOWER];
 		gpm.CannonBallKilled = kills[SpriteTemplate.CANNON_BALL];
 		gpm.ChompFlowersKilled = kills[SpriteTemplate.CHOMP_FLOWER];
-		gpm.write("player.txt");
-		System.out.println(detailedLog);
-		write(detailedLog);
+		gpm.write("players/" + playerName + "/" + timestamp + ".stats");
 		
 	}
 
 
-
-	private void write(String detailedLog2) {
+	public void dump() {
 		try {
-			FileWriter file = new FileWriter(new File("DetailedInfo.txt"));
-			file.write(detailedLog);
-			file.close();
+			long ts = (System.currentTimeMillis() / 1000L);
+			
+			File file = new File("players/" + playerName + "/" + ts + ".log");
+			File playerFolder = file.getParentFile();
+
+			if (null != playerFolder)
+			    playerFolder.mkdirs();
+			
+			FileWriter fw = new FileWriter(file);
+			fw.write(detailedLog);
+			fw.close();
+			
+			fillGamePlayMetrics(ts);
+			//System.out.println(detailedLog);
 		} catch (IOException e) {
 			
 			e.printStackTrace();

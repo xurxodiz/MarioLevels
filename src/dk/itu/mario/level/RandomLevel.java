@@ -9,13 +9,6 @@ import dk.itu.mario.engine.sprites.Enemy;
 
 
 public class RandomLevel extends Level{
-	//Store information about the level
-	 public   int ENEMIES = 0; //the number of enemies the level contains
-	 public   int BLOCKS_EMPTY = 0; // the number of empty blocks
-	 public   int BLOCKS_COINS = 0; // the number of coin blocks
-	 public   int BLOCKS_POWER = 0; // the number of power blocks
-	 public   int COINS = 0; //These are the coins in boxes that Mario collect
-
  
 	private static Random levelSeedRandom = new Random();
 	    public static long lastSeed;

@@ -8,8 +8,9 @@ public class Play {
 	public static void main(String[] args)
 	    {
 
+			String playerName = "jorge";
 	    	JFrame frame = new JFrame("Mario Experience Showcase");
-	    	MarioComponent mario = new MarioComponent(640, 480,false);
+	    	MarioComponent mario = new MarioComponent(640, 480, playerName, false);
 
 	    	frame.setContentPane(mario);
 	    	frame.setResizable(false);

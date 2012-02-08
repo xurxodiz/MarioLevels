@@ -161,7 +161,7 @@ public class Mario extends Sprite
 
 	    		running = true;
 	    	}
-	    	else{
+	    	else if (running) {
 	    		if(world.recorder!= null && world.recorder.recording){
 	    			world.recorder.endRunningRecord();
 	    		}

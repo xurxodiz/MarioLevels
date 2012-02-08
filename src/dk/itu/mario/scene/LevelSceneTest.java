@@ -36,12 +36,15 @@ import dk.itu.mario.res.ResourcesManager;
 			private int point = -1;
 			private int []checkPoints;
 			private boolean isCustom;
+			private String playerName = "";
 
 
 			public LevelSceneTest(GraphicsConfiguration graphicsConfiguration,
-					MarioComponent renderer, long seed, int levelDifficulty, int type,boolean isCustom){
+					MarioComponent renderer, long seed, int levelDifficulty, int type, 
+					String playerName, boolean isCustom){
 				super(graphicsConfiguration,renderer,seed,levelDifficulty,type);
 				this.isCustom = isCustom;
+				this.playerName = playerName;
 			}
 
 			public void init() {
@@ -117,7 +120,7 @@ import dk.itu.mario.res.ResourcesManager;
 		    	double startX = 32; //mario start position
 		    	double endX = level.getxExit()*squareSize; //position of the end on the level
 		    	if(!isCustom && recorder==null)
-		    		recorder = new DataRecorder(this,(RandomLevel)level,keys);
+		    		recorder = new DataRecorder(playerName,this,keys);
 
 		        gameStarted = false;
 			}
@@ -138,7 +141,7 @@ import dk.itu.mario.res.ResourcesManager;
 
 			public void winActions(){
 				if(recorder != null)
-				recorder.fillGamePlayMetrics((RandomLevel)level);
+				recorder.dump();
 				
 				marioComponent.win();
 			}
@@ -146,7 +149,7 @@ import dk.itu.mario.res.ResourcesManager;
 			public void deathActions(){
 				if(Mario.lives <=0){//has no more lives
 					if(recorder != null)
-					recorder.fillGamePlayMetrics((RandomLevel)level);
+					recorder.dump();
 					marioComponent.lose();
 				}
 				else // mario still has lives to play :)--> have a new beginning
