@@ -1,0 +1,31 @@
+StartTime = -17
+Jump:  StTime = 23 EdTime = 39
+RunState: StTime = 23 EdTime = 43
+RunState: StTime = 69 EdTime = 82
+Jump:  StTime = 69 EdTime = 85
+Jump:  StTime = 88 EdTime = 103
+Jump:  StTime = 125 EdTime = 134
+RunState: StTime = 88 EdTime = 149
+LittleState: StTime = -17 EdTime = 149
+Totaltime = 166
+Die:  EnemyType = 2
+StartTime = -17
+RightMove: StTime = -2 EdTime = 24
+Jump:  StTime = 29 EdTime = 44
+RightMove: StTime = 32 EdTime = 86
+Jump:  StTime = 90 EdTime = 101
+Jump:  StTime = 117 EdTime = 129
+RightMove: StTime = 95 EdTime = 138
+RunState: StTime = 10 EdTime = 171
+LittleState: StTime = -17 EdTime = 171
+Totaltime = 188
+Die:  EnemyType = 2
+StartTime = -17
+RightMove: StTime = 2 EdTime = 166
+Jump:  StTime = 30 EdTime = 45
+RightMove: StTime = 33 EdTime = 228
+Jump:  StTime = 98 EdTime = 110
+RunState: StTime = 22 EdTime = 133
+LittleState: StTime = -17 EdTime = 133
+Totaltime = 150
+Die:  EnemyType = 2
