@@ -1,3 +1,7 @@
-Based on the code available at:
+Lakitu is the custom code made to generate levels.
+
+MarioAIChallenge is the platform available at:
 
 http://www.marioai.org/LevelGeneration/level-generation-track-source
+
+Some changes had to be performed, unfortunately, to work around it. They are covered in marioaichallenge/CHANGES.
