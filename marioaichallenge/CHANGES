@@ -1,0 +1,7 @@
+These methods and members have been changed from private to protected:
+
+dk.itu.mario.engine.MarioComponent:
+	randomLevel
+	graphicsConfiguration
+	sound
+	scene
