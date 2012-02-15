@@ -40,9 +40,9 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
 
 		    private boolean running = false;
 		    private int width, height;
-		    private GraphicsConfiguration graphicsConfiguration;
-		    private Scene scene;
-		    private SonarSoundEngine sound;
+		    protected GraphicsConfiguration graphicsConfiguration;
+		    protected Scene scene;
+		    protected SonarSoundEngine sound;
 		    private boolean focused = false;
 		    private boolean useScale2x = false;
 		    private boolean isCustom = false;
@@ -313,7 +313,7 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
 		    public static final int MINIMIZED_FIRST = 1;
 
 
-		    private LevelScene randomLevel;
+		    protected LevelScene randomLevel;
 
 
 		    /**
