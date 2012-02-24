@@ -20,7 +20,7 @@ public class PlayerGamePlay extends GamePlay {
 		this.timeStamp = timeStamp;
 	}
 
-	public void dump() {
+	public void save() {
 		
 		ObjectOutputStream out = null;
 		String fileName = "players/" + playerName + "/" + timeStamp + ".gp";
@@ -43,10 +43,10 @@ public class PlayerGamePlay extends GamePlay {
 		
 	}
 	
-	public static GamePlay read(String playerName, long timeStamp){
+	public static PlayerGamePlay load(String playerName, long timeStamp){
 		FileInputStream fis = null;
 	    ObjectInputStream in = null;
-	    GamePlay gp =  null;
+	    PlayerGamePlay gp =  null;
 		String fileName = "players/" + playerName + "/" + timeStamp + ".gp";
 		try {
 			fis = new FileInputStream(fileName);

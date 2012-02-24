@@ -1,9 +1,7 @@
 package es.diz.mario.game;
 
-import dk.itu.mario.engine.Art;
 import dk.itu.mario.engine.MarioComponent;
 import dk.itu.mario.engine.sprites.Mario;
-import dk.itu.mario.scene.LevelScene;
 import dk.itu.mario.scene.LoseScene;
 import es.diz.mario.scene.PlayerLevelSceneTest;
 import es.diz.mario.scene.PlayerWinScene;
@@ -12,9 +10,10 @@ public class PlayerMarioComponent extends MarioComponent {
 	
 	private static final long serialVersionUID = 1L;
 	protected String playerName;
+	protected PlayerApplet app;
 	protected Thread thread;
 
-	public PlayerMarioComponent(String playerName) {
+	public PlayerMarioComponent(String playerName, PlayerApplet app) {
 		super(640, 480, false);
 		this.playerName = playerName;
 	}
@@ -42,7 +41,7 @@ public class PlayerMarioComponent extends MarioComponent {
     }
     
     public void reset() {
-        PlayerPlay.reset();
+        app.reset();
     }
     
     public void lose(){

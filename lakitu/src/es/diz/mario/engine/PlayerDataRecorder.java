@@ -17,11 +17,9 @@ public class PlayerDataRecorder extends DataRecorder {
 			boolean[] keys) {
 		super(levelScene, level, keys);
 		this.playerName = playerName;
-		System.out.println("pistonudo");
 	}
 	
 	public void fillGamePlayMetrics(RandomLevel dummyLevel) {
-		System.out.println("yipikaye");
 
 		try {
 			long ts = (System.currentTimeMillis() / 1000L);
@@ -93,7 +91,7 @@ public class PlayerDataRecorder extends DataRecorder {
 		gpm.JumpFlowersKilled = kills[SpriteTemplate.JUMP_FLOWER];
 		gpm.CannonBallKilled = kills[SpriteTemplate.CANNON_BALL];
 		gpm.ChompFlowersKilled = kills[SpriteTemplate.CHOMP_FLOWER];
-		gpm.dump();
+		gpm.save();
 	}
 
 }
