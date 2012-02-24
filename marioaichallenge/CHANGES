@@ -5,3 +5,17 @@ dk.itu.mario.engine.MarioComponent:
 	graphicsConfiguration
 	sound
 	scene
+	
+dk.itu.mario.engine.DataRecorder:
+	level
+	deaths
+	kills
+	
+
+	
+	
+the following lines were commented:
+
+
+dk.itu.mario.scene.LevelScene:
+	line 488

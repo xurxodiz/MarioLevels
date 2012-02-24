@@ -20,7 +20,7 @@ import dk.itu.mario.engine.sprites.FlowerEnemy;
 public class DataRecorder {
 
 	public boolean recording = true;
-	private RandomLevel level;
+	protected RandomLevel level;
 	private boolean []keys, keyPressed;
 	private LevelScene levelScene;
 
@@ -59,7 +59,7 @@ public class DataRecorder {
 	/**
 	 * How many kills the player has
 	 */
-	private int[] kills;
+	protected int[] kills;
 	private int fireKills;
 	private int suicideKills;
 	private int stompKills;
@@ -68,7 +68,7 @@ public class DataRecorder {
 	/**
 	 * How many times dit the player die to the specific cause (monster or jump)
 	 */
-	private int[] deaths;
+	protected int[] deaths;
 
 	/**
 	 * How many coins did the player collect
