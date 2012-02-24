@@ -2,10 +2,11 @@ package es.diz.mario.engine;
 
 import dk.itu.mario.engine.MarioComponent;
 import dk.itu.mario.engine.sprites.Mario;
-import es.diz.mario.scene.PlayerLevelScene;
+import es.diz.mario.scene.PlayerLevelSceneTest;
 
 public class PlayerMarioComponent extends MarioComponent {
 	
+	private static final long serialVersionUID = 1L;
 	protected String playerName;
 
 	public PlayerMarioComponent(String playerName) {
@@ -22,7 +23,7 @@ public class PlayerMarioComponent extends MarioComponent {
     }
     
     public void toGame() {
-    	randomLevel = new PlayerLevelScene(graphicsConfiguration, this, playerName);
+    	randomLevel = new PlayerLevelSceneTest(graphicsConfiguration, this, playerName);
 
     	Mario.fire = false;
     	Mario.large = false;
