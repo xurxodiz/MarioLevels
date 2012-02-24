@@ -20,6 +20,22 @@ public class PlayerGamePlay extends GamePlay {
 		this.timeStamp = timeStamp;
 	}
 
+	public static PlayerGamePlay load(String playerName, long timeStamp){
+		FileInputStream fis = null;
+	    ObjectInputStream in = null;
+	    PlayerGamePlay gp =  null;
+		String fileName = "players/" + playerName + "/" + timeStamp + ".gp";
+		try {
+			fis = new FileInputStream(fileName);
+			in = new ObjectInputStream(fis);
+			gp = (PlayerGamePlay)in.readObject();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return gp;
+	}
+	
 	public void save() {
 		
 		ObjectOutputStream out = null;
@@ -36,6 +52,9 @@ public class PlayerGamePlay extends GamePlay {
 			out.writeObject(this);
 			out.close();
 			fos.close();
+			
+			saveXml();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,20 +62,8 @@ public class PlayerGamePlay extends GamePlay {
 		
 	}
 	
-	public static PlayerGamePlay load(String playerName, long timeStamp){
-		FileInputStream fis = null;
-	    ObjectInputStream in = null;
-	    PlayerGamePlay gp =  null;
-		String fileName = "players/" + playerName + "/" + timeStamp + ".gp";
-		try {
-			fis = new FileInputStream(fileName);
-			in = new ObjectInputStream(fis);
-			gp = (PlayerGamePlay)in.readObject();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return gp;
+	public void saveXml() {
+		// TODO 
 	}
 	
 }
