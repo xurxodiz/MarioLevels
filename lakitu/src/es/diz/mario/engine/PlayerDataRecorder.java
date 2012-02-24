@@ -17,9 +17,11 @@ public class PlayerDataRecorder extends DataRecorder {
 			boolean[] keys) {
 		super(levelScene, level, keys);
 		this.playerName = playerName;
+		System.out.println("pistonudo");
 	}
 	
-	public void fillGamePlayMetrics(String dummy) {
+	public void fillGamePlayMetrics(RandomLevel dummyLevel) {
+		System.out.println("yipikaye");
 
 		try {
 			long ts = (System.currentTimeMillis() / 1000L);

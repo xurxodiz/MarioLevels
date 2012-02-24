@@ -31,6 +31,12 @@ public class PlayerLevelSceneTest extends LevelSceneTest {
 		// currentLevel = new RandomLevel(320, 15, levelSeed, levelDifficulty, levelType);
 		currentLevel = new RandomLevel(320, 15, levelSeed, levelDifficulty, 2);
 		
+        try {
+			 level = currentLevel.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		
 		// change to make my own recorder
 		recorder = new PlayerDataRecorder(playerName, this, (RandomLevel)level, keys);
 		super.init();

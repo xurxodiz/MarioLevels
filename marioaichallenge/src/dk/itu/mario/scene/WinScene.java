@@ -11,7 +11,7 @@ import dk.itu.mario.engine.Art;
 
 public class WinScene extends Scene
 {
-    private int tick;
+    protected int tick;
     private String scrollMessage = "Thank you for saving me, Mario!";
 
     public WinScene()
