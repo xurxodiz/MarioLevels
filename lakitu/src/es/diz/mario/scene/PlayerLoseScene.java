@@ -2,7 +2,7 @@ package es.diz.mario.scene;
 
 import dk.itu.mario.engine.sprites.Mario;
 import dk.itu.mario.scene.LoseScene;
-import es.diz.mario.game.PlayerMarioComponent;
+import es.diz.mario.engine.PlayerMarioComponent;
 
 public class PlayerLoseScene extends LoseScene {
 	
@@ -18,7 +18,7 @@ public class PlayerLoseScene extends LoseScene {
         tick++;
         if (!wasDown && keys[Mario.KEY_JUMP])
         {
-            mario.reset();
+            mario.newGame();
         }
         if (keys[Mario.KEY_JUMP])
         {

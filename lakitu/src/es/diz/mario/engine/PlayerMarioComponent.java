@@ -1,20 +1,25 @@
-package es.diz.mario.game;
+package es.diz.mario.engine;
 
 import dk.itu.mario.engine.MarioComponent;
 import dk.itu.mario.engine.sprites.Mario;
-import dk.itu.mario.scene.LoseScene;
+import es.diz.mario.game.PlayerGame;
 import es.diz.mario.scene.PlayerLevelSceneTest;
+import es.diz.mario.scene.PlayerLoseScene;
 import es.diz.mario.scene.PlayerWinScene;
 
 public class PlayerMarioComponent extends MarioComponent {
 	
 	private static final long serialVersionUID = 1L;
 	protected String playerName;
-	protected PlayerApplet app;
+	protected PlayerGame game;
 	protected Thread thread;
 
-	public PlayerMarioComponent(String playerName, PlayerApplet app) {
+	public PlayerMarioComponent(PlayerGame game) {
 		super(640, 480, false);
+		this.game = game;
+	}
+	
+	public void setPlayer(String playerName) {
 		this.playerName = playerName;
 	}
 	
@@ -40,12 +45,8 @@ public class PlayerMarioComponent extends MarioComponent {
    
     }
     
-    public void reset() {
-        app.reset();
-    }
-    
     public void lose(){
-        scene = new LoseScene();
+        scene = new PlayerLoseScene(this);
         scene.setSound(sound);
         scene.init();
     }
@@ -55,9 +56,10 @@ public class PlayerMarioComponent extends MarioComponent {
         scene.setSound(sound);
         scene.init();
     }
-
     
-    
-    
+    public void newGame() {
+    	stop();
+    	game.newGame();
+    }
 
 }

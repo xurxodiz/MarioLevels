@@ -2,7 +2,7 @@ package es.diz.mario.scene;
 
 import dk.itu.mario.engine.sprites.Mario;
 import dk.itu.mario.scene.WinScene;
-import es.diz.mario.game.PlayerMarioComponent;
+import es.diz.mario.engine.PlayerMarioComponent;
 
 public class PlayerWinScene extends WinScene {
 	
@@ -18,7 +18,7 @@ public class PlayerWinScene extends WinScene {
         tick++;
         if (!wasDown && keys[Mario.KEY_JUMP])
         {
-            mario.reset();
+            mario.newGame();
         }
         if (keys[Mario.KEY_JUMP])
         {
