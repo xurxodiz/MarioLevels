@@ -34,13 +34,14 @@ public class PlayerPlay extends JApplet {
 	
 	public void init() {
 		isApplet = true;
-		setSize(640, 480);
 	}
 	
 	public void start() {
-		if (isApplet)
+		if (isApplet) {
+			setSize(640, 480);
 			game = new PlayerGame(this);
-		else {
+		} else {
+			frame.setSize(640, 480);
 			game = new PlayerGame(frame);
 			frameInit();
 		}
@@ -50,7 +51,6 @@ public class PlayerPlay extends JApplet {
 	private void frameInit() {
     	frame.setResizable(false);
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
     	frame.setVisible(true);
     	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     	frame.setLocation((screenSize.width-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);

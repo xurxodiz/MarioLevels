@@ -12,7 +12,6 @@ public class PlayerMarioComponent extends MarioComponent {
 	private static final long serialVersionUID = 1L;
 	protected String playerName;
 	protected PlayerGame game;
-	protected Thread thread;
 
 	public PlayerMarioComponent(PlayerGame game) {
 		super(640, 480, false);
@@ -45,21 +44,24 @@ public class PlayerMarioComponent extends MarioComponent {
    
     }
     
-    public void lose(){
+    public void lose() {
         scene = new PlayerLoseScene(this);
         scene.setSound(sound);
         scene.init();
     }
 
-    public void win(){
+    public void win() {
         scene = new PlayerWinScene(this);
         scene.setSound(sound);
         scene.init();
     }
     
+    public void getRunning() {
+    	running = true;
+    }
+    
     public void newGame() {
-    	stop();
-    	game.newGame();
+    	run();
     }
 
 }

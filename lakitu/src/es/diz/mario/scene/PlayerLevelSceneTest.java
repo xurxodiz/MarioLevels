@@ -37,6 +37,8 @@ public class PlayerLevelSceneTest extends LevelSceneTest {
 			e.printStackTrace();
 		}
 		
+        sprites.removeAll(sprites);
+        
 		// change to make my own recorder
 		recorder = new PlayerDataRecorder(playerName, this, (RandomLevel)level, keys);
 		super.init();

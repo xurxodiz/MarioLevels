@@ -1,0 +1,28 @@
+StartTime = -17
+Jump:  StTime = 38 EdTime = 53
+CollectCoin:  time = 78
+CollectCoin:  time = 80
+CollectCoin:  time = 82
+RunState: StTime = 71 EdTime = 89
+LittleState: StTime = -17 EdTime = 89
+Totaltime = 106
+Die:  EnemyType = 2
+StartTime = -17
+Jump:  StTime = 26 EdTime = 41
+CollectCoin:  time = 59
+CollectCoin:  time = 61
+Jump:  StTime = 44 EdTime = 62
+RunState: StTime = 18 EdTime = 63
+LittleState: StTime = -17 EdTime = 63
+Totaltime = 80
+Die:  EnemyType = 2
+StartTime = -17
+Jump:  StTime = 18 EdTime = 33
+CollectCoin:  time = 55
+CollectCoin:  time = 56
+CollectCoin:  time = 57
+Jump:  StTime = 40 EdTime = 58
+RunState: StTime = 14 EdTime = 58
+LittleState: StTime = -17 EdTime = 58
+Totaltime = 75
+Die:  EnemyType = 2

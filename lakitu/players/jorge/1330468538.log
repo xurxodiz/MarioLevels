@@ -1,0 +1,12 @@
+StartTime = -17
+LittleState: StTime = -17 EdTime = 45
+Totaltime = 62
+Die:  EnemyType = 2
+StartTime = -17
+LittleState: StTime = -17 EdTime = 27
+Totaltime = 44
+Die:  EnemyType = 2
+StartTime = -17
+LittleState: StTime = -17 EdTime = 27
+Totaltime = 44
+Die:  EnemyType = 2
