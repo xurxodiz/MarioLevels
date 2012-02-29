@@ -1,10 +1,13 @@
 package es.diz.mario.game;
 
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,7 +26,6 @@ public class PlayerLogin extends JPanel {
 		super(new GridBagLayout());		
 		this.game = game;
 		
-		
 		addLabel();
 		addTextField();
 		addButton();
@@ -33,22 +35,37 @@ public class PlayerLogin extends JPanel {
 	}
 	
 	public void addLabel() {
-		lbl = new JLabel("What's your name?");
+		String str = "What's your name?";
+		lbl = new JLabel(str);
+		Font newFont = new Font("Arial Rounded MT Bold",
+				  lbl.getFont().getStyle(),
+				  24);  
+
+		lbl.setFont(newFont);
+		
 		GridBagConstraints cons = new GridBagConstraints();
 		cons.gridx = 1;
 		cons.gridy = 1;
-		cons.ipady = 50;
-		cons.weightx = 0;
+		cons.insets = new Insets(20, 20, 20, 20);
 		add(lbl, cons);
 	}
 	
 	public void addTextField() {
-		txt = new JTextField(50);
+		txt = new JTextField(15);
+		Font newFont = new Font("Arial Rounded MT Bold",
+							  Font.BOLD,
+							  40);  
+		  
+		txt.setFont(newFont);
+		txt.setBorder(BorderFactory.createCompoundBorder(
+		        txt.getBorder(), 
+		        BorderFactory.createEmptyBorder(15, 15, 15, 15)));
+		
 		GridBagConstraints cons = new GridBagConstraints();
 		cons.gridx = 1;
 		cons.gridy = 2;
-		cons.weightx = 0;
-		cons.fill = GridBagConstraints.NONE;
+		cons.ipady = 50;
+		cons.insets = new Insets(20, 10, 20, 10);
 		add(txt, cons);
 		txt.requestFocus();
 	}
@@ -60,11 +77,19 @@ public class PlayerLogin extends JPanel {
 				button_pressed(e);
 			}
 		});
-		but.setText("Play!");
+		Font newFont = new Font("Arial Rounded MT Bold",
+				  but.getFont().getStyle(),
+				  18);  
+
+		but.setFont(newFont);
+		but.setText("Play !");
+		
 		GridBagConstraints cons = new GridBagConstraints();
 		cons.gridx = 1;
 		cons.gridy = 3;
-		cons.weightx = 0;
+		cons.ipadx = 50;
+		cons.ipady = 30;
+		cons.insets = new Insets(20, 20, 20, 20);
 		add(but, cons);
 	}
 	

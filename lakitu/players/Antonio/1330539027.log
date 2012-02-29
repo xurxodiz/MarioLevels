@@ -1,0 +1,67 @@
+StartTime = -17
+CollectCoin:  time = 32
+CollectCoin:  time = 32
+CollectCoin:  time = 33
+BlockCoinDestroy:  time = 35
+CollectCoin:  time = 36
+Jump:  StTime = 32 EdTime = 40
+RightMove: StTime = 5 EdTime = 41
+Jump:  StTime = 44 EdTime = 53
+RightMove: StTime = 48 EdTime = 51
+Jump:  StTime = 66 EdTime = 75
+Jump:  StTime = 100 EdTime = 114
+RightMove: StTime = 70 EdTime = 95
+Jump:  StTime = 115 EdTime = 124
+Jump:  StTime = 125 EdTime = 138
+Jump:  StTime = 148 EdTime = 157
+CollectCoin:  time = 162
+CollectCoin:  time = 162
+RightMove: StTime = 119 EdTime = 147
+CollectCoin:  time = 172
+CollectCoin:  time = 172
+Jump:  StTime = 162 EdTime = 175
+Jump:  StTime = 184 EdTime = 196
+RightMove: StTime = 173 EdTime = 190
+Jump:  StTime = 211 EdTime = 217
+CollectCoin:  time = 229
+CollectCoin:  time = 229
+CollectCoin:  time = 231
+CollectCoin:  time = 233
+Jump:  StTime = 229 EdTime = 238
+CollectCoin:  time = 249
+CollectCoin:  time = 250
+CollectCoin:  time = 251
+CollectCoin:  time = 260
+Jump:  StTime = 249 EdTime = 261
+CollectCoin:  time = 263
+CollectCoin:  time = 263
+Jump:  StTime = 263 EdTime = 272
+Jump:  StTime = 277 EdTime = 294
+RightMove: StTime = 217 EdTime = 270
+Jump:  StTime = 296 EdTime = 305
+CollectCoin:  time = 310
+CollectCoin:  time = 311
+CollectCoin:  time = 312
+CollectCoin:  time = 314
+CollectCoin:  time = 316
+Jump:  StTime = 310 EdTime = 319
+Jump:  StTime = 325 EdTime = 334
+Jump:  StTime = 339 EdTime = 353
+CollectCoin:  time = 367
+Jump:  StTime = 356 EdTime = 370
+Jump:  StTime = 373 EdTime = 384
+Jump:  StTime = 387 EdTime = 401
+Jump:  StTime = 408 EdTime = 420
+CollectCoin:  time = 438
+CollectCoin:  time = 439
+Jump:  StTime = 425 EdTime = 441
+RightMove: StTime = 300 EdTime = 416
+Jump:  StTime = 442 EdTime = 450
+CollectCoin:  time = 464
+RightMove: StTime = 447 EdTime = 441
+Jump:  StTime = 471 EdTime = 483
+Jump:  StTime = 487 EdTime = 492
+Totaltime = 509
+RightMove: StTime = 474 EdTime = 459
+RunState: StTime = 8 EdTime = 492
+LittleState: StTime = -17 EdTime = 492
