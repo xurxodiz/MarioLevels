@@ -15,30 +15,32 @@ public class PlayerDataRecorder extends DataRecorder {
 	
 	protected String playerName;
 	protected long timeStamp = 0L;
+	
+	protected String pathGPM;
+	protected String pathLog;
 
 	public PlayerDataRecorder(String playerName, LevelScene levelScene, RandomLevel level, boolean[] keys) {
 		super(levelScene, level, keys);
 		this.playerName = playerName;
+		stampTime();
 	}
 	
 	public void fillGamePlayMetrics(RandomLevel dummyLevel) {
 		
-		timeStamp = (System.currentTimeMillis() / 1000L);
-		
+		// the data recorder already keeps the level as member
+		// so just ignore the parameter for sanity's sake
+			
         PlayerGamePlay gpm = new PlayerGamePlay();
         gpm.copyMetrics(this);
 
 		try {
 			
-			String pathFolder = System.getProperty("user.dir") + "/../players/" + playerName + "/";
-			String pathGPM = pathFolder + timeStamp + ".gpm";
-			String pathLog = pathFolder + timeStamp + ".log";
-			
-			File playerFolder = new File(pathFolder);
-			playerFolder.mkdirs();
-			
+
 			File fileGPM = new File(pathGPM);
+			fileGPM.getParentFile().mkdirs();
+			
 			File fileLog = new File(pathLog);
+			fileLog.getParentFile().mkdirs();
 			
 			FileOutputStream fosGPM = new FileOutputStream(fileGPM);
 			ObjectOutputStream outGPM =  new ObjectOutputStream(fosGPM);
@@ -52,12 +54,22 @@ public class PlayerDataRecorder extends DataRecorder {
 			outGPM.close();
 			fosGPM.close();
 			
+			// dump level TODO FIXME AAAH
+			
 			// System.out.println(detailedLog);
 		} catch (IOException e) {
 			
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void stampTime() {
+		timeStamp = (System.currentTimeMillis() / 1000L);
+		
+		String pathFolder = System.getProperty("user.dir") + "/../players/" + playerName + "/";
+		pathGPM = pathFolder + timeStamp + ".gpm";
+		pathLog = pathFolder + timeStamp + ".log";
 	}
 
 	public int getTotalCoins() {

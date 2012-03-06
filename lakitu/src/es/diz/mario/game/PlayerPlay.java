@@ -40,8 +40,8 @@ public class PlayerPlay extends JApplet {
 		if (isApplet) {
 			setSize(640, 480);
 			game = new PlayerGame(this);
+	    	System.out.println(getWidth() + "/" + getHeight());
 		} else {
-			frame.setSize(640, 480);
 			game = new PlayerGame(frame);
 			frameInit();
 		}
@@ -52,8 +52,16 @@ public class PlayerPlay extends JApplet {
     	frame.setResizable(false);
     	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	frame.setVisible(true);
+    	
+		frame.setSize(640, 480);
     	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setSize(640, 480);
+		frame.setSize(640, 480);
     	frame.setLocation((screenSize.width-frame.getWidth())/2, (screenSize.height-frame.getHeight())/2);
+		//frame.setSize(640, 480);
+		
+    	// nothing wroks im going crasy
+
 
 	}
 	

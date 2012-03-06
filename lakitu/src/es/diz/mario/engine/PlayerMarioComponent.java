@@ -4,8 +4,6 @@ import dk.itu.mario.engine.MarioComponent;
 import dk.itu.mario.engine.sprites.Mario;
 import es.diz.mario.game.PlayerGame;
 import es.diz.mario.scene.PlayerLevelSceneTest;
-import es.diz.mario.scene.PlayerLoseScene;
-import es.diz.mario.scene.PlayerWinScene;
 
 public class PlayerMarioComponent extends MarioComponent {
 	
@@ -14,7 +12,7 @@ public class PlayerMarioComponent extends MarioComponent {
 	protected PlayerGame game;
 
 	public PlayerMarioComponent(PlayerGame game) {
-		super(640, 480, false);
+		super(640, 420, false);
 		this.game = game;
 	}
 	
@@ -45,15 +43,11 @@ public class PlayerMarioComponent extends MarioComponent {
     }
     
     public void lose() {
-        scene = new PlayerLoseScene(this);
-        scene.setSound(sound);
-        scene.init();
+        game.levelSurvey(PlayerLevelSceneTest.recorder);
     }
 
     public void win() {
-        scene = new PlayerWinScene(this);
-        scene.setSound(sound);
-        scene.init();
+        game.levelSurvey(PlayerLevelSceneTest.recorder);
     }
     
     public void getRunning() {

@@ -34,6 +34,10 @@ public class PlayerLogin extends JPanel {
 		setVisible(true);
 	}
 	
+	public void show() {
+		getRootPane().setDefaultButton(but);
+	}
+	
 	public void addLabel() {
 		String str = "What's your name?";
 		lbl = new JLabel(str);
@@ -51,7 +55,7 @@ public class PlayerLogin extends JPanel {
 	}
 	
 	public void addTextField() {
-		txt = new JTextField(15);
+		txt = new JTextField(10);
 		Font newFont = new Font("Arial Rounded MT Bold",
 							  Font.BOLD,
 							  40);  
@@ -71,7 +75,7 @@ public class PlayerLogin extends JPanel {
 	}
 	
 	public void addButton() {
-		JButton but = new JButton();
+		but = new JButton();
 		but.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				button_pressed(e);
