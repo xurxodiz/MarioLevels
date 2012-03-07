@@ -1,5 +1,7 @@
 package es.diz.mario.engine;
 
+import java.awt.Dimension;
+
 import dk.itu.mario.engine.MarioComponent;
 import dk.itu.mario.engine.sprites.Mario;
 import es.diz.mario.game.PlayerGame;
@@ -11,12 +13,10 @@ public class PlayerMarioComponent extends MarioComponent {
 	protected String playerName;
 	protected PlayerGame game;
 
-	public PlayerMarioComponent(PlayerGame game) {
-		super(640, 420, false);
+	public PlayerMarioComponent(PlayerGame game, String playerName) {
+		super(640, 480, false);
+		this.setPreferredSize(new Dimension(640, 480));
 		this.game = game;
-	}
-	
-	public void setPlayer(String playerName) {
 		this.playerName = playerName;
 	}
 	

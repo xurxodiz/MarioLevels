@@ -1,5 +1,6 @@
 package es.diz.mario.game;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -30,11 +31,15 @@ public class PlayerLogin extends JPanel {
 		addTextField();
 		addButton();
 		
-		setSize(640,480);
+		setPreferredSize(new Dimension(640,480));
 		setVisible(true);
 	}
 	
-	public void show() {
+	public boolean requestFocusInWindow() {
+		return super.requestFocusInWindow() && txt.requestFocusInWindow();
+	}
+	
+	public void setDefaults() {
 		getRootPane().setDefaultButton(but);
 	}
 	

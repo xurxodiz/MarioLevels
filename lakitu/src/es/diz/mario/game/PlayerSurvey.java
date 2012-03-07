@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import dk.itu.mario.engine.DataRecorder;
 
@@ -21,7 +20,6 @@ public class PlayerSurvey extends JPanel {
 	protected PlayerGame game;
 	
 	protected JLabel lbl;
-	protected JTextField txt;
 	protected JButton butN;
 	protected JButton butY;
 
@@ -30,14 +28,19 @@ public class PlayerSurvey extends JPanel {
 		this.game = game;
 		
 		addLabel();
-		//addTextField();
 		addButtonYes();
 		addButtonNo();
-	}
-	
-	public void show() {		
+		
 		setSize(640,480);
 		setVisible(true);
+	}
+	
+	public void setDefaults() {		
+		getRootPane().setDefaultButton(butY);
+	}
+	
+	public boolean requestFocusInWindow() {
+		return super.requestFocusInWindow() && butY.requestFocusInWindow();
 	}
 	
 	public void addLabel() {

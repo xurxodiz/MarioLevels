@@ -1,10 +1,10 @@
 package es.diz.mario.game;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
 import javax.swing.RootPaneContainer;
 import javax.swing.Timer;
 
@@ -24,25 +24,17 @@ public class PlayerGame {
 		this.app = app;
 		login = new PlayerLogin(this);
 		app.setContentPane(login);
-		login.show();
+		login.setDefaults();
+		setFocusTimer(app.getContentPane());
 	}
 	
 	public void setName(String playerName) {
 
 		this.playerName = playerName;
 		
-		killPanel(login);
+		killComponent(login);
 		
-		mario = new PlayerMarioComponent(this);
-		mario.setPlayer(playerName);
-		app.setContentPane(mario);
-		setFocusTimer(app.getContentPane());
-		
-		mario.start();
-	}
-	
-	public void start() {
-		// ...
+		startNewMario();
 	}
 	
 	public void setFocusTimer(final Container container) {
@@ -53,32 +45,42 @@ public class PlayerGame {
     	    	container.requestFocusInWindow();
     	     } 
     	}); 
+		timer.setRepeats(false);
     	timer.start();
 	}
 	
 	public void levelSurvey(DataRecorder recorder) {
+		
 		mario.stop();
+		killComponent(mario);
+		
 		survey = new PlayerSurvey(recorder, this);
 		app.setContentPane(survey);
-		app.getContentPane().repaint();
+		survey.setDefaults();
 		setFocusTimer(app.getContentPane());
 	}
 	
 	public void continuePlaying() {
 		
-		killPanel(survey);
+		killComponent(survey);
 		
-		app.setContentPane(mario);
-		setFocusTimer(app.getContentPane());
-		mario.newGame();
+		startNewMario();
 	}
 	
-	protected void killPanel(JPanel panel) {
+	protected void killComponent(Component panel) {
 		// kill it with fire
 		panel.setEnabled(false);
 		panel.setFocusable(false);
 		panel.setVisible(false);
 		panel = null;
+	}
+	
+	protected void startNewMario() {
+		mario = new PlayerMarioComponent(this, playerName);
+		app.setContentPane(mario);
+		setFocusTimer(app.getContentPane());
+		
+		mario.start();
 	}
 	
 	
