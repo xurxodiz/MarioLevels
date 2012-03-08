@@ -1,0 +1,52 @@
+StartTime = -17
+Jump:  StTime = 24 EdTime = 39
+RightMove: StTime = 3 EdTime = 38
+Jump:  StTime = 44 EdTime = 56
+Jump:  StTime = 69 EdTime = 79
+Jump:  StTime = 82 EdTime = 96
+CollectCoin:  time = 115
+CollectCoin:  time = 116
+Jump:  StTime = 109 EdTime = 120
+Jump:  StTime = 131 EdTime = 139
+Jump:  StTime = 144 EdTime = 154
+Jump:  StTime = 170 EdTime = 188
+RightMove: StTime = 48 EdTime = 185
+Jump:  StTime = 192 EdTime = 205
+RightMove: StTime = 203 EdTime = 198
+Jump:  StTime = 215 EdTime = 227
+RightMove: StTime = 220 EdTime = 210
+Jump:  StTime = 230 EdTime = 249
+CollectCoin:  time = 272
+CollectCoin:  time = 273
+CollectCoin:  time = 274
+CollectCoin:  time = 285
+CollectCoin:  time = 286
+StompKill:  EnemyType = 2 time = 287
+CollectCoin:  time = 288
+CollectCoin:  time = 289
+RightMove: StTime = 234 EdTime = 272
+Jump:  StTime = 272 EdTime = 297
+CollectCoin:  time = 309
+CollectCoin:  time = 311
+Jump:  StTime = 301 EdTime = 313
+Jump:  StTime = 322 EdTime = 334
+RightMove: StTime = 305 EdTime = 321
+Jump:  StTime = 336 EdTime = 356
+Jump:  StTime = 359 EdTime = 367
+Jump:  StTime = 373 EdTime = 389
+Jump:  StTime = 396 EdTime = 408
+RightMove: StTime = 364 EdTime = 368
+CollectCoin:  time = 422
+CollectCoin:  time = 424
+Jump:  StTime = 415 EdTime = 427
+CollectCoin:  time = 442
+CollectCoin:  time = 443
+StompKill:  EnemyType = 2 time = 443
+CollectCoin:  time = 445
+CollectCoin:  time = 447
+Jump:  StTime = 432 EdTime = 452
+Jump:  StTime = 488 EdTime = 500
+Totaltime = 517
+RightMove: StTime = 418 EdTime = 450
+RunState: StTime = 5 EdTime = 500
+LittleState: StTime = -17 EdTime = 500

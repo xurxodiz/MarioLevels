@@ -18,7 +18,7 @@ public class PlayerDataRecorder extends DataRecorder {
 	
 	protected String pathGPM;
 	protected String pathLog;
-
+	
 	public PlayerDataRecorder(String playerName, LevelScene levelScene, RandomLevel level, boolean[] keys) {
 		super(levelScene, level, keys);
 		this.playerName = playerName;
@@ -68,7 +68,7 @@ public class PlayerDataRecorder extends DataRecorder {
 	public void stampTime() {
 		timeStamp = (System.currentTimeMillis() / 1000L);
 		
-		String pathFolder = System.getProperty("user.dir") + "/../players/" + playerName + "/";
+		String pathFolder = System.getProperty("user.dir") + "/players/" + playerName + "/";
 		pathGPM = pathFolder + timeStamp + ".gpm";
 		pathLog = pathFolder + timeStamp + ".log";
 	}

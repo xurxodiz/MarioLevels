@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 
 import dk.itu.mario.engine.DataRecorder;
 import es.diz.mario.game.PlayerGame;
@@ -69,12 +70,13 @@ public class Survey extends JPanel {
 	}
 	
 	public void addLabel() {
-		String str = "Did you like this level more than the previous one?";
+		String str = "<html>Did you like this level<br/>more than the previous one?</html>";
 		lbl = new JLabel(str);
 		Font newFont = new Font("Arial Rounded MT Bold",
 				  lbl.getFont().getStyle(),
 				  24);  
 
+		lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl.setFont(newFont);
 		
 		GridBagConstraints cons = new GridBagConstraints();

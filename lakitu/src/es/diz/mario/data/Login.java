@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import es.diz.mario.game.PlayerGame;
 
@@ -38,7 +39,10 @@ public class Login extends JPanel {
 	}
 	
 	public boolean requestFocusInWindow() {
-		return super.requestFocusInWindow() && txt.requestFocusInWindow();
+		super.requestFocusInWindow();
+		txt.requestFocusInWindow();
+		// funnily, often they return both false but the textField gets focus anyway
+		return true;
 	}
 	
 	public void setDefaults() {
@@ -52,6 +56,7 @@ public class Login extends JPanel {
 				  lbl.getFont().getStyle(),
 				  24);  
 
+		lbl.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl.setFont(newFont);
 		
 		GridBagConstraints cons = new GridBagConstraints();
