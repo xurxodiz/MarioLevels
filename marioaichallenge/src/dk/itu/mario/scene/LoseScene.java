@@ -12,7 +12,7 @@ import dk.itu.mario.engine.MarioComponent;
 public class LoseScene extends Scene
 {
 
-    protected int tick;
+    private int tick;
     private String scrollMessage = "Game over!";
 
     public LoseScene()

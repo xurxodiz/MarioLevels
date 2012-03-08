@@ -12,12 +12,6 @@ dk.itu.mario.engine.DataRecorder:
 	level
 	deaths
 	kills
-	
-dk.itu.mario.scene.WinScene:
-	tick
-	
-dk.itu.mario.scene.LoseScene:
-	tick
 
 	
 	
