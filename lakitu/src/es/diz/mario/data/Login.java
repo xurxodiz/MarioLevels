@@ -1,4 +1,4 @@
-package es.diz.mario.game;
+package es.diz.mario.data;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,7 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class PlayerLogin extends JPanel {
+import es.diz.mario.game.PlayerGame;
+
+public class Login extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	protected PlayerGame game;
@@ -23,7 +25,7 @@ public class PlayerLogin extends JPanel {
 	protected JTextField txt;
 	protected JButton but;
 
-	public PlayerLogin(PlayerGame game) {
+	public Login(PlayerGame game) {
 		super(new GridBagLayout());		
 		this.game = game;
 		

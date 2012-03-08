@@ -1,4 +1,4 @@
-package es.diz.mario.game;
+package es.diz.mario.data;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -7,13 +7,16 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import dk.itu.mario.engine.DataRecorder;
+import es.diz.mario.game.PlayerGame;
 
-public class PlayerSurvey extends JPanel {
+public class Survey extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	protected DataRecorder recorder;
@@ -23,7 +26,7 @@ public class PlayerSurvey extends JPanel {
 	protected JButton butN;
 	protected JButton butY;
 
-	public PlayerSurvey(DataRecorder recorder, PlayerGame game) {
+	public Survey(DataRecorder recorder, PlayerGame game) {
 		super(new GridBagLayout());		
 		this.game = game;
 		
@@ -35,12 +38,34 @@ public class PlayerSurvey extends JPanel {
 		setVisible(true);
 	}
 	
-	public void setDefaults() {		
-		getRootPane().setDefaultButton(butY);
+	public void setDefaults() {
+		
+		butY.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("Y"), "like");
+		butY.getActionMap().put("like", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("pressed y");
+		        button_pressed(true);
+		    }
+		});
+		butY.setMnemonic('Y');
+		
+		
+		butN.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("N"), "dislike");
+		butN.getActionMap().put("dislike", new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("pressed n");
+		        button_pressed(false);
+		    }
+		});
+		butN.setMnemonic('n');
 	}
 	
 	public boolean requestFocusInWindow() {
-		return super.requestFocusInWindow() && butY.requestFocusInWindow();
+		return super.requestFocusInWindow(); // explicit
 	}
 	
 	public void addLabel() {

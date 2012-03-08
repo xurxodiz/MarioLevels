@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import dk.itu.mario.engine.MarioComponent;
 import dk.itu.mario.engine.sprites.Mario;
 import es.diz.mario.game.PlayerGame;
+import es.diz.mario.scene.EndScene;
 import es.diz.mario.scene.PlayerLevelSceneTest;
 
 public class PlayerMarioComponent extends MarioComponent {
@@ -43,10 +44,18 @@ public class PlayerMarioComponent extends MarioComponent {
     }
     
     public void lose() {
-        game.levelSurvey(PlayerLevelSceneTest.recorder);
+        end();
     }
+    
 
     public void win() {
+    	end();
+    }
+    
+    protected void end() {
+        scene = new EndScene();
+        scene.setSound(sound);
+        scene.init();
         game.levelSurvey(PlayerLevelSceneTest.recorder);
     }
     

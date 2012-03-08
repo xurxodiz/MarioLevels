@@ -10,6 +10,8 @@ import javax.swing.Timer;
 
 import dk.itu.mario.engine.DataRecorder;
 
+import es.diz.mario.data.Survey;
+import es.diz.mario.data.Login;
 import es.diz.mario.engine.PlayerMarioComponent;
 
 public class PlayerGame {
@@ -17,12 +19,12 @@ public class PlayerGame {
 	protected String playerName;
 	protected PlayerMarioComponent mario = null;
 	protected RootPaneContainer app = null;
-	protected PlayerLogin login;
-	protected PlayerSurvey survey;
+	protected Login login;
+	protected Survey survey;
 	
 	public PlayerGame(RootPaneContainer app) {
 		this.app = app;
-		login = new PlayerLogin(this);
+		login = new Login(this);
 		app.setContentPane(login);
 		login.setDefaults();
 		setFocusTimer(app.getContentPane());
@@ -54,7 +56,7 @@ public class PlayerGame {
 		mario.stop();
 		killComponent(mario);
 		
-		survey = new PlayerSurvey(recorder, this);
+		survey = new Survey(recorder, this);
 		app.setContentPane(survey);
 		survey.setDefaults();
 		setFocusTimer(app.getContentPane());
