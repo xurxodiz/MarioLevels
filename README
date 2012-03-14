@@ -1,7 +1,8 @@
-Lakitu is the custom code made to generate levels.
+This system will generate random levels of Super Mario Bros with the intention of maximizing enjoyment.
 
-MarioAIChallenge is the platform available at:
+This project has two branches: cig, simplified and oriented to generate a working competition entry for CIG 2012 in Granada; and pfc, with extra functionalities and with the end goal of serving as Degree Thesis.
+
+Both are based on the platform available at:
 
 http://www.marioai.org/LevelGeneration/level-generation-track-source
 
-Some changes had to be performed, unfortunately, to work around it. They are covered in marioaichallenge/CHANGES.
