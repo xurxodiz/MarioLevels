@@ -38,11 +38,11 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
 		    public static final int EVOLVE_VERSION = 4;
 		    public static final int GAME_VERSION = 4;
 
-		    protected boolean running = false;
+		    private boolean running = false;
 		    private int width, height;
-		    protected GraphicsConfiguration graphicsConfiguration;
-		    protected Scene scene;
-		    protected SonarSoundEngine sound;
+		    private GraphicsConfiguration graphicsConfiguration;
+		    private Scene scene;
+		    private SonarSoundEngine sound;
 		    private boolean focused = false;
 		    private boolean useScale2x = false;
 		    private boolean isCustom = false;
@@ -50,7 +50,7 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
 
 		    private Scale2x scale2x = new Scale2x(320, 240);
 
-		    protected double openTime;
+		    private double openTime;
 
 		    public MarioComponent(int width, int height,boolean isCustomized){
 		    	addFocusListener(this);
@@ -313,7 +313,7 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
 		    public static final int MINIMIZED_FIRST = 1;
 
 
-		    protected LevelScene randomLevel;
+		    private LevelScene randomLevel;
 
 
 		    /**
