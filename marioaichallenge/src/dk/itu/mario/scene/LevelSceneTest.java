@@ -1,4 +1,5 @@
 package dk.itu.mario.scene;
+
 import java.awt.GraphicsConfiguration;
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -6,8 +7,10 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
+import dizpicojorge.LakituLevelGenerator;
 import dk.itu.mario.level.BgLevelGenerator;
 import dk.itu.mario.MarioInterface.GamePlay;
+import dk.itu.mario.MarioInterface.LevelGenerator;
 import dk.itu.mario.engine.sonar.FixedSoundSource;
 import dk.itu.mario.engine.sprites.CoinAnim;
 import dk.itu.mario.engine.sprites.FireFlower;
@@ -57,10 +60,10 @@ import dk.itu.mario.res.ResourcesManager;
 
 		        if(level==null)
 		        	if(isCustom){
-		        		CustomizedLevelGenerator clg = new CustomizedLevelGenerator();
+		        		LevelGenerator lg = new LakituLevelGenerator();
 		        		GamePlay gp = new GamePlay();
 		        		gp = gp.read("player.txt");
-		        		currentLevel = (Level)clg.generateLevel(gp);
+		        		currentLevel = (Level)lg.generateLevel(gp);
 		        		
 		        		//You can use the following commands if you want to benefit from
 		        		//	the interface containing detailed information
