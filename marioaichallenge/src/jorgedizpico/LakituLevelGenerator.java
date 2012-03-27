@@ -10,15 +10,28 @@ public class LakituLevelGenerator implements LevelGenerator {
 
 	@Override
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
-		int[] paramArray = process_metrics(playerMetrics);
-		int playerSkill = paramArray[0] + 5;
-		int[] mapWave = draw_wave(playerSkill);
-		ground_pass(mapWave, paramArray);
+		Level lvl = new LakituLevel(329,15)
+		// int[] waveParams = get_wave(playerMetrics);
+		// int[] challengeRates = get_rates(playerMetrics);
+
+		// w = A·sen(b·a + a0) + c
+		// A: amplitude, swing of the difficulty
+		// c: average difficulty
+		// sen/cos: trigonometric function (matter of choice)
+		// b: speed of difficulty swings, rate of slope change
+		// a0: starting phase
+		int[] waveParams = {4, 2, 0, 0, 0};
+		int[] challengeRates = {0.4, 0.15, 0.15, ;
+				
+		int[] mapWave = draw_wave(waveParams);
+		ground_pass(lvl, mapWave, challengeRates[0]);
+		
 		// hill_pass(mapWave, paramArray);
 		// pipe_pass(mapWave, paramArray);
 		// enemy_pass(mapWave, paramArray);
 		// block_pass(mapWave, paramArray);
 		// coin_pass(mapWave, paramArray);
+		
 		int type = new Random().nextInt(3); //0: over, 1: under, 2: castle
 		return new LakituLevel(320, 15, new Random().nextLong(), playerSkill, type, playerMetrics);
 	}
@@ -35,7 +48,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 		return null;
 	}
 
-	private int[] draw_wave(int playerSkill) {
+	private int[] draw_wave(int[] waveParams) {
 		// takes skill and builds a tension wave
 		return null;
 	}

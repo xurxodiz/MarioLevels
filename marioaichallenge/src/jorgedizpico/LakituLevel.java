@@ -18,4 +18,8 @@ public class LakituLevel extends Level implements LevelInterface {
         super(width, height);
         this.playerM = playerMetrics;
     }
+    
+    public LakituLevel(int width, int height) {
+    	this.playerM = null;
+    }
 }
