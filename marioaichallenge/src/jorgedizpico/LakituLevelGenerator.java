@@ -1,6 +1,5 @@
 package jorgedizpico;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import dk.itu.mario.MarioInterface.GamePlay;
@@ -10,11 +9,7 @@ import dk.itu.mario.MarioInterface.LevelInterface;
 public class LakituLevelGenerator implements LevelGenerator {
 	
   	protected static Random rand = new Random();
-  	
-  	 int I_START_PLATFORM = 5;
-  	 int I_END_PLATFORM = 7;
-  	 int I_EXIT_OFFSET = 5; // offset always smaller than end platform
-  	 int I_HEIGHT_MARGIN = 2;
+  	protected LakituParameters lkp;
 	
 	@Override
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
@@ -40,7 +35,8 @@ public class LakituLevelGenerator implements LevelGenerator {
 		return new LakituLevel(320, 15, new Random().nextLong(), 3, type, playerMetrics);
 		*/
 		LakituLevel lvl = new LakituLevel();
-		gaps_pass(lvl, new int[2], 0.3f);
+		lkp = new LakituParameters(playerMetrics);
+		ground_pass(lvl);
 		return lvl;
 	}
 
@@ -50,82 +46,102 @@ public class LakituLevelGenerator implements LevelGenerator {
 		return null;
 	}
 	
-	protected int start_platform(LakituLevel lvl, int length) {
+	protected int start_platform(LakituLevel lvl, LakituParameters lkp) {
 		
-		int initY = (int) (I_HEIGHT_MARGIN + rand.nextDouble()*(lvl.getHeight() - I_HEIGHT_MARGIN));
+		int initY = (int) (rand.nextDouble()*lvl.getHeight()/2) + (lvl.getHeight()/2);
+		initY = lvl.constrain_height(initY);
 		
-		for (int x = 0; x < length; x++) // initial platform
-			lvl.setGroundHeight(x, initY);
+		lvl.setGroundHeight(0, initY);
+		lvl.addFlatLand(1, lkp.I_START_PLATFORM-1);
 		
 		return initY;
 	}
 	
-	protected int constrain_height(LakituLevel lvl, int y) {
-		return Math.max(I_HEIGHT_MARGIN, Math.min(lvl.getHeight() - I_HEIGHT_MARGIN, y));
-	}
-	
-	protected int[] gaps_pass(LakituLevel lvl, int[] mapWave, float gapRate) {
-
-   	 double CHANCE_GAP = 0.1;
-   	 double CHANCE_HILL_CHANGE = 0.1;
-   	 
-		 int GAP_LENGTH = 7;
-		 double GAP_OFFSET = -5;
-		 double GAP_RANGE = 10;
+	protected void ground_pass(LakituLevel lvl) {
 				
-		boolean justChanged = false;
-		int length = 0;
-		int landHeight = lvl.getHeight() - 1;
+		/*int length = 0;
+		boolean inGap = false;*/
 				
-		int lastY, y, nextY;
-		lastY = y = nextY = start_platform(lvl, I_START_PLATFORM);
+		int y = start_platform(lvl, lkp);
 		
-		for (int x = I_START_PLATFORM; x < lvl.getWidth() - I_END_PLATFORM; x++) {
+		// loop optimization
+		int middlestart = lkp.I_START_PLATFORM;
+		int middleend = lvl.getWidth() - lkp.I_END_PLATFORM;
+		
+		int width = 2;
+		
+		
+		for (int x = middlestart; x < middleend; x += width) {
 			
-			// need more ground (current gap is too large)
-			if (length > GAP_LENGTH && y >= lvl.getHeight()) {
-				nextY = landHeight;
-				justChanged = true;
-				length = 1;
+			double roll = rand.nextDouble();
+			
+			/*if (roll < lkp.CHANCE_GAP) {
+				roll = rand.nextDouble();
+				
+				if (roll < lkp.CHANCE_GAP_HILL);
+				else if (roll < lkp.CHANCE_GAP_BOX);
+				else if (roll < lkp.CHANCE_GAP_VANILLA);
+				
+			} else*/ if (roll < lkp.CHANCE_VERT) {
+				roll = rand.nextDouble();
+				
+				if (roll < lkp.CHANCE_VERT_PIPE);
+				else if (roll < lkp.CHANCE_VERT_STAIRS);
+				else if (roll < lkp.CHANCE_VERT_HILL) {
+					width = hill_buffer(middleend - x);
+					lvl.addHillChange(x, hill_change(), width);
+					
+				}
+				
+			} else {
+				width = 3;
+				lvl.addFlatLand(x, width);
 			}
-			// adjust ground level
-			else if (rand.nextDouble() < CHANCE_HILL_CHANGE && !justChanged) {
-				nextY += (int)(GAP_OFFSET + GAP_RANGE*rand.nextDouble());
-				nextY = constrain_height(lvl, nextY);
-				justChanged = true;
+				
+			
+			/*if (inGap && length > lkp.GAP_LENGTH) { // restore ground
+				
+				y = lastLandHeight;
 				length = 1;
-			}
-			// add a gap
-			// checks that the gap constraint is not violated
-			else if (y < lvl.getHeight() &&  rand.nextDouble() < CHANCE_GAP && !justChanged) {
-				landHeight = Math.min(lvl.getHeight() - I_HEIGHT_MARGIN, lastY);
-				nextY = lvl.getHeight();
-				justChanged = true;
+				inGap = false;
+				
+			} else if (length > 1 && !inGap && chanceHill()) { // add gap
+				
+				lastLandHeight = y;
+				y = lvl.getHeight();
 				length = 1;
-			}
-			// continue placing flat ground
-			else {
+				inGap = true;
+				
+			} else if (length > 1 && chanceGap()) { // change ground
+				
+				y = (inGap)? varyDown(lastLandHeight) : varyBoth(y);
+				y = lvl.constrain_height(y);
+				length = 1;
+				inGap = false;
+				
+			} else {
 				length++;
-				justChanged = false;
-			}
-			
+			} 
 			lvl.setGroundHeight(x, y);
-			lastY = y;			
-			y = nextY;
+			*/
 		}
+					
+		// end_platform()
+		lvl.addFlatLand(middleend, lkp.I_END_PLATFORM);
 		
-		nextY = (y >= lvl.getHeight())? landHeight: y;
-		
-		for (int x = lvl.getWidth() - I_END_PLATFORM; x < lvl.getWidth(); x++) { // final platform
-			lvl.setGroundHeight(x, y);
-			lastY = y;
-			y = nextY;
-		}
-		
-		lvl.setExit(lvl.getWidth() - I_EXIT_OFFSET);
+		lvl.setExit(lvl.getWidth() - lkp.I_EXIT_OFFSET);
 		lvl.fixWalls();
 		
-		return mapWave; // once decreased
+	}
+	
+	public int hill_change() {
+		return (int) (lkp.VERT_HILL_OFFSET + lkp.VERT_HILL_RANGE * rand.nextDouble());
+	}
+	
+	public int hill_buffer(int max) {
+		int candidate = (int) (lkp.VERT_HILL_MIN + lkp.VERT_HILL_MAXEXTRA * rand.nextDouble());
+		if (candidate > max) candidate = max;
+		return candidate;
 	}
 	
 }

@@ -10,8 +10,14 @@ public class LakituLevel extends Level implements LevelInterface {
 	public int type = Level.TYPE_CASTLE;
    
     public LakituLevel() {
-    	super(100, 15);
-    	ground = new int[100];
+    	super(320, 15);
+    	ground = new int[320];
+    }
+    
+    public int capX(int x) {
+    	if (x < 0) return 0;
+    	if (x >= width) return width-1;
+    	return x;
     }
     
     public void setExit(int x) {
@@ -20,12 +26,39 @@ public class LakituLevel extends Level implements LevelInterface {
     }
     
     public void setGroundHeight(int x, int y) {
-    	for (int i = y+1; i < height; i++)
+    	x = capX(x);
+    	for (int i = y; i < height; i++)
     		setBlock (x, i, Level.GROUND);
     	ground[x] = y;
     }
+    
+    public int getGroundHeight(int x) {
+        return ground[capX(x)];
+    }
+    
+    public int constrain_height(int y) {
+    	return Math.max(1, Math.min(getHeight() - 1, y));
+    }
 
-	public void fixWalls() {
+    public void addFlatLand(int x, int length) {
+    	int y = getGroundHeight(x-1);
+    	for (int i = 0; i < length; i++)
+    		setGroundHeight(x+i, y);
+    }
+    
+    public void addHillChange(int x, int variation, int length) {
+    	int y = getGroundHeight(x-1);
+    	int yy = constrain_height(y+variation);
+    	
+    	for (int i = 0; i < length/2; i++)
+    		setGroundHeight(x+i, y);
+    	
+    	for (int i = length/2; i < length; i++)
+    		setGroundHeight(x+i, yy);   	
+    }
+
+    
+    public void fixWalls() {
 	    boolean[][] blockMap = new boolean[width + 1][height + 1];
 	
 	    for (int x = 0; x < width + 1; x++) {
@@ -44,7 +77,7 @@ public class LakituLevel extends Level implements LevelInterface {
 	    blockify(this, blockMap, width + 1, height + 1);
 	}
 
-	private void blockify(Level level, boolean[][] blocks, int width,
+	protected void blockify(Level level, boolean[][] blocks, int width,
 	                      int height) {
 	    int to = 0;
 	    if (type == LevelInterface.TYPE_CASTLE) {
