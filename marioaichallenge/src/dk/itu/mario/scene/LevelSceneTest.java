@@ -8,7 +8,6 @@ import java.util.Random;
 
 import jorgedizpico.LakituLevelGenerator;
 
-
 import dk.itu.mario.level.BgLevelGenerator;
 import dk.itu.mario.MarioInterface.GamePlay;
 import dk.itu.mario.MarioInterface.LevelGenerator;
@@ -61,7 +60,7 @@ import dk.itu.mario.res.ResourcesManager;
 
 		        if(level==null)
 		        	if(isCustom){
-		        		CustomizedLevelGenerator lg = new CustomizedLevelGenerator();
+		        		LakituLevelGenerator lg = new LakituLevelGenerator();
 		        		GamePlay gp = new GamePlay();
 		        		gp = gp.read("player.txt");
 		        		currentLevel = (Level)lg.generateLevel(gp);
