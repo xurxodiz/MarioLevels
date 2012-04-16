@@ -62,7 +62,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 		/*int length = 0;
 		boolean inGap = false;*/
 				
-		int y = start_platform(lvl, lkp);
+		start_platform(lvl, lkp);
 		
 		// loop optimization
 		int middlestart = lkp.I_START_PLATFORM;
@@ -75,14 +75,14 @@ public class LakituLevelGenerator implements LevelGenerator {
 			
 			double roll = rand.nextDouble();
 			
-			/*if (roll < lkp.CHANCE_GAP) {
+			if (roll < lkp.CHANCE_GAP) {
 				roll = rand.nextDouble();
 				
 				if (roll < lkp.CHANCE_GAP_HILL);
 				else if (roll < lkp.CHANCE_GAP_BOX);
 				else if (roll < lkp.CHANCE_GAP_VANILLA);
 				
-			} else*/ if (roll < lkp.CHANCE_VERT) {
+			} else if (roll < lkp.CHANCE_VERT) {
 				roll = rand.nextDouble();
 				
 				if (roll < lkp.CHANCE_VERT_PIPE);
@@ -97,33 +97,6 @@ public class LakituLevelGenerator implements LevelGenerator {
 				width = 3;
 				lvl.addFlatLand(x, width);
 			}
-				
-			
-			/*if (inGap && length > lkp.GAP_LENGTH) { // restore ground
-				
-				y = lastLandHeight;
-				length = 1;
-				inGap = false;
-				
-			} else if (length > 1 && !inGap && chanceHill()) { // add gap
-				
-				lastLandHeight = y;
-				y = lvl.getHeight();
-				length = 1;
-				inGap = true;
-				
-			} else if (length > 1 && chanceGap()) { // change ground
-				
-				y = (inGap)? varyDown(lastLandHeight) : varyBoth(y);
-				y = lvl.constrain_height(y);
-				length = 1;
-				inGap = false;
-				
-			} else {
-				length++;
-			} 
-			lvl.setGroundHeight(x, y);
-			*/
 		}
 					
 		// end_platform()
