@@ -56,6 +56,16 @@ public class LakituLevel extends Level implements LevelInterface {
     	for (int i = length/2; i < length; i++)
     		setGroundHeight(x+i, yy);   	
     }
+    
+    public void addGap(int x, int variation, int length) {
+    	System.out.println(x+","+variation+","+length);
+    	// length includes +2 for edges at the extremes
+    	int y = getGroundHeight(x-1);
+    	setGroundHeight(x, y);
+    	for (int i = 1; i < length-1; i++)
+    		setGroundHeight(x+i, height);
+    	setGroundHeight(x+length-1, y+variation);
+    }
 
     
     public void fixWalls() {

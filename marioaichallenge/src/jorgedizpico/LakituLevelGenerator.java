@@ -80,7 +80,10 @@ public class LakituLevelGenerator implements LevelGenerator {
 				
 				if (roll < lkp.CHANCE_GAP_HILL);
 				else if (roll < lkp.CHANCE_GAP_BOX);
-				else if (roll < lkp.CHANCE_GAP_VANILLA);
+				else if (roll < lkp.CHANCE_GAP_VANILLA) {
+					width = gap_vanilla_length(middleend - x);
+					lvl.addGap(x, gap_change(), width);
+				}
 				
 			} else if (roll < lkp.CHANCE_VERT) {
 				roll = rand.nextDouble();
@@ -88,7 +91,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 				if (roll < lkp.CHANCE_VERT_PIPE);
 				else if (roll < lkp.CHANCE_VERT_STAIRS);
 				else if (roll < lkp.CHANCE_VERT_HILL) {
-					width = hill_buffer(middleend - x);
+					width = vert_hill_length(middleend - x);
 					lvl.addHillChange(x, hill_change(), width);
 					
 				}
@@ -108,11 +111,23 @@ public class LakituLevelGenerator implements LevelGenerator {
 	}
 	
 	public int hill_change() {
-		return (int) (lkp.VERT_HILL_OFFSET + lkp.VERT_HILL_RANGE * rand.nextDouble());
+		return (int) (lkp.JUMP_OFFSET + lkp.JUMP_RANGE * rand.nextDouble());
 	}
 	
-	public int hill_buffer(int max) {
-		int candidate = (int) (lkp.VERT_HILL_MIN + lkp.VERT_HILL_MAXEXTRA * rand.nextDouble());
+	public int gap_change() {
+		int d = (int) (lkp.JUMP_OFFSET + lkp.JUMP_RANGE * rand.nextDouble());
+		if (d > 0) d = -d;
+		return d;
+	}
+	
+	public int vert_hill_length(int max) {
+		int candidate = (int) (lkp.VERT_HILL_MIN + (lkp.VERT_HILL_MAX - lkp.VERT_HILL_MIN) * rand.nextDouble());
+		if (candidate > max) candidate = max;
+		return candidate;
+	}
+	
+	public int gap_vanilla_length(int max) {
+		int candidate = (int) (lkp.GAP_VANILLA_MIN + (lkp.GAP_VANILLA_MAX - lkp.GAP_VANILLA_MIN)* rand.nextDouble());
 		if (candidate > max) candidate = max;
 		return candidate;
 	}
