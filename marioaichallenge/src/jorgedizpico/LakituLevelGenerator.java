@@ -51,8 +51,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 		int initY = (int) (rand.nextDouble()*lvl.getHeight()/2) + (lvl.getHeight()/2);
 		initY = lvl.constrain_height(initY);
 		
-		lvl.setGroundHeight(0, initY);
-		lvl.addFlatLand(1, lkp.I_START_PLATFORM-1);
+		lvl.addFlatLand(0, initY, lkp.I_START_PLATFORM);
 		
 		return initY;
 	}
@@ -62,13 +61,14 @@ public class LakituLevelGenerator implements LevelGenerator {
 		/*int length = 0;
 		boolean inGap = false;*/
 				
-		start_platform(lvl, lkp);
+		int y = start_platform(lvl, lkp);
 		
 		// loop optimization
 		int middlestart = lkp.I_START_PLATFORM;
 		int middleend = lvl.getWidth() - lkp.I_END_PLATFORM;
 		
 		int width = 2;
+		int change = 0;
 		
 		
 		for (int x = middlestart; x < middleend; x += width) {
@@ -82,7 +82,15 @@ public class LakituLevelGenerator implements LevelGenerator {
 				else if (roll < lkp.CHANCE_GAP_BOX);
 				else if (roll < lkp.CHANCE_GAP_VANILLA) {
 					width = gap_vanilla_length(middleend - x);
-					lvl.addGap(x, gap_change(), width);
+					lvl.addGap(x, width);
+
+					roll = rand.nextDouble();
+					if (roll < lkp.CHANCE_GAP_VANILLA_CHANGE) {
+						change = gap_change();
+						y += change;
+					}
+					lvl.addFlatLand(x+width, y, lkp.I_FLAT_MIN);
+					width += lkp.I_FLAT_MIN;
 				}
 				
 			} else if (roll < lkp.CHANCE_VERT) {
@@ -91,19 +99,19 @@ public class LakituLevelGenerator implements LevelGenerator {
 				if (roll < lkp.CHANCE_VERT_PIPE);
 				else if (roll < lkp.CHANCE_VERT_STAIRS);
 				else if (roll < lkp.CHANCE_VERT_HILL) {
-					width = vert_hill_length(middleend - x);
-					lvl.addHillChange(x, hill_change(), width);
+					y += hill_change();
+					lvl.addFlatLand(x, y, lkp.I_FLAT_MIN);
 					
 				}
 				
 			} else {
 				width = 3;
-				lvl.addFlatLand(x, width);
+				lvl.addFlatLand(x, y, width);
 			}
 		}
 					
 		// end_platform()
-		lvl.addFlatLand(middleend, lkp.I_END_PLATFORM);
+		lvl.addFlatLand(middleend, y, lkp.I_END_PLATFORM);
 		
 		lvl.setExit(lvl.getWidth() - lkp.I_EXIT_OFFSET);
 		lvl.fixWalls();
@@ -111,19 +119,15 @@ public class LakituLevelGenerator implements LevelGenerator {
 	}
 	
 	public int hill_change() {
-		return (int) (lkp.JUMP_OFFSET + lkp.JUMP_RANGE * rand.nextDouble());
+		return (int) (lkp.I_JUMP_OFFSET + lkp.I_JUMP_RANGE * rand.nextDouble());
 	}
 	
 	public int gap_change() {
-		int d = (int) (lkp.JUMP_OFFSET + lkp.JUMP_RANGE * rand.nextDouble());
+		// it's just better to consider you can't jump "up"
+		// so only "down" changes are allowed
+		int d = (int) (lkp.I_JUMP_OFFSET + lkp.I_JUMP_RANGE * rand.nextDouble());
 		if (d > 0) d = -d;
 		return d;
-	}
-	
-	public int vert_hill_length(int max) {
-		int candidate = (int) (lkp.VERT_HILL_MIN + (lkp.VERT_HILL_MAX - lkp.VERT_HILL_MIN) * rand.nextDouble());
-		if (candidate > max) candidate = max;
-		return candidate;
 	}
 	
 	public int gap_vanilla_length(int max) {
