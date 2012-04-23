@@ -1,18 +1,26 @@
 package jorgedizpico;
 
 
+import java.util.ArrayList;
+
 import dk.itu.mario.MarioInterface.LevelInterface;
 import dk.itu.mario.level.Level;
 
 public class LakituLevel extends Level implements LevelInterface {
 	
-	public int[] ground;
-	public int type = Level.TYPE_CASTLE;
+	protected int[] ground;
+	public int type = Level.TYPE_OVERGROUND; // default
    
     public LakituLevel() {
     	super(320, 15);
     	ground = new int[320];
     }
+    
+    public void setType(int type) {
+    	if (type < 0) type = 0;
+    	if (type > 2) type = 2;
+    	this.type = type;
+}
     
     public int capX(int x) {
     	if (x < 0) return 0;
@@ -36,24 +44,38 @@ public class LakituLevel extends Level implements LevelInterface {
         return ground[capX(x)];
     }
     
-    public int constrain_height(int y) {
-    	return Math.max(1, Math.min(getHeight() - 1, y));
-    }
-
-    public void addFlatLand(int x, int y, int length) {
-    	for (int i = 0; i < length; i++)
-    		setGroundHeight(x+i, y);
+    public ArrayList<int[]> getFlatlands() {
+    	ArrayList<int[]> flats = new ArrayList<int[]>();
+    	int x, y;
+    	int xx = 0, yy = getGroundHeight(xx);
+    	
+    	for (x = 0; x < width; x++) {
+    		y = getGroundHeight(x);
+    		if (y != yy) {
+    			flats.add(new int[]{xx, x-xx});
+    			xx = x;
+    			yy = y;
+    		}
+    	}
+    	return flats;
     }
     
-    public void addHillChange(int x, int variation, int length) {
-    	int y = getGroundHeight(x-1);
-    	int yy = constrain_height(y+variation);
-    	
-    	for (int i = 0; i < length/2; i++)
+    public ArrayList<int[]> getFlatlandsFiltered() {
+		ArrayList<int[]> flats = getFlatlands();
+		// remove first and last flatlands
+		// (usually start/end platforms)
+		flats.remove(flats.size()-1);
+		flats.remove(0);
+		// remove gaps
+		for (int[] coord : flats)
+			if (height == coord[1])
+				flats.remove(coord);
+		return flats;
+    }
+    
+    public void addFlatLand(int x, int length, int y) {
+    	for (int i = 0; i < length; i++)
     		setGroundHeight(x+i, y);
-    	
-    	for (int i = length/2; i < length; i++)
-    		setGroundHeight(x+i, yy);   	
     }
     
     public void addGap(int x, int length) {
@@ -61,7 +83,6 @@ public class LakituLevel extends Level implements LevelInterface {
     		setGroundHeight(x+i, height);
     }
 
-    
     public void fixWalls() {
 	    boolean[][] blockMap = new boolean[width + 1][height + 1];
 	

@@ -1,5 +1,6 @@
 package jorgedizpico;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import dk.itu.mario.MarioInterface.GamePlay;
@@ -9,34 +10,20 @@ import dk.itu.mario.MarioInterface.LevelInterface;
 public class LakituLevelGenerator implements LevelGenerator {
 	
   	protected static Random rand = new Random();
+  	protected LakituLevel lvl;
   	protected LakituParameters lkp;
 	
 	@Override
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
-		/*
-		// w(x) = A·sen(b·x + a0) + c
-		// A: amplitude, swing of the difficulty
-		// b: speed of difficulty swings, rate of slope change
-		// a0: starting phase
-		// c: average difficulty
-		float[] waveParams = get_wave(playerMetrics);
-		float[] rates = get_rates(playerMetrics); // decor, gaps, climbs, enemies
-			
-		int[] mapWave = draw_wave(waveParams);
-		// for (int i = 0; i < 320; i++)
-		//	wave[i] = (int) Math.round(wp[0] * Math.sin(wp[1] * i + wp[2]) + wp[3]);
-		mapWave = gaps_pass(lvl, mapWave, rates[1]); // vanilla, box, hill
-		mapWave = climbs_pass(lvl, mapWave, rates[2]); // stairs, slope, pipes
-		mapWave = enemies_pass(lvl, mapWave, rates[3]); // koopa, greenturtle, redturtle, cannon, piranha
-		
-		decor_pass(lvl, rates[0]); // hills, blocks, coins
-		
-		int type = new Random().nextInt(3); //0: over, 1: under, 2: castle
-		return new LakituLevel(320, 15, new Random().nextLong(), 3, type, playerMetrics);
-		*/
-		LakituLevel lvl = new LakituLevel();
+
+		lvl = new LakituLevel();
 		lkp = new LakituParameters(playerMetrics);
-		ground_pass(lvl);
+		
+		lvl.setType(rand.nextInt(3));
+		
+		passGround();
+		passBoxes();
+		
 		return lvl;
 	}
 
@@ -46,91 +33,138 @@ public class LakituLevelGenerator implements LevelGenerator {
 		return null;
 	}
 	
-	protected int start_platform(LakituLevel lvl, LakituParameters lkp) {
-		
-		int initY = (int) (rand.nextDouble()*lvl.getHeight()/2) + (lvl.getHeight()/2);
-		initY = lvl.constrain_height(initY);
-		
-		lvl.addFlatLand(0, initY, lkp.I_START_PLATFORM);
-		
-		return initY;
-	}
-	
-	protected void ground_pass(LakituLevel lvl) {
-				
-		/*int length = 0;
-		boolean inGap = false;*/
-				
-		int y = start_platform(lvl, lkp);
+	protected void passGround() {
 		
 		// loop optimization
-		int middlestart = lkp.I_START_PLATFORM;
-		int middleend = lvl.getWidth() - lkp.I_END_PLATFORM;
+		int stageend = lvl.getWidth() - lkp.I_END_PLATFORM;
+						
+		int x,y;
+		int pos[] = createStart();
 		
-		int width = 2;
-		int change = 0;
-		
-		
-		for (int x = middlestart; x < middleend; x += width) {
+		for (x = pos[0], y = pos[1]; x < stageend;	x = pos[0], y = pos[1]) {
 			
 			double roll = rand.nextDouble();
 			
 			if (roll < lkp.CHANCE_GAP) {
 				roll = rand.nextDouble();
 				
-				if (roll < lkp.CHANCE_GAP_HILL);
-				else if (roll < lkp.CHANCE_GAP_BOX);
-				else if (roll < lkp.CHANCE_GAP_VANILLA) {
-					width = gap_vanilla_length(middleend - x);
-					lvl.addGap(x, width);
-
-					roll = rand.nextDouble();
-					if (roll < lkp.CHANCE_GAP_VANILLA_CHANGE) {
-						change = gap_change();
-						y += change;
-					}
-					lvl.addFlatLand(x+width, y, lkp.I_FLAT_MIN);
-					width += lkp.I_FLAT_MIN;
-				}
+				if (roll < lkp.CHANCE_GAP_HILL)
+					;
+				else if (roll < lkp.CHANCE_GAP_BOX)
+					;
+				else if (roll < lkp.CHANCE_GAP_VANILLA)
+					pos = createGapVanilla(x, y);
 				
 			} else if (roll < lkp.CHANCE_VERT) {
 				roll = rand.nextDouble();
 				
-				if (roll < lkp.CHANCE_VERT_PIPE);
-				else if (roll < lkp.CHANCE_VERT_STAIRS);
-				else if (roll < lkp.CHANCE_VERT_HILL) {
-					y += hill_change();
-					lvl.addFlatLand(x, y, lkp.I_FLAT_MIN);
-					
-				}
+				if (roll < lkp.CHANCE_VERT_PIPE)
+					;
+				else if (roll < lkp.CHANCE_VERT_STAIRS)
+					;
+				else if (roll < lkp.CHANCE_VERT_HILL)
+					pos = createVertHill(x, y);					
 				
-			} else {
-				width = 3;
-				lvl.addFlatLand(x, y, width);
-			}
+			} else
+				pos = createFlatLand(x, y);
 		}
 					
 		// end_platform()
-		lvl.addFlatLand(middleend, y, lkp.I_END_PLATFORM);
-		
-		lvl.setExit(lvl.getWidth() - lkp.I_EXIT_OFFSET);
+		createEnd(x, y);
 		lvl.fixWalls();
+	}
+	
+	protected void passBoxes() {
+		ArrayList<int[]> flats = lvl.getFlatlandsFiltered();
+		/*
+		 
+		 for each flat
+		 	if roll for boxes
+		 	   place
+		 	   if roll higher
+		 	   	place double row
+		 	   	
+		  keep a log of empty flats and another of boxes
+		  for each of them
+		  	if roll for coins on top
+		  		place
+		  keep same log of boxes and the still empty
+		  for each of them
+		  		if roll for enemies
+		  			roll for type
+		  				place
+		 
+		 */
+		
 		
 	}
 	
-	public int hill_change() {
-		return (int) (lkp.I_JUMP_OFFSET + lkp.I_JUMP_RANGE * rand.nextDouble());
+	
+	protected int[] createStart() {
+		
+		int x = lkp.I_START_PLATFORM;
+		int y = (int) (rand.nextDouble()*lvl.getHeight()/2) + (lvl.getHeight()/2);
+		y = constrainHeight(y);
+		
+		lvl.addFlatLand(0, x, y);
+		
+		return new int[]{x,y};
 	}
 	
-	public int gap_change() {
+	protected void createEnd(int x, int y) {
+		int stageend = lvl.getWidth() - lkp.I_END_PLATFORM;
+		lvl.addFlatLand(stageend, lkp.I_END_PLATFORM, y);
+		lvl.setExit(lvl.getWidth() - lkp.I_EXIT_OFFSET);
+	}
+	
+	protected int[] createGapVanilla(int x, int y) {
+		int stageend = lvl.getWidth() - lkp.I_END_PLATFORM;
+		
+		int width = lengthGapVanilla(stageend - x);
+		lvl.addGap(x, width);
+
+		double roll = rand.nextDouble();
+		if (roll < lkp.CHANCE_GAP_VANILLA_CHANGE)
+			y = changeGap(y);
+		
+		lvl.addFlatLand(x+width, lkp.I_FLAT_MIN, y);
+		width += lkp.I_FLAT_MIN;
+		
+		return new int[]{x+width, y};
+	}
+	
+	protected int[] createVertHill(int x, int y) {
+		y = changeHill(y);
+		return createFlatLand(x,y);
+	}
+	
+	protected int[] createFlatLand(int x, int y) {
+		int width = lkp.I_FLAT_MIN;
+		lvl.addFlatLand(x, width, y);
+		return new int[]{x+width, y};
+	}
+	
+	protected int constrainHeight(int y) {
+		return Math.max(lkp.I_FLAT_MIN, Math.min(y, lvl.getHeight()-lkp.I_FLAT_MIN));
+	}
+	
+	protected int changeHill(int y) {
+		int yy = y + (int) (lkp.I_JUMP_OFFSET + lkp.I_JUMP_RANGE * rand.nextDouble());
+		yy = constrainHeight(yy);
+		if (y < lvl.getHeight()/2 && yy < y)
+			yy = constrainHeight(y + (y-yy));
+		return yy;
+	}
+	
+	protected int changeGap(int y) {
 		// it's just better to consider you can't jump "up"
 		// so only "down" changes are allowed
-		int d = (int) (lkp.I_JUMP_OFFSET + lkp.I_JUMP_RANGE * rand.nextDouble());
-		if (d > 0) d = -d;
-		return d;
+		int yy = changeHill(y);
+		if (yy < y) yy = y;
+		return yy;
 	}
 	
-	public int gap_vanilla_length(int max) {
+	protected int lengthGapVanilla(int max) {
 		int candidate = (int) (lkp.GAP_VANILLA_MIN + (lkp.GAP_VANILLA_MAX - lkp.GAP_VANILLA_MIN)* rand.nextDouble());
 		if (candidate > max) candidate = max;
 		return candidate;
