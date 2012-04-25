@@ -52,24 +52,12 @@ public class LakituLevel extends Level implements LevelInterface {
     	for (x = 0; x < width; x++) {
     		y = getGroundHeight(x);
     		if (y != yy) {
-    			flats.add(new int[]{xx, x-xx});
+    			if (yy != height)
+    				flats.add(new int[]{xx, x-xx-1, yy});
     			xx = x;
     			yy = y;
     		}
     	}
-    	return flats;
-    }
-    
-    public ArrayList<int[]> getFlatlandsFiltered() {
-		ArrayList<int[]> flats = getFlatlands();
-		// remove first and last flatlands
-		// (usually start/end platforms)
-		flats.remove(flats.size()-1);
-		flats.remove(0);
-		// remove gaps
-		for (int[] coord : flats)
-			if (height == coord[1])
-				flats.remove(coord);
 		return flats;
     }
     
@@ -83,6 +71,18 @@ public class LakituLevel extends Level implements LevelInterface {
     		setGroundHeight(x+i, height);
     }
 
+    public void placeBlockPowerup(int x, int y) {
+    	setBlock(x, y, LakituLevel.BLOCK_POWERUP);
+    }
+    
+    public void placeBlockCoin(int x, int y) {
+    	setBlock(x, y, LakituLevel.BLOCK_COIN);
+    }
+    
+    public void placeBlockEmpty(int x, int y) {
+    	setBlock(x, y, LakituLevel.BLOCK_EMPTY);
+    }
+    
     public void fixWalls() {
 	    boolean[][] blockMap = new boolean[width + 1][height + 1];
 	

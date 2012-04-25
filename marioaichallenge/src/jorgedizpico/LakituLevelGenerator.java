@@ -6,6 +6,8 @@ import java.util.Random;
 import dk.itu.mario.MarioInterface.GamePlay;
 import dk.itu.mario.MarioInterface.LevelGenerator;
 import dk.itu.mario.MarioInterface.LevelInterface;
+import dk.itu.mario.engine.sprites.Enemy;
+import dk.itu.mario.engine.sprites.SpriteTemplate;
 
 public class LakituLevelGenerator implements LevelGenerator {
 	
@@ -38,12 +40,14 @@ public class LakituLevelGenerator implements LevelGenerator {
 		// loop optimization
 		int stageend = lvl.getWidth() - lkp.I_END_PLATFORM;
 						
+		double roll;
+		
 		int x,y;
 		int pos[] = createStart();
 		
 		for (x = pos[0], y = pos[1]; x < stageend;	x = pos[0], y = pos[1]) {
 			
-			double roll = rand.nextDouble();
+			roll = rand.nextDouble();
 			
 			if (roll < lkp.CHANCE_GAP) {
 				roll = rand.nextDouble();
@@ -52,7 +56,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 					;
 				else if (roll < lkp.CHANCE_GAP_BOX)
 					;
-				else if (roll < lkp.CHANCE_GAP_VANILLA)
+				else //if (roll < lkp.CHANCE_GAP_VANILLA)
 					pos = createGapVanilla(x, y);
 				
 			} else if (roll < lkp.CHANCE_VERT) {
@@ -62,7 +66,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 					;
 				else if (roll < lkp.CHANCE_VERT_STAIRS)
 					;
-				else if (roll < lkp.CHANCE_VERT_HILL)
+				else //if (roll < lkp.CHANCE_VERT_HILL)
 					pos = createVertHill(x, y);					
 				
 			} else
@@ -75,14 +79,27 @@ public class LakituLevelGenerator implements LevelGenerator {
 	}
 	
 	protected void passBoxes() {
-		ArrayList<int[]> flats = lvl.getFlatlandsFiltered();
+		double roll;
+		
+		ArrayList<int[]> flats = lvl.getFlatlands();
+		flats = splitFilterFlats(flats);
+		
+		for (int[] flat : flats) {
+			roll = rand.nextDouble();
+			if (roll < lkp.CHANCE_BLOCK_ROW)
+				createBlocks(flat[0], flat[1], flat[2]);
+				// double row
+
+		}
+		
+		for (int[] flat: flats) {
+			roll = rand.nextDouble();
+			if (roll < lkp.CHANCE_ENEMY_ROW)
+				createEnemies(flat[0], flat[1], flat[2]);
+				
+		}
+		
 		/*
-		 
-		 for each flat
-		 	if roll for boxes
-		 	   place
-		 	   if roll higher
-		 	   	place double row
 		 	   	
 		  keep a log of empty flats and another of boxes
 		  for each of them
@@ -99,6 +116,24 @@ public class LakituLevelGenerator implements LevelGenerator {
 		
 	}
 	
+	protected ArrayList<int[]> splitFilterFlats(ArrayList<int[]> flats) {
+		// for loop skips start and end platform
+		ArrayList<int[]> newflats = new ArrayList<int[]>();
+		for (int i = 1; i < flats.size(); i++) {
+			int[] flat = flats.get(i);
+			if (flat[1] < lkp.BLOCK_ROW_MINLENGTH)
+				continue;
+			else if (flat[2] - lkp.I_BLOCK_HOVER_HEIGHT < 0)
+				continue;
+			//else if (flat[1] > lkp.BLOCK_ROW_MAXLENGTH)
+				// split it
+			else
+				newflats.add(flat);
+		}
+			
+
+		return newflats;
+	}
 	
 	protected int[] createStart() {
 		
@@ -144,6 +179,48 @@ public class LakituLevelGenerator implements LevelGenerator {
 		return new int[]{x+width, y};
 	}
 	
+	protected void createBlocks(int x, int length, int y) {
+		int yy = y - lkp.I_BLOCK_HOVER_HEIGHT;
+		double roll;
+		for (int i = lkp.BLOCK_ROW_START; i <= length-lkp.BLOCK_ROW_END; i++) {
+			roll = rand.nextDouble();
+			if (roll < lkp.CHANCE_BLOCK_POWERUP)
+				lvl.placeBlockPowerup(x+i, yy);
+			else if (roll < lkp.CHANCE_BLOCK_COIN)
+				lvl.placeBlockCoin(x+i, yy);
+			else //if (roll < lkp.CHANCE_BLOCK_EMPTY)
+				lvl.placeBlockEmpty(x+i, yy);
+		}
+	}
+
+	public void createEnemies(int x, int length, int y) {
+		double roll;
+		int type;
+		boolean winged;
+		
+		for (int i = 0; i < length; i++) {
+			roll = rand.nextDouble();
+
+			if (roll < lkp.CHANCE_ENEMY_SINGLE) {
+				
+				roll = rand.nextDouble();
+				if (roll < lkp.CHANCE_ENEMY_REDKOOPA)
+					type = Enemy.ENEMY_RED_KOOPA;
+				else if (roll < lkp.CHANCE_ENEMY_GREENKOOPA)
+					type = Enemy.ENEMY_GREEN_KOOPA;
+				else if (roll < lkp.CHANCE_ENEMY_SPIKY)
+					type = Enemy.ENEMY_SPIKY;
+				else //if (roll < lkp.CHANCE_ENEMY_GOOMBA)
+					type = Enemy.ENEMY_GOOMBA;
+				
+				winged = rand.nextDouble() < lkp.CHANCE_ENEMY_WINGED;
+				
+				lvl.setSpriteTemplate(x+i, y-1, new SpriteTemplate(type, winged));
+				System.out.println("enemy");
+			}
+		}
+	}
+	
 	protected int constrainHeight(int y) {
 		return Math.max(lkp.I_FLAT_MIN, Math.min(y, lvl.getHeight()-lkp.I_FLAT_MIN));
 	}
@@ -169,5 +246,5 @@ public class LakituLevelGenerator implements LevelGenerator {
 		if (candidate > max) candidate = max;
 		return candidate;
 	}
-	
+
 }
