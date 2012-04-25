@@ -1,7 +1,8 @@
-Lakitu is the custom code made to generate levels. That branch has been put on hold indefinitely, and its future is unclear, so ignore it for the moment.
-
-MarioAIChallenge is the platform available at:
+A module for generating random levels based on player data is being developed
+and integrated on the MarioAIChallenge platform, available at:
 
 http://www.marioai.org/LevelGeneration/level-generation-track-source
 
-A module for generating random levels based on player data is being developed under the package jorgedizpico and integrated on that platform.
+The design currently consists of a finite state automaton
+creating the different parts of the level in each state.
+The transitions are defined by the user data recorded.
