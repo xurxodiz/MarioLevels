@@ -1,8 +1,14 @@
-This system will generate random levels of Super Mario Bros with the intention of maximizing enjoyment.
+This branch has been severely deprecated and abandoned.
 
-This project has two branches: cig, simplified and oriented to generate a working competition entry for CIG 2012 in Granada; and pfc, with extra functionalities and with the end goal of serving as Degree Thesis.
+It originally was going to allow playing several stages on a row,
+recording all data under a name prompted at the beginning,
+as well as the answer to a post-level survey;
+then use that data as input for a genetic algorithm.
 
-Both are based on the platform available at:
+It got scrapped to focus efforts on a simpler algorithm
+that required less data and could be submitted to the Mario AI Challenge at CIG 2012.
 
-http://www.marioai.org/LevelGeneration/level-generation-track-source
+We therefore encourage you to check the cig branch, where the real work is being done.
+
+Thanks.
 
