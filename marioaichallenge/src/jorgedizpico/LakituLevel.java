@@ -44,6 +44,15 @@ public class LakituLevel extends Level implements LevelInterface {
         return ground[capX(x)];
     }
     
+    public int getLastGroundHeight(int x) {
+    	int y;
+    	int xx = x-1;
+    	y = getGroundHeight(xx);
+    	while (y == height)
+    		y = getGroundHeight(--xx);
+    	return y;
+    }
+    
     public ArrayList<int[]> getFlatlands() {
     	ArrayList<int[]> flats = new ArrayList<int[]>();
     	int x, y;

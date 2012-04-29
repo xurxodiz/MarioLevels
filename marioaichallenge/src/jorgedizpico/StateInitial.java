@@ -1,8 +1,8 @@
 package jorgedizpico;
 
-public class StateStart implements LakituState {
+public class StateInitial implements LakituState {
 
-	public StateStart() {
+	public StateInitial() {
 		super();
 		// nothing needed here
 	}
@@ -10,13 +10,13 @@ public class StateStart implements LakituState {
 	@Override
 	public LakituState transition() {
 		// TODO Auto-generated method stub
-		return new StateFlat();
+		return new StateStart();
 	}
 
 	@Override
 	public int genesis(LakituBuilder lkb, int x) {
 		// start state creates nothing
-		return lkb.createStartPlug();
+		return x;
 	}
 
 }

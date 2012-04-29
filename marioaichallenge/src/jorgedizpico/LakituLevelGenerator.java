@@ -1,13 +1,10 @@
 package jorgedizpico;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import dk.itu.mario.MarioInterface.GamePlay;
 import dk.itu.mario.MarioInterface.LevelGenerator;
 import dk.itu.mario.MarioInterface.LevelInterface;
-import dk.itu.mario.engine.sprites.Enemy;
-import dk.itu.mario.engine.sprites.SpriteTemplate;
 
 public class LakituLevelGenerator implements LevelGenerator {
 	
@@ -19,12 +16,18 @@ public class LakituLevelGenerator implements LevelGenerator {
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
 
 		lvl = new LakituLevel();
-		lkp = new LakituParameters(playerMetrics);
+		// lkp = new LakituParameters(playerMetrics);
 		
 		lvl.setType(rand.nextInt(3));
 		
-		passGround();
-		passBoxes();
+		//passGround();
+		//passBoxes();
+		
+		LakituAutomaton aut = new LakituAutomaton();
+		LakituBuilder lkb = new LakituBuilder(lvl);
+		
+		aut.execute(lkb);
+		lkb.fixLevel();
 		
 		return lvl;
 	}
@@ -34,6 +37,8 @@ public class LakituLevelGenerator implements LevelGenerator {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	/*
 	
 	protected void passGround() {
 		
@@ -99,7 +104,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 				
 		}
 		
-		/*
+		
 		 	   	
 		  keep a log of empty flats and another of boxes
 		  for each of them
@@ -111,7 +116,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 		  			roll for type
 		  				place
 		 
-		 */
+		 
 		
 		
 	}
@@ -246,5 +251,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 		if (candidate > max) candidate = max;
 		return candidate;
 	}
+	
+	*/
 
 }

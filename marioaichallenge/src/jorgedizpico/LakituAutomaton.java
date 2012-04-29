@@ -2,23 +2,21 @@ package jorgedizpico;
 
 public class LakituAutomaton {
 	
-	protected LakituBuilder lkb;
 	protected LakituState state;
 
-	public LakituAutomaton (LakituBuilder lkb){
-		this.lkb = lkb;
+	public LakituAutomaton (){
 	}
 	
-	public void execute(int end) {
+	public void execute(LakituBuilder lkb) {
 		int x = 0;
+		int end = lkb.lvl.getWidth();
 		
-		state = new StateStart();
+		state = new StateInitial();
 		
 		while (x < end) {
 			state = state.transition();
 			x = state.genesis(lkb, x);
 		}
-		
 	}
 
 }

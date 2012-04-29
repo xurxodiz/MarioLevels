@@ -2,7 +2,7 @@ package jorgedizpico;
 
 import java.util.Random;
 
-public class StateFlat implements LakituState {
+public class StateGap implements LakituState {
 	
 	protected double CHANCE_TO_STATEFLAT = 0.5;
 	protected double CHANCE_TO_STATEGAP = 1.0;
@@ -20,8 +20,8 @@ public class StateFlat implements LakituState {
 
 	@Override
 	public int genesis(LakituBuilder lkb, int x) {
-		int width = lkb.I_FLAT_MIN;
-		lkb.createFlatLand(x, width);
+		int width = lkb.I_GAP_MIN;
+		lkb.createGap(x, width);
 		return x+width;
 	}
 
