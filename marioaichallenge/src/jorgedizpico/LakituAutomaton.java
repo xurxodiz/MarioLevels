@@ -8,14 +8,13 @@ public class LakituAutomaton {
 	}
 	
 	public void execute(LakituBuilder lkb) {
-		int x = 0;
-		int end = lkb.lvl.getWidth();
+		int err = 1;
 		
 		state = new StateInitial();
 		
-		while (x < end) {
+		while (err < lkb.getLevelWidth()) {
 			state = state.transition();
-			x = state.genesis(lkb, x);
+			err = state.genesis(lkb);
 		}
 	}
 

@@ -2,10 +2,9 @@ package jorgedizpico;
 
 import java.util.Random;
 
-public class StateFlat implements LakituState {
+public class StatePipe implements LakituState {
 	
-	protected double CHANCE_TO_STATEPIPE = 0.2;
-	protected double CHANCE_TO_ENEMIES = 0.25;
+	protected double CHANCE_TO_ENEMIES = 0.3;
 	protected double CHANCE_TO_STATEFLAT = 0.7;
 	protected double CHANCE_TO_STATEGAP = 1.0;
 
@@ -14,9 +13,7 @@ public class StateFlat implements LakituState {
 	@Override
 	public LakituState transition() {
 		double roll = rand.nextDouble();
-		if (roll < CHANCE_TO_STATEPIPE)
-			return new StatePipe();
-		else if (roll < CHANCE_TO_ENEMIES)
+		if (roll < CHANCE_TO_ENEMIES)
 			return new StateEnemies();
 		else if (roll < CHANCE_TO_STATEFLAT)
 			return new StateFlat();
@@ -26,7 +23,7 @@ public class StateFlat implements LakituState {
 
 	@Override
 	public int genesis(LakituBuilder lkb) {
-		return lkb.createFlatLand();
+		return lkb.createPipe();
 	}
 
 }

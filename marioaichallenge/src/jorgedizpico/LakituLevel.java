@@ -16,10 +16,11 @@ public class LakituLevel extends Level implements LevelInterface {
     	ground = new int[320];
     }
     
-    public void setType(int type) {
+    public int setType(int type) {
     	if (type < 0) type = 0;
     	if (type > 2) type = 2;
     	this.type = type;
+    	return this.type;
 }
     
     public int capX(int x) {
@@ -28,16 +29,18 @@ public class LakituLevel extends Level implements LevelInterface {
     	return x;
     }
     
-    public void setExit(int x) {
+    public int setExit(int x) {
     	this.xExit = x;
     	this.yExit = ground[x];
+    	return x;
     }
     
-    public void setGroundHeight(int x, int y) {
+    public int setGroundHeight(int x, int y) {
     	x = capX(x);
     	for (int i = y; i < height; i++)
     		setBlock (x, i, Level.GROUND);
     	ground[x] = y;
+    	return ground[x];
     }
     
     public int getGroundHeight(int x) {
@@ -70,27 +73,49 @@ public class LakituLevel extends Level implements LevelInterface {
 		return flats;
     }
     
-    public void addFlatLand(int x, int length, int y) {
-    	for (int i = 0; i < length; i++)
+    public int addFlatLand(int x, int length, int y) {
+    	int i;
+    	for (i = 0; i < length && x+i < width; i++)
     		setGroundHeight(x+i, y);
+    	return i;
     }
     
-    public void addGap(int x, int length) {
-    	for (int i = 0; i < length; i++)
+    public int addGap(int x, int length) {
+    	int i;
+    	for (i = 0; i < length && x+i < width; i++)
     		setGroundHeight(x+i, height);
+    	return i;
     }
 
-    public void placeBlockPowerup(int x, int y) {
+    public int placeBlockPowerup(int x, int y) {
+    	x = capX(x);
     	setBlock(x, y, LakituLevel.BLOCK_POWERUP);
+    	return x;
     }
     
-    public void placeBlockCoin(int x, int y) {
+    public int placeBlockCoin(int x, int y) {
+    	x = capX(x);
     	setBlock(x, y, LakituLevel.BLOCK_COIN);
+    	return x;
     }
     
-    public void placeBlockEmpty(int x, int y) {
+    public int placeBlockEmpty(int x, int y) {
+    	x = capX(x);
     	setBlock(x, y, LakituLevel.BLOCK_EMPTY);
+    	return x;
     }
+    
+	public int placePipe(int x, int y, int height) {
+		x = capX(x);
+		for (int i = 1; i < height; i++) {
+			setBlock(x, y - i, LakituLevel.TUBE_SIDE_LEFT);				
+			setBlock(x + 1, y - i, LakituLevel.TUBE_SIDE_RIGHT);							
+		}
+		
+		setBlock(x, y - height, LakituLevel.TUBE_TOP_LEFT);				
+		setBlock(x + 1, y - height, LakituLevel.TUBE_TOP_RIGHT);	
+		return x;
+	}
     
     public void fixWalls() {
 	    boolean[][] blockMap = new boolean[width + 1][height + 1];

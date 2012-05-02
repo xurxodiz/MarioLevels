@@ -14,7 +14,7 @@ public class StateStart implements LakituState {
 	}
 
 	@Override
-	public int genesis(LakituBuilder lkb, int x) {
+	public int genesis(LakituBuilder lkb) {
 		// start state creates nothing
 		return lkb.createStartPlug();
 	}
