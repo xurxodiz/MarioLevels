@@ -1,0 +1,252 @@
+StartTime = -17
+RightMove: StTime = 33 EdTime = 58
+RightMove: StTime = 92 EdTime = 59
+RunState: StTime = 110 EdTime = 119
+Jump:  StTime = 129 EdTime = 143
+Jump:  StTime = 156 EdTime = 171
+Jump:  StTime = 182 EdTime = 199
+RightMove: StTime = 141 EdTime = 137
+Jump:  StTime = 223 EdTime = 239
+Jump:  StTime = 241 EdTime = 257
+CollectCoin:  time = 263
+RightMove: StTime = 228 EdTime = 178
+Jump:  StTime = 261 EdTime = 275
+CollectCoin:  time = 283
+CollectCoin:  time = 283
+CollectCoin:  time = 294
+Jump:  StTime = 283 EdTime = 298
+RightMove: StTime = 274 EdTime = 213
+LeftMove: StTime = 310 EdTime = 24
+Jump:  StTime = 335 EdTime = 351
+LeftMove: StTime = 346 EdTime = 46
+Jump:  StTime = 386 EdTime = 400
+RightMove: StTime = 369 EdTime = 250
+StompKill:  EnemyType = 2 time = 428
+Jump:  StTime = 411 EdTime = 439
+RightMove: StTime = 409 EdTime = 304
+CollectCoin:  time = 492
+RightMove: StTime = 466 EdTime = 343
+CollectCoin:  time = 505
+CollectCoin:  time = 506
+Jump:  StTime = 492 EdTime = 508
+RightMove: StTime = 506 EdTime = 356
+Jump:  StTime = 513 EdTime = 521
+CollectCoin:  time = 532
+CollectCoin:  time = 533
+Jump:  StTime = 532 EdTime = 540
+BlockCoinDestroy:  time = 548
+Jump:  StTime = 546 EdTime = 554
+RightMove: StTime = 525 EdTime = 394
+Jump:  StTime = 564 EdTime = 575
+LeftMove: StTime = 569 EdTime = 59
+Jump:  StTime = 578 EdTime = 586
+Jump:  StTime = 590 EdTime = 598
+Jump:  StTime = 604 EdTime = 618
+Jump:  StTime = 619 EdTime = 635
+Jump:  StTime = 647 EdTime = 657
+RightMove: StTime = 599 EdTime = 478
+CollectCoin:  time = 712
+CollectCoin:  time = 728
+CollectCoin:  time = 728
+RightMove: StTime = 684 EdTime = 530
+RightMove: StTime = 739 EdTime = 531
+CollectCoin:  time = 741
+Jump:  StTime = 728 EdTime = 743
+CollectCoin:  time = 748
+BlockCoinDestroy:  time = 750
+Jump:  StTime = 748 EdTime = 756
+CollectCoin:  time = 765
+BlockCoinDestroy:  time = 767
+Jump:  StTime = 765 EdTime = 773
+RightMove: StTime = 741 EdTime = 568
+Jump:  StTime = 790 EdTime = 798
+LeftMove: StTime = 780 EdTime = 81
+RightMove: StTime = 803 EdTime = 600
+Jump:  StTime = 834 EdTime = 849
+CollectCoin:  time = 871
+CollectCoin:  time = 873
+Jump:  StTime = 871 EdTime = 887
+RightMove: StTime = 843 EdTime = 649
+Jump:  StTime = 892 EdTime = 907
+CollectCoin:  time = 917
+CollectCoin:  time = 917
+BlockCoinDestroy:  time = 919
+Jump:  StTime = 917 EdTime = 925
+RightMove: StTime = 900 EdTime = 679
+BlockCoinDestroy:  time = 944
+Jump:  StTime = 942 EdTime = 950
+LeftMove: StTime = 934 EdTime = 99
+CollectCoin:  time = 967
+CollectCoin:  time = 969
+BlockPowerDestroy:  time = 969
+Jump:  StTime = 967 EdTime = 975
+CollectCoin:  time = 987
+RightMove: StTime = 954 EdTime = 718
+Jump:  StTime = 987 EdTime = 995
+BlockCoinDestroy:  time = 1003
+Jump:  StTime = 1001 EdTime = 1009
+LeftMove: StTime = 994 EdTime = 117
+RightMove: StTime = 1017 EdTime = 724
+LittleState: StTime = -17 EdTime = 1044
+LeftMove: StTime = 1024 EdTime = 161
+Jump:  StTime = 1100 EdTime = 1106
+CollectCoin:  time = 1111
+Jump:  StTime = 1116 EdTime = 1122
+RightMove: StTime = 1069 EdTime = 785
+Jump:  StTime = 1130 EdTime = 1136
+Jump:  StTime = 1153 EdTime = 1159
+Jump:  StTime = 1165 EdTime = 1171
+LeftMove: StTime = 1140 EdTime = 192
+Jump:  StTime = 1175 EdTime = 1181
+Jump:  StTime = 1184 EdTime = 1190
+LeftMove: StTime = 1181 EdTime = 210
+Jump:  StTime = 1194 EdTime = 1200
+CollectCoin:  time = 1238
+CollectCoin:  time = 1242
+BlockCoinDestroy:  time = 1242
+Jump:  StTime = 1241 EdTime = 1247
+CollectCoin:  time = 1250
+RightMove: StTime = 1202 EdTime = 842
+Jump:  StTime = 1257 EdTime = 1263
+BlockCoinDestroy:  time = 1283
+Jump:  StTime = 1282 EdTime = 1288
+LeftMove: StTime = 1277 EdTime = 223
+BlockCoinDestroy:  time = 1314
+Jump:  StTime = 1313 EdTime = 1319
+RightMove: StTime = 1293 EdTime = 872
+Jump:  StTime = 1360 EdTime = 1370
+RightMove: StTime = 1329 EdTime = 919
+Jump:  StTime = 1376 EdTime = 1390
+RightMove: StTime = 1380 EdTime = 935
+Jump:  StTime = 1398 EdTime = 1410
+Jump:  StTime = 1419 EdTime = 1438
+CollectCoin:  time = 1439
+CollectCoin:  time = 1443
+Jump:  StTime = 1442 EdTime = 1457
+CollectCoin:  time = 1476
+CollectCoin:  time = 1485
+BlockCoinDestroy:  time = 1488
+Jump:  StTime = 1487 EdTime = 1493
+RightMove: StTime = 1401 EdTime = 1027
+CollectCoin:  time = 1502
+BlockCoinDestroy:  time = 1507
+Jump:  StTime = 1506 EdTime = 1512
+RightMove: StTime = 1497 EdTime = 1051
+Jump:  StTime = 1532 EdTime = 1546
+RunState: StTime = 1593 EdTime = 1599
+RightMove: StTime = 1523 EdTime = 1156
+RightMove: StTime = 1629 EdTime = 1157
+RightMove: StTime = 1631 EdTime = 1158
+RightMove: StTime = 1633 EdTime = 1159
+RightMove: StTime = 1635 EdTime = 1160
+RightMove: StTime = 1637 EdTime = 1161
+RightMove: StTime = 1639 EdTime = 1162
+RightMove: StTime = 1641 EdTime = 1163
+Jump:  StTime = 1640 EdTime = 1655
+RightMove: StTime = 1650 EdTime = 1175
+RightMove: StTime = 1663 EdTime = 1176
+Jump:  StTime = 1664 EdTime = 1679
+RightMove: StTime = 1669 EdTime = 1208
+RightMove: StTime = 1702 EdTime = 1209
+Jump:  StTime = 1699 EdTime = 1711
+Jump:  StTime = 1759 EdTime = 1774
+BlockCoinDestroy:  time = 1781
+Jump:  StTime = 1780 EdTime = 1786
+RightMove: StTime = 1704 EdTime = 1298
+Jump:  StTime = 1799 EdTime = 1805
+RightMove: StTime = 1794 EdTime = 1314
+BlockCoinDestroy:  time = 1813
+Jump:  StTime = 1812 EdTime = 1818
+Jump:  StTime = 1839 EdTime = 1845
+LeftMove: StTime = 1825 EdTime = 249
+Jump:  StTime = 1861 EdTime = 1867
+Jump:  StTime = 1879 EdTime = 1885
+RightMove: StTime = 1852 EdTime = 1365
+Jump:  StTime = 1901 EdTime = 1916
+CollectCoin:  time = 1955
+CollectCoin:  time = 1958
+CollectCoin:  time = 1961
+CollectCoin:  time = 1964
+CollectCoin:  time = 1978
+CollectCoin:  time = 1979
+StompKill:  EnemyType = 2 time = 1979
+RightMove: StTime = 1904 EdTime = 1445
+Jump:  StTime = 1965 EdTime = 1994
+StompKill:  EnemyType = 2 time = 2011
+Jump:  StTime = 1997 EdTime = 2026
+CollectCoin:  time = 2044
+Jump:  StTime = 2042 EdTime = 2048
+CollectCoin:  time = 2053
+BlockCoinDestroy:  time = 2056
+Jump:  StTime = 2055 EdTime = 2061
+RightMove: StTime = 2023 EdTime = 1483
+BlockPowerDestroy:  time = 2069
+Jump:  StTime = 2068 EdTime = 2074
+CollectCoin:  time = 2087
+BlockCoinDestroy:  time = 2094
+CollectCoin:  time = 2098
+Jump:  StTime = 2093 EdTime = 2099
+RightMove: StTime = 2082 EdTime = 1503
+LeftMove: StTime = 2112 EdTime = 271
+RightMove: StTime = 2135 EdTime = 1510
+Jump:  StTime = 2128 EdTime = 2144
+RightMove: StTime = 2143 EdTime = 1519
+LeftMove: StTime = 2153 EdTime = 283
+Jump:  StTime = 2160 EdTime = 2170
+LargeState: StTime = 1044 EdTime = 2172
+RightMove: StTime = 2166 EdTime = 1561
+CollectCoin:  time = 2245
+Jump:  StTime = 2234 EdTime = 2246
+CollectCoin:  time = 2250
+CollectCoin:  time = 2254
+RightMove: StTime = 2209 EdTime = 1614
+BlockCoinDestroy:  time = 2278
+Jump:  StTime = 2277 EdTime = 2283
+LeftMove: StTime = 2263 EdTime = 308
+Jump:  StTime = 2300 EdTime = 2306
+CollectCoin:  time = 2316
+Jump:  StTime = 2316 EdTime = 2322
+RightMove: StTime = 2289 EdTime = 1651
+CollectCoin:  time = 2333
+CollectCoin:  time = 2337
+CollectCoin:  time = 2362
+BlockCoinDestroy:  time = 2362
+Jump:  StTime = 2361 EdTime = 2367
+CollectCoin:  time = 2373
+BlockCoinDestroy:  time = 2374
+RightMove: StTime = 2329 EdTime = 1700
+Jump:  StTime = 2373 EdTime = 2379
+Jump:  StTime = 2399 EdTime = 2405
+LeftMove: StTime = 2384 EdTime = 333
+Jump:  StTime = 2418 EdTime = 2424
+Jump:  StTime = 2434 EdTime = 2440
+CollectCoin:  time = 2462
+Jump:  StTime = 2461 EdTime = 2467
+CollectCoin:  time = 2471
+BlockPowerDestroy:  time = 2475
+RightMove: StTime = 2410 EdTime = 1768
+Jump:  StTime = 2474 EdTime = 2480
+BlockPowerDestroy:  time = 2500
+CollectCoin:  time = 2501
+Jump:  StTime = 2499 EdTime = 2505
+RightMove: StTime = 2494 EdTime = 1784
+BlockPowerDestroy:  time = 2516
+Jump:  StTime = 2515 EdTime = 2521
+CollectCoin:  time = 2535
+Jump:  StTime = 2537 EdTime = 2543
+RightMove: StTime = 2530 EdTime = 1800
+BlockCoinDestroy:  time = 2552
+Jump:  StTime = 2551 EdTime = 2557
+CollectCoin:  time = 2562
+Jump:  StTime = 2562 EdTime = 2568
+RightMove: StTime = 2556 EdTime = 1813
+CollectCoin:  time = 2579
+BlockPowerDestroy:  time = 2582
+Jump:  StTime = 2581 EdTime = 2587
+RightMove: StTime = 2574 EdTime = 1833
+LeftMove: StTime = 2601 EdTime = 338
+Jump:  StTime = 2603 EdTime = 2613
+LeftMove: StTime = 2611 EdTime = 366
+Totaltime = 2710
+RightMove: StTime = 2640 EdTime = 1886
+FireState: StTime = 2172 EdTime = 2693

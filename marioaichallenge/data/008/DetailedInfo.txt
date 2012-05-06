@@ -1,0 +1,200 @@
+StartTime = -17
+RightMove: StTime = -16 EdTime = 1619
+Jump:  StTime = 126 EdTime = 135
+CollectCoin:  time = 197
+CollectCoin:  time = 197
+Jump:  StTime = 197 EdTime = 208
+RightMove: StTime = 17 EdTime = 1811
+CollectCoin:  time = 215
+RightMove: StTime = 211 EdTime = 1820
+Jump:  StTime = 214 EdTime = 223
+Jump:  StTime = 224 EdTime = 233
+Jump:  StTime = 236 EdTime = 245
+CollectCoin:  time = 248
+Jump:  StTime = 246 EdTime = 255
+CollectCoin:  time = 260
+BlockPowerDestroy:  time = 263
+CollectCoin:  time = 265
+Jump:  StTime = 260 EdTime = 269
+CollectCoin:  time = 274
+BlockPowerDestroy:  time = 277
+CollectCoin:  time = 279
+Jump:  StTime = 274 EdTime = 283
+Jump:  StTime = 289 EdTime = 298
+CollectCoin:  time = 329
+CollectCoin:  time = 329
+Jump:  StTime = 329 EdTime = 338
+LittleState: StTime = -17 EdTime = 338
+RightMove: StTime = 239 EdTime = 1938
+CollectCoin:  time = 368
+CollectCoin:  time = 378
+RightMove: StTime = 360 EdTime = 1980
+RightMove: StTime = 409 EdTime = 1981
+Jump:  StTime = 400 EdTime = 412
+RightMove: StTime = 414 EdTime = 1982
+RightMove: StTime = 418 EdTime = 1983
+Jump:  StTime = 420 EdTime = 430
+RightMove: StTime = 428 EdTime = 1997
+RightMove: StTime = 446 EdTime = 1998
+Jump:  StTime = 447 EdTime = 458
+Jump:  StTime = 493 EdTime = 507
+RightMove: StTime = 453 EdTime = 2121
+Jump:  StTime = 575 EdTime = 586
+RightMove: StTime = 580 EdTime = 2232
+RightMove: StTime = 692 EdTime = 2234
+Jump:  StTime = 690 EdTime = 701
+RightMove: StTime = 704 EdTime = 2251
+StompKill:  EnemyType = 2 time = 723
+Jump:  StTime = 712 EdTime = 734
+Jump:  StTime = 813 EdTime = 829
+RightMove: StTime = 732 EdTime = 2391
+Jump:  StTime = 870 EdTime = 882
+RightMove: StTime = 891 EdTime = 2392
+RightMove: StTime = 893 EdTime = 2393
+RightMove: StTime = 895 EdTime = 2394
+RightMove: StTime = 897 EdTime = 2395
+RightMove: StTime = 899 EdTime = 2396
+RightMove: StTime = 901 EdTime = 2397
+RightMove: StTime = 903 EdTime = 2398
+RightMove: StTime = 905 EdTime = 2399
+RightMove: StTime = 907 EdTime = 2400
+RightMove: StTime = 909 EdTime = 2401
+RightMove: StTime = 911 EdTime = 2402
+RightMove: StTime = 913 EdTime = 2403
+RightMove: StTime = 915 EdTime = 2404
+Jump:  StTime = 915 EdTime = 927
+CollectCoin:  time = 942
+CollectCoin:  time = 945
+CollectCoin:  time = 948
+CollectCoin:  time = 951
+CollectCoin:  time = 954
+CollectCoin:  time = 957
+CollectCoin:  time = 960
+Jump:  StTime = 973 EdTime = 986
+RightMove: StTime = 924 EdTime = 2473
+LeftMove: StTime = 1001 EdTime = 206
+RightMove: StTime = 1050 EdTime = 2482
+LeftMove: StTime = 1099 EdTime = 210
+RightMove: StTime = 1132 EdTime = 2484
+RightMove: StTime = 1135 EdTime = 2499
+LeftMove: StTime = 1151 EdTime = 219
+LeftMove: StTime = 1164 EdTime = 229
+Jump:  StTime = 1164 EdTime = 1179
+LeftMove: StTime = 1178 EdTime = 238
+RightMove: StTime = 1213 EdTime = 2526
+RightMove: StTime = 1241 EdTime = 2527
+RightMove: StTime = 1243 EdTime = 2528
+RightMove: StTime = 1245 EdTime = 2529
+RightMove: StTime = 1247 EdTime = 2530
+RightMove: StTime = 1249 EdTime = 2531
+RightMove: StTime = 1251 EdTime = 2532
+LeftMove: StTime = 1268 EdTime = 258
+Jump:  StTime = 1311 EdTime = 1327
+RightMove: StTime = 1323 EdTime = 2542
+LeftMove: StTime = 1334 EdTime = 268
+LeftMove: StTime = 1371 EdTime = 275
+Jump:  StTime = 1368 EdTime = 1381
+Jump:  StTime = 1418 EdTime = 1429
+LeftMove: StTime = 1388 EdTime = 323
+RightMove: StTime = 1439 EdTime = 2544
+RightMove: StTime = 1443 EdTime = 2573
+RunState: StTime = 1523 EdTime = 1526
+RightMove: StTime = 1513 EdTime = 2590
+RunState: StTime = 1536 EdTime = 1539
+RunState: StTime = 1543 EdTime = 1545
+RunState: StTime = 1548 EdTime = 1550
+RunState: StTime = 1552 EdTime = 1554
+RunState: StTime = 1556 EdTime = 1560
+BlockCoinDestroy:  time = 1616
+Jump:  StTime = 1615 EdTime = 1621
+Jump:  StTime = 1623 EdTime = 1629
+Jump:  StTime = 1631 EdTime = 1637
+RunState: StTime = 1668 EdTime = 1672
+RightMove: StTime = 1646 EdTime = 2642
+RightMove: StTime = 1699 EdTime = 2643
+RightMove: StTime = 1701 EdTime = 2644
+RightMove: StTime = 1703 EdTime = 2645
+RightMove: StTime = 1705 EdTime = 2646
+RightMove: StTime = 1707 EdTime = 2647
+RightMove: StTime = 1713 EdTime = 2648
+LeftMove: StTime = 1722 EdTime = 332
+RightMove: StTime = 1733 EdTime = 2653
+RightMove: StTime = 1739 EdTime = 2654
+RightMove: StTime = 1741 EdTime = 2655
+RightMove: StTime = 1743 EdTime = 2656
+RightMove: StTime = 1745 EdTime = 2657
+RightMove: StTime = 1747 EdTime = 2658
+RightMove: StTime = 1749 EdTime = 2659
+RightMove: StTime = 1751 EdTime = 2660
+RightMove: StTime = 1753 EdTime = 2661
+Jump:  StTime = 1752 EdTime = 1761
+RightMove: StTime = 1755 EdTime = 2674
+RightMove: StTime = 1772 EdTime = 2683
+Jump:  StTime = 1801 EdTime = 1810
+RightMove: StTime = 1784 EdTime = 2728
+CollectCoin:  time = 1829
+Jump:  StTime = 1816 EdTime = 1832
+Jump:  StTime = 1838 EdTime = 1850
+CollectCoin:  time = 1857
+CollectCoin:  time = 1867
+Jump:  StTime = 1861 EdTime = 1872
+RightMove: StTime = 1853 EdTime = 2750
+RightMove: StTime = 1879 EdTime = 2779
+RightMove: StTime = 1909 EdTime = 2780
+RightMove: StTime = 1911 EdTime = 2781
+Jump:  StTime = 1913 EdTime = 1925
+RightMove: StTime = 1924 EdTime = 2782
+RightMove: StTime = 1926 EdTime = 2783
+RightMove: StTime = 1928 EdTime = 2784
+RightMove: StTime = 1930 EdTime = 2785
+RightMove: StTime = 1932 EdTime = 2786
+RightMove: StTime = 1934 EdTime = 2787
+RightMove: StTime = 1936 EdTime = 2788
+Jump:  StTime = 1941 EdTime = 1953
+Jump:  StTime = 1979 EdTime = 1991
+RightMove: StTime = 1951 EdTime = 2828
+RightMove: StTime = 1992 EdTime = 2829
+RightMove: StTime = 1994 EdTime = 2830
+RightMove: StTime = 1996 EdTime = 2831
+Jump:  StTime = 1995 EdTime = 2004
+Jump:  StTime = 2040 EdTime = 2055
+LargeState: StTime = 338 EdTime = 2169
+RightMove: StTime = 1998 EdTime = 3024
+Jump:  StTime = 2168 EdTime = 2197
+RightMove: StTime = 2194 EdTime = 3078
+RightMove: StTime = 2252 EdTime = 3079
+RightMove: StTime = 2254 EdTime = 3080
+RightMove: StTime = 2256 EdTime = 3081
+RightMove: StTime = 2258 EdTime = 3082
+RightMove: StTime = 2260 EdTime = 3083
+RightMove: StTime = 2262 EdTime = 3084
+RightMove: StTime = 2264 EdTime = 3085
+RightMove: StTime = 2266 EdTime = 3086
+RightMove: StTime = 2268 EdTime = 3087
+RightMove: StTime = 2270 EdTime = 3088
+RightMove: StTime = 2276 EdTime = 3089
+RightMove: StTime = 2278 EdTime = 3090
+RightMove: StTime = 2280 EdTime = 3091
+Jump:  StTime = 2277 EdTime = 2289
+RightMove: StTime = 2282 EdTime = 3129
+RightMove: StTime = 2321 EdTime = 3130
+RightMove: StTime = 2323 EdTime = 3131
+RightMove: StTime = 2328 EdTime = 3132
+RightMove: StTime = 2330 EdTime = 3133
+RightMove: StTime = 2332 EdTime = 3134
+RightMove: StTime = 2336 EdTime = 3135
+RightMove: StTime = 2338 EdTime = 3136
+RightMove: StTime = 2340 EdTime = 3137
+Jump:  StTime = 2339 EdTime = 2355
+RightMove: StTime = 2380 EdTime = 3138
+Jump:  StTime = 2378 EdTime = 2387
+Jump:  StTime = 2389 EdTime = 2403
+RightMove: StTime = 2382 EdTime = 3163
+RightMove: StTime = 2408 EdTime = 3164
+RightMove: StTime = 2410 EdTime = 3165
+RightMove: StTime = 2412 EdTime = 3166
+Jump:  StTime = 2410 EdTime = 2421
+Jump:  StTime = 2502 EdTime = 2512
+Totaltime = 2529
+RightMove: StTime = 2414 EdTime = 3264
+LittleState: StTime = 2169 EdTime = 2512
