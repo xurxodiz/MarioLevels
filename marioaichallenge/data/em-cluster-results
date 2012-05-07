@@ -1,0 +1,202 @@
+=== Run information ===
+
+Scheme:weka.clusterers.EM -I 100 -N -1 -M 1.0E-6 -S 100
+Relation:     playerdata
+Instances:    103
+Attributes:   45
+              GoombasKilled
+              aimlessJumps
+              coinBlocksDestroyed
+              coinsCollected
+              completionTime
+              duckNumber
+              emptyBlocksDestroyed
+              enemyKillByFire
+              jumpsNumber
+              percentageBlocksDestroyed
+              percentageCoinBlocksDestroyed
+              percentageEmptyBlockesDestroyed
+              percentagePowerBlockDestroyed
+              powerBlocksDestroyed
+              timeRunningLeft
+              timeRunningRight
+              timeSpentDucking
+              timeSpentRunning
+              timesOfDeathByGoomba
+              timesPressedRun
+              timesSwichingPower
+              totalCoinBlocks
+              totalCoins
+              totalEmptyBlocks
+              totalEnemies
+              totalTime
+              totalTimeFireMode
+              totalTimeLargeMode
+              totalTimeLittleMode
+              totalpowerBlocks
+Ignored:
+              ArmoredTurtlesKilled
+              CannonBallKilled
+              ChompFlowersKilled
+              GreenTurtlesKilled
+              JumpFlowersKilled
+              RedTurtlesKilled
+              enemyKillByKickingShell
+              kickedShells
+              timesOfDeathByArmoredTurtle
+              timesOfDeathByCannonBall
+              timesOfDeathByChompFlower
+              timesOfDeathByFallingIntoGap
+              timesOfDeathByGreenTurtle
+              timesOfDeathByJumpFlower
+              timesOfDeathByRedTurtle
+Test mode:evaluate on training data
+
+=== Model and evaluation on training set ===
+
+
+EM
+==
+
+Number of clusters selected by cross validation: 3
+
+
+                                   Cluster
+Attribute                                0        1        2
+                                    (0.51)    (0.2)   (0.29)
+=============================================================
+GoombasKilled
+  mean                               5.8148   7.3096   2.1323
+  std. dev.                          3.0982   3.6326   1.6417
+
+aimlessJumps
+  mean                              50.3909  99.4188  40.8262
+  std. dev.                         11.0584  19.3341  13.1409
+
+coinBlocksDestroyed
+  mean                              12.2597  17.0959   4.6816
+  std. dev.                          4.5493   5.8336   3.1617
+
+coinsCollected
+  mean                              43.0945  69.3862  31.2743
+  std. dev.                         14.2795  19.9604  15.5598
+
+completionTime
+  mean                             155.4941 127.8354  75.8183
+  std. dev.                         28.0359  50.8418  45.9275
+
+duckNumber
+  mean                               2.5549   3.3456        0
+  std. dev.                          2.8756   4.1756   3.0708
+
+emptyBlocksDestroyed
+  mean                              11.9136  19.0887   0.8318
+  std. dev.                          7.4092  12.7474   1.3465
+
+enemyKillByFire
+  mean                               2.5169   2.5584        0
+  std. dev.                          2.5228    3.457   2.6445
+
+jumpsNumber
+  mean                              82.0968 147.7823  49.5939
+  std. dev.                         14.8964  33.6194  15.7326
+
+percentageBlocksDestroyed
+  mean                               2.3605   4.3768   1.2316
+  std. dev.                          0.9922    1.591   1.0188
+
+percentageCoinBlocksDestroyed
+  mean                               1.0701   1.9505   0.6361
+  std. dev.                          0.3761   0.6637   0.7044
+
+percentageEmptyBlockesDestroyed
+  mean                               0.1907   0.3443        0
+  std. dev.                          0.3929   0.4751    0.373
+
+percentagePowerBlockDestroyed
+  mean                               1.0997   2.0821   0.5955
+  std. dev.                          0.7842   1.3706    0.711
+
+powerBlocksDestroyed
+  mean                               4.1775   7.3785    1.122
+  std. dev.                          1.9078   3.8882   1.1302
+
+timeRunningLeft
+  mean                              28.5554  58.3013  10.7904
+  std. dev.                          9.7394  20.7539   8.3888
+
+timeRunningRight
+  mean                               98.611 185.2273   63.973
+  std. dev.                         17.9689  35.4242  26.8311
+
+timeSpentDucking
+  mean                               1.2964   2.0175        0
+  std. dev.                          1.3232   2.3079   1.5832
+
+timeSpentRunning
+  mean                              19.0761  12.9569  29.9457
+  std. dev.                         26.7737  11.4779  28.8209
+
+timesOfDeathByGoomba
+  mean                               0.0891   0.7047   0.7939
+  std. dev.                          0.2849   0.8366   1.1638
+
+timesPressedRun
+  mean                              25.2013  32.4501   5.6465
+  std. dev.                         20.6556  38.2323   7.3842
+
+timesSwichingPower
+  mean                               3.7421   7.6049   2.7836
+  std. dev.                          1.0792   2.9834   1.4832
+
+totalCoinBlocks
+  mean                               8.9938   7.8849   6.1881
+  std. dev.                          3.0181   3.3929   4.0343
+
+totalCoins
+  mean                              43.0703  41.0676  38.1901
+  std. dev.                         12.4123    8.719  15.5792
+
+totalEmptyBlocks
+  mean                              20.0719  20.6589  17.3479
+  std. dev.                          6.8667   6.8953   8.5504
+
+totalEnemies
+  mean                               7.5308   6.9323   6.7864
+  std. dev.                          2.6746   3.4435   2.1638
+
+totalTime
+  mean                             161.3086 326.6827 102.8455
+  std. dev.                         30.4561  74.1908  51.3949
+
+totalTimeFireMode
+  mean                              61.3906  91.4152   2.3177
+  std. dev.                         39.5592  71.5201   6.2005
+
+totalTimeLargeMode
+  mean                              39.5556 109.9741  16.4313
+  std. dev.                         22.1405  67.2801   21.523
+
+totalTimeLittleMode
+  mean                              61.4431  126.785  84.4273
+  std. dev.                         40.1148  54.3084  45.3364
+
+totalpowerBlocks
+  mean                               3.1644   3.1816   1.3025
+  std. dev.                          1.8168   1.9303   1.1921
+
+
+
+Time taken to build model (full training data) : 2.45 seconds
+
+=== Model and evaluation on training set ===
+
+Clustered Instances
+
+0       50 ( 49%)
+1       21 ( 20%)
+2       32 ( 31%)
+
+
+Log likelihood: -92.79464
+

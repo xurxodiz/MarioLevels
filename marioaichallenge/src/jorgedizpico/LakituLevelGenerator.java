@@ -12,7 +12,6 @@ public class LakituLevelGenerator implements LevelGenerator {
 	
   	protected static Random rand = new Random();
   	protected LakituLevel lvl;
-  	protected LakituParameters lkp;
 	
 	@Override
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
