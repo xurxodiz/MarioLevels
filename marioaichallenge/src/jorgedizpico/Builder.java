@@ -3,7 +3,7 @@ package jorgedizpico;
 import dk.itu.mario.engine.sprites.Enemy;
 import dk.itu.mario.engine.sprites.SpriteTemplate;
 
-public class LakituBuilder {
+public class Builder {
 	
 	public LakituLevel lvl;
 	
@@ -13,7 +13,8 @@ public class LakituBuilder {
 	
 	protected int I_HEIGHT_MARGIN = 2;
 	
-	protected int I_FLAT_MIN = 2;
+	protected int I_FLAT_MIN = 4;
+	protected int I_HEIGHT_MIN = 2;
 	protected int I_GAP_MIN = 2;
 	
 	protected int I_JUMP_OFFSET = -5;
@@ -24,7 +25,7 @@ public class LakituBuilder {
 	
 	protected int x = 0;
 	
-	public LakituBuilder(LakituLevel lvl) {
+	public Builder(LakituLevel lvl) {
 		this.lvl = lvl;
 		this.x = 0;
 	}
@@ -33,11 +34,6 @@ public class LakituBuilder {
 		return lvl.getWidth();
 	}
 	
-	/*public int createFlatLand(int y) {
-		x += lvl.addFlatLand(x, I_FLAT_MIN, y);
-		return x;
-	}*/
-	
 	public int createFlatLand() {
 		int y = lvl.getLastGroundHeight(x);
 		x += lvl.addFlatLand(x, I_FLAT_MIN, y);
@@ -45,7 +41,7 @@ public class LakituBuilder {
 	}
 	
 	public int createGap() {
-		x +=lvl.addGap(x, I_GAP_MIN);
+		x += lvl.addGap(x, I_GAP_MIN);
 		return x;
 	}
 	
@@ -68,13 +64,44 @@ public class LakituBuilder {
 		return x;
 	}
 	
+	public int createBlocks() {
+		int y = lvl.getLastGroundHeight(x);
+		int w = lvl.addFlatLand(x,  I_FLAT_MIN, y);
+		
+		for (int i = 0; i< w; i++)
+			switch (i%3) {
+				case 0:
+					lvl.placeBlockPowerUp(x+i, y-I_BLOCK_HOVER_HEIGHT);
+					break;
+				case 1:
+					lvl.placeBlockCoin(x+i, y-I_BLOCK_HOVER_HEIGHT);
+					break;
+				default:
+					lvl.placeBlockEmpty(x+i, y-I_BLOCK_HOVER_HEIGHT);
+					break;
+			}
+		x += w;
+		return x;
+	}
+	
+	public int createCoins() {
+		int y = lvl.getLastGroundHeight(x);
+		int w = lvl.addFlatLand(x,  I_FLAT_MIN, y);
+		
+		for (int i = 0; i < w; i++)
+			lvl.placeCoin(x+i, y-I_BLOCK_HOVER_HEIGHT);
+		
+		x += w;
+		return x;
+	}
+	
 	public int createStartPlug() {
-		x += lvl.addFlatLand(x, I_START_PLATFORM, lvl.getHeight()-I_FLAT_MIN);
+		x += lvl.addFlatLand(x, I_START_PLATFORM, lvl.getHeight()-I_HEIGHT_MIN);
 		return x;
 	}
 	
 	public int createEndPlug() {
-		int w = lvl.addFlatLand(lvl.getWidth()-I_END_PLATFORM, I_END_PLATFORM, lvl.getHeight()-I_FLAT_MIN);
+		int w = lvl.addFlatLand(lvl.getWidth()-I_END_PLATFORM, I_END_PLATFORM, lvl.getHeight()-I_HEIGHT_MIN);
 		lvl.setExit(lvl.getWidth()-I_EXIT_OFFSET);
 		return w;
 	}

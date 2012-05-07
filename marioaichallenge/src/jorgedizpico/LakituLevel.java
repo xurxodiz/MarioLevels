@@ -87,7 +87,7 @@ public class LakituLevel extends Level implements LevelInterface {
     	return i;
     }
 
-    public int placeBlockPowerup(int x, int y) {
+    public int placeBlockPowerUp(int x, int y) {
     	x = capX(x);
     	setBlock(x, y, LakituLevel.BLOCK_POWERUP);
     	return x;
@@ -102,6 +102,12 @@ public class LakituLevel extends Level implements LevelInterface {
     public int placeBlockEmpty(int x, int y) {
     	x = capX(x);
     	setBlock(x, y, LakituLevel.BLOCK_EMPTY);
+    	return x;
+    }
+    
+    public int placeCoin(int x, int y) {
+    	x = capX(x);
+    	setBlock(x, y, LakituLevel.COIN);
     	return x;
     }
     
