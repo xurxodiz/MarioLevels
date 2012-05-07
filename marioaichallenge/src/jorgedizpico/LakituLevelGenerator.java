@@ -2,6 +2,8 @@ package jorgedizpico;
 
 import java.util.Random;
 
+import jorgedizpico.auto.LakituAutomaton;
+
 import dk.itu.mario.MarioInterface.GamePlay;
 import dk.itu.mario.MarioInterface.LevelGenerator;
 import dk.itu.mario.MarioInterface.LevelInterface;

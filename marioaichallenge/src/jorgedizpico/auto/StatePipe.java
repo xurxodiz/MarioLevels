@@ -1,6 +1,8 @@
-package jorgedizpico;
+package jorgedizpico.auto;
 
 import java.util.Random;
+
+import jorgedizpico.LakituBuilder;
 
 public class StatePipe implements LakituState {
 	

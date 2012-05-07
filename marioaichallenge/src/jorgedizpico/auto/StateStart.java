@@ -1,4 +1,6 @@
-package jorgedizpico;
+package jorgedizpico.auto;
+
+import jorgedizpico.LakituBuilder;
 
 public class StateStart implements LakituState {
 

@@ -1,4 +1,4 @@
-package jorgedizpico;
+package jorgedizpico.extra;
 
 import java.util.ArrayList;
 import java.util.Random;
