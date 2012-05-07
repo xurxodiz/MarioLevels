@@ -1,4 +1,4 @@
-package jorgedizpico;
+package jorgedizpico.cluster;
 
 import weka.clusterers.ClusterEvaluation;
 import weka.clusterers.DensityBasedClusterer;
