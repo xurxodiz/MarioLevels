@@ -1,5 +1,5 @@
 === Run information ===
-
+ 
 Scheme:weka.clusterers.EM -I 100 -N 3 -M 1.0E-6 -S 100
 Relation:     playerdata
 Instances:    105
