@@ -16,6 +16,7 @@ import jorgedizpico.cluster.DataFileParser;
 import dk.itu.mario.MarioInterface.GamePlay;
 import dk.itu.mario.MarioInterface.LevelGenerator;
 import dk.itu.mario.MarioInterface.LevelInterface;
+import dk.itu.mario.level.Level;
 
 public class LakituLevelGenerator implements LevelGenerator {
 	
@@ -26,16 +27,24 @@ public class LakituLevelGenerator implements LevelGenerator {
 	@Override
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
 		try {
+						
 			lvl = new LakituLevel();
 	
-			Clusterer cl = readClusters(clusterFile);
+			Clusterer cl = readClusters(clusterFile);			
 			Instance inst = makeInstance(playerMetrics);
-			
-			// classify playerMetrics
-			// pass type to automaton on creation
 			int cluster = cl.clusterInstance(inst);
 			
-			lvl.setType(cluster);
+			switch (cluster) {
+				case 0: // intermediate
+					lvl.setType(Level.TYPE_OVERGROUND);
+					break;
+				case 1: // speeder
+					lvl.setType(Level.TYPE_CASTLE);
+					break;
+				case 2: // explorer
+					lvl.setType(Level.TYPE_UNDERGROUND);
+					break;
+			}
 			
 			Automaton aut = new Automaton(cluster);
 			Builder lkb = new Builder(lvl);
@@ -79,12 +88,12 @@ public class LakituLevelGenerator implements LevelGenerator {
 			Arrays.sort(flds, new DataFileParser().new FieldComparator());
 			
 			for (int i = 0; i < flds.length; i++){
-				@SuppressWarnings("rawtypes")
-				Class cl = flds[i].getType();
-				if (cl.isInstance(new Integer(2)))
+				
+				if (flds[i].getType() == Integer.TYPE)
 					d = new Double((Integer)flds[i].get(gp));
-				else if (cl.isInstance(new Double(2)))
+				else if (flds[i].getType() == Double.TYPE)
 					d = (Double) flds[i].get(gp);
+					
 				inst.setValue(i, d);
 			}
 			

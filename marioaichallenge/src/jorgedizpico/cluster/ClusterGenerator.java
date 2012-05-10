@@ -62,7 +62,7 @@ public class ClusterGenerator {
 		FilteredClusterer fc = new FilteredClusterer();
 		fc.setFilter(remove); //add filter to remove attributes
 		fc.setClusterer(cl); //bind FilteredClusterer to original clusterer
-		    fc.buildClusterer(data);
+		fc.buildClusterer(data);
 		    
 		ClusterEvaluation eval = new ClusterEvaluation();
 		eval.setClusterer(fc);

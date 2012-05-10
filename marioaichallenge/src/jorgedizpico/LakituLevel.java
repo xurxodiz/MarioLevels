@@ -31,14 +31,21 @@ public class LakituLevel extends Level implements LevelInterface {
     	return x;
     }
     
+    public int capY(int y) {
+    	if (y < 0) return 0;
+    	if (y >= width) return height-1;
+    	return y;
+    }
+    
     public int setExit(int x) {
-    	this.xExit = x;
+    	this.xExit = capX(x);
     	this.yExit = ground[x];
-    	return x;
+    	return xExit;
     }
     
     public int setGroundHeight(int x, int y) {
     	x = capX(x);
+    	y = capY(y);
     	for (int i = y; i < height; i++)
     		setBlock (x, i, Level.GROUND);
     	ground[x] = y;
@@ -85,7 +92,7 @@ public class LakituLevel extends Level implements LevelInterface {
     public int addGap(int x, int length) {
     	int i;
     	for (i = 0; i < length && x+i < width; i++)
-    		setGroundHeight(x+i, height);
+    		setGroundHeight(capX(x+i), height);
     	return i;
     }
 
@@ -97,12 +104,14 @@ public class LakituLevel extends Level implements LevelInterface {
     
     public int placeBlockCoin(int x, int y) {
     	x = capX(x);
+    	y = capY(y);
     	setBlock(x, y, LakituLevel.BLOCK_COIN);
     	return x;
     }
     
     public int placeBlockEmpty(int x, int y) {
     	x = capX(x);
+    	y = capY(y);
     	setBlock(x, y, LakituLevel.BLOCK_EMPTY);
     	return x;
     }
@@ -115,12 +124,14 @@ public class LakituLevel extends Level implements LevelInterface {
     
     public int placeRock(int x, int y) {
     	x = capX(x);
+    	y = capY(y);
     	setBlock(x, y, LakituLevel.ROCK);
     	return x;
     }
     
 	public int placePipe(int x, int y, int height) {
 		x = capX(x);
+		y = capY(y);
 		for (int i = 1; i < height; i++) {
 			setBlock(x, y - i, LakituLevel.TUBE_SIDE_LEFT);				
 			setBlock(x + 1, y - i, LakituLevel.TUBE_SIDE_RIGHT);							
@@ -132,16 +143,22 @@ public class LakituLevel extends Level implements LevelInterface {
 	}
 	
 	public int placePiranha(int x, int y) {
+		x = capX(x);
+		y = capY(y);
 		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_FLOWER, false));
 		return x;
 	}
 	
 	public int placeGoomba(int x, int y) {
+		x = capX(x);
+		y = capY(y);
 		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_GOOMBA, false));
 		return x;
 	}
 	
 	public int placeCannon(int x, int y, int height) {
+		x = capX(x);
+		y = capY(y);
 		
         setBlock(x, y-height-1, (byte) (14 + 0 * 16));
         
@@ -260,5 +277,11 @@ public class LakituLevel extends Level implements LevelInterface {
 	            }
 	        }
 	    }
+	}
+
+	public void cleanSprites(int x, int length) {
+		for (int xx = x; xx < width; xx++)
+			for (int yy = 0; yy < height; yy++)
+				setSpriteTemplate(xx, yy, null);
 	}
 }

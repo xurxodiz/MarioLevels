@@ -34,7 +34,6 @@ public class Automaton {
 		double roll = new Random().nextDouble();
 		double accum = 0.0;
 				
-		System.out.println(state);
 		for (Transition t : transitions.get(state)) {
 			accum += t.getOdds();
 			if (accum > roll)

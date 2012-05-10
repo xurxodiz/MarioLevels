@@ -153,6 +153,7 @@ public class Builder {
 	
 	public int createEndPlug() {
 		int w = lvl.addFlatLand(lvl.getWidth()-I_END_PLATFORM, I_END_PLATFORM, lvl.getHeight()-I_HEIGHT_MIN);
+		lvl.cleanSprites(lvl.getWidth()-I_EXIT_OFFSET, lvl.getWidth());
 		lvl.setExit(lvl.getWidth()-I_EXIT_OFFSET);
 		return w;
 	}
