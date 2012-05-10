@@ -7,6 +7,7 @@ import jorgedizpico.auto.Automaton;
 import dk.itu.mario.MarioInterface.GamePlay;
 import dk.itu.mario.MarioInterface.LevelGenerator;
 import dk.itu.mario.MarioInterface.LevelInterface;
+import dk.itu.mario.level.Level;
 
 public class LakituLevelGenerator implements LevelGenerator {
 	
@@ -17,13 +18,14 @@ public class LakituLevelGenerator implements LevelGenerator {
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
 
 		lvl = new LakituLevel();
-		
-		lvl.setType(rand.nextInt(3));
 
 		// classify playerMetrics
 		// pass type to automaton on creation
+		int cluster = Level.TYPE_OVERGROUND;
 		
-		Automaton aut = new Automaton(2);
+		lvl.setType(cluster);
+		
+		Automaton aut = new Automaton(cluster);
 		Builder lkb = new Builder(lvl);
 		
 		aut.execute(lkb);

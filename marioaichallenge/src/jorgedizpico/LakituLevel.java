@@ -4,6 +4,8 @@ package jorgedizpico;
 import java.util.ArrayList;
 
 import dk.itu.mario.MarioInterface.LevelInterface;
+import dk.itu.mario.engine.sprites.Enemy;
+import dk.itu.mario.engine.sprites.SpriteTemplate;
 import dk.itu.mario.level.Level;
 
 public class LakituLevel extends Level implements LevelInterface {
@@ -111,6 +113,12 @@ public class LakituLevel extends Level implements LevelInterface {
     	return x;
     }
     
+    public int placeRock(int x, int y) {
+    	x = capX(x);
+    	setBlock(x, y, LakituLevel.ROCK);
+    	return x;
+    }
+    
 	public int placePipe(int x, int y, int height) {
 		x = capX(x);
 		for (int i = 1; i < height; i++) {
@@ -120,7 +128,29 @@ public class LakituLevel extends Level implements LevelInterface {
 		
 		setBlock(x, y - height, LakituLevel.TUBE_TOP_LEFT);				
 		setBlock(x + 1, y - height, LakituLevel.TUBE_TOP_RIGHT);	
+		return x+1;
+	}
+	
+	public int placePiranha(int x, int y) {
+		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_FLOWER, false));
 		return x;
+	}
+	
+	public int placeGoomba(int x, int y) {
+		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_GOOMBA, false));
+		return x;
+	}
+	
+	public int placeCannon(int x, int y, int height) {
+		
+        setBlock(x, y-height-1, (byte) (14 + 0 * 16));
+        
+        for (int i = height; i > 0; i--)
+        	setBlock(x, y-i, (byte) (14 + 1 * 16));
+        
+        setBlock(x, y-1, (byte) (14 + 2 * 16));
+        
+        return x;
 	}
     
     public void fixWalls() {
