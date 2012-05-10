@@ -88,7 +88,7 @@ public class DataFileParser {
 		
 	}
 	
-	class FieldComparator implements Comparator<Field> {
+	public class FieldComparator implements Comparator<Field> {
 		   
 	    public int compare(Field f1, Field f2){
 
