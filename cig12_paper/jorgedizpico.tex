@@ -60,43 +60,53 @@ In this work, a novel approach to adaptive level generation is presented after t
 
 \section{Methodology}
 
-The presented approach tries to offer a new insight into adaptively generating random levels. It is comprised of two main parts: a data-driven clustering process (mostly offline), and a finite state machine execution (online). A third layer, a library of functions that actually build the level, serves as the link between the adaptive generator system and the game API.
+The presented approach tries to offer a new insight into adaptively generating random levels. It is comprised of two main parts: a data-driven clustering process (mostly offline), and a finite state machine execution (online). A third layer, a library of functions that actually build the level, serves as the link between the adaptive generator system and the game API. 
 
-[DIAGRAM OF LAYERS?]
+\begin{figure*}[htp]
+\centerline{\includegraphics[width=1.2\columnwidth]{layers.png}}
+\caption{Layers and modules of the proposed architecture}
+\label{layers}
+\end{figure*}
 
 \subsection{Clustering}
 
-The topmost layer undertakes a clustering process on data collected from user play. This approach bases the decisions on actual metrics and avoids overguessing. This execution can be run offline once and then stored for use afterwards, reducing the computational load on the level generation process. It only needs to be rerun when new samples are collected, to refine and recheck the clustering.
+The topmost layer undertakes a clustering process on data collected from user play. This approach bases the decisions on empricial metrics and avoids overguessing. This execution can be run offline once and then stored for use afterwards, reducing the computational load on the level generation process. It only needs to be rerun when new samples are collected, to refine and recheck the clustering.
 
 The suggested method for collecting samples is to present a vast array of different players with roughly similar levels (ideally, the same). Having them face comparable challenges makes possible to extrapolate on their gameplay style. So as to not overtrain on a particular player, it is recommended to keep just one significant sample per player. Those collections are then clustered as mentioned before.
 
 Now, when a new player comes to the game, he is made to play a test level in the same vein as the ones used in the aforementioned process. The records of his gameplay are fed to a clusterer that will assign him to one of groups found.
 
-It must be noted that the classification shown here is the most basic approach. Clustering could be further refined, perhaps selecting different parameters at different executions, obtaining the player's position along two different axis; or supporting it with additional inputs like the own player's preferred difficulty.
+It must be noted that the classification shown here is the most basic approach. Clustering could be further refined, perhaps selecting different parameters at different executions, obtaining the player's position along two different axis; or supporting it with additional inputs like the preferred difficulty.
 
 \subsection{Finite state machines}
 
-Once the player has been identified as belonging to a given group, this association is used to further assign him an automaton. This is done on a one to one basis: each group has a finite state machine modeled and tailored to its detected needs, defined upon inspection of their characteristic metrics.
+Once the player has been identified as belonging to a given group, this association is used to further assign him an automaton. This is done on a one-to-one basis: each group has a finite state machine modeled and tailored to its detected needs, defined upon inspection of their characteristic metrics.
 
-This machines have each their own states and transitions, but most importantly, those transitions are defined as probabilistic. Traversing an automaton is done by picking between the next available states from the current one, weighted by the probability associated to that movement. This feature adds the random component needed to keep the levels generated fresh and unique every time, even though the automata themselves are always the same.
+These machines have each their own states and transitions, but most importantly, those transitions are defined as probabilistic. Traversing an automaton is done by picking between the next available states from the current one, weighted by the probability associated to that movement. This feature adds the random component needed to keep the levels generated fresh and unique every time, even though the automata themselves are always the same.
 
-This approach allows for a great flexibility on the process given to each user, as different preferences and goals are accounted for. Reducing the space of all possible players into a small number of aggregated playstyles also tones down the number of needed automata as to be few enough to be designed by hand. Manually crafting the states and weights of the transitions improves the overall arching flow, per the control over sequentially adjacent ``chunks'' of the level. Albeit keeping it characteristic randomness, the levels are ensured to have an orderly sense instead of being just a messy sequence of pieces.
+As different preferences and goals are accounted for, the approach allows for great flexibility on the process followed for each user. Reducing the space of all possible players into a small number of aggregated playstyles also tones down the number of needed automata as to be few enough to be designed by hand. Manually crafting the states and weights of the transitions improves the overall arching flow, per the control over sequentially adjacent ``chunks'' of the level. Albeit keeping it characteristic randomness, the levels are ensured to have an orderly sense instead of being just a messy sequence of pieces.
 
-To further enforce modularity, the automata sit on top of a builder layer that acts as an API through its several level constructing functions. Each state delegates its world-building function to this layer, preventing code repetition on the states and promoting code sharing and reuse. 
+To further enforce modularity, the automata sit on top of a builder layer that acts as an API through its several level constructing functions. Each state delegates its world-building function to this layer, preventing code repetition on the states and promoting code sharing and reuse.
+
+A diagram of the flow is shown in figure~\ref{layers}.
 
 \section{Results}
 
-Work was started by collecting data from many different players. Each participant was asked to play one of the levels generated by the standard, random algorithm found in the Mario AI Challenge platform, and return the resulting records. Social networks and word of mouth were used to recruit volunteers, managing to get 115 different user profiles at the time of this article. Several clustering algorithms were then tried to detect the different playstyles. The best results were obtained with Expectation-Maximization, with KMeans and XMeans close behind. 
+Work was started by collecting data from many different players. Each participant was asked to play one of the levels generated by the standard, random algorithm found in the Mario AI Challenge platform, and return the resulting records. Social networks and word of mouth were used to recruit volunteers, managing to get 115 different user profiles at the time of this article. Several clustering algorithms were then tried to detect the different playstyles. The best log likelihood value was obtained with \textit{Expectation-Maximization}, with \textit{SimpleKMeans} and \textit{XMeans} close behind. 
 
-[Some screenshots of Weka comparing how the clusters classify the data, and proving EM is the best fit, would be cool]
+Three clear clusters were found. One of the clusters was identifiable by the high number of blocks broken and enemies killed, as well as long completion times. The users in this group were nicknamed ``explorers''. Another cluster was characteristic for its quick completion time, long use of running mode, and disregard for powerups. They were nicknamed ```speeders''. Finally, the remaining cluster, presenting a more neutral set of attributes, were nicknamed ``intermediates''. Figure~\ref{wekaplot} shows a plot of another of the most telling parameters, \textit{timeRunningLeft}, a measure of backtracking to interact with missed elements, against cluster membership (some jittering was added for easier visualization).
 
-Three clear clusters were found. One of the clusters was identifiable by the high number of blocks broken and enemies killed, as well as long completion times. The users in this group were nicknamed ``explorers''. Another cluster was characteristic for its quick completion time, long use of running mode, and disregard for powerups. They were nicknamed ```speeders''. Finally, the remaining cluster, presenting a more neutral set of attributes, were nicknamed ``intermediates''.
+\begin{figure}[htp]
+\centerline{\includegraphics[width=0.75\columnwidth]{timeRunningLeft_.png}}
+\caption{timeRunningLeft plotted against cluster membership}
+\label{wekaplot}
+\end{figure}
 
 Per this observation, and reflecting on the meaning of those user profiles, three automata were designed, attending to the inferred needs of those clusters. For example, speeders may frown upon blocks of ``stairs'' because they often force a stop of the running flow. Similarly, explorers tend to enjoy double rows of blocks, an aspect overlooked by the other types of players. 
 
-[A diagram of one of the automata, and some explanation of the logic behind the states and their links would be nice.]
+[insert here a simplified version of one of the automata]
 
-[A panorama with three different screenshots, one from each automata, spanning both columns, would look good here.]
+[insert here a screenshot]
 
 \section{Conclusions}
 
@@ -108,7 +118,7 @@ Finally, the modelling of the automata after a Markov chain allows for statistic
 
 \subsection*{Future work}
 
-The presented architecture can be improved upon in several ways, of which here is suggested the most promising one.
+The presented architecture can be enhanced in several ways, of which here is suggested the most promising one.
 
 Users are never perfectly encompassed by the cluster they are assigned to; rather, they are more accurately represented by percentages of membership. Rather than force fit a user into a predefined finite state machine, it could be possible to mix and match several of automata until a faithful representation of the user is reached. This could be done by encoding the automata as grammars and using evolutionary algorithms. We hope to explore this path in the near future.
 
