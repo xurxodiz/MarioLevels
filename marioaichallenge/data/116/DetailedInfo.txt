@@ -1,0 +1,15 @@
+StartTime = -17
+Jump:  StTime = 64 EdTime = 78
+CollectCoin:  time = 104
+CollectCoin:  time = 107
+Jump:  StTime = 95 EdTime = 109
+CollectCoin:  time = 121
+BlockPowerDestroy:  time = 123
+Jump:  StTime = 121 EdTime = 129
+RightMove: StTime = 31 EdTime = 484
+LittleState: StTime = -17 EdTime = 155
+LargeState: StTime = 155 EdTime = 213
+RightMove: StTime = 143 EdTime = 587
+LittleState: StTime = 213 EdTime = 365
+Totaltime = 382
+Die:  EnemyType = 2
