@@ -854,6 +854,11 @@
 					<key>Draws</key>
 					<string>NO</string>
 				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Pattern</key>
+					<integer>1</integer>
+				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
@@ -937,6 +942,11 @@
 				<dict>
 					<key>Draws</key>
 					<string>NO</string>
+				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Pattern</key>
+					<integer>1</integer>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -1077,6 +1087,11 @@
 				<dict>
 					<key>Draws</key>
 					<string>NO</string>
+				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Pattern</key>
+					<integer>1</integer>
 				</dict>
 			</dict>
 			<key>Text</key>
@@ -1254,6 +1269,11 @@
 					<key>Draws</key>
 					<string>NO</string>
 				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Pattern</key>
+					<integer>1</integer>
+				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
@@ -1368,6 +1388,11 @@
 					<key>Draws</key>
 					<string>NO</string>
 				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Pattern</key>
+					<integer>1</integer>
+				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
@@ -1428,7 +1453,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-05-15 03:17:54 +0000</string>
+	<string>2012-05-15 21:10:04 +0000</string>
 	<key>Modifier</key>
 	<string>Jorge Diz Pico</string>
 	<key>NotesVisible</key>
@@ -1518,7 +1543,7 @@
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{36, 136}, {522, 415.33331}}</string>
+		<string>{{35.333332, 136}, {522, 415.33331}}</string>
 		<key>Zoom</key>
 		<real>1.5</real>
 		<key>ZoomValues</key>
