@@ -14,6 +14,7 @@
 	
     <target name="init">
         <mkdir dir="bin"/>
+    	<mkdir dir="src/jorgedizpico/grammar"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
                 <exclude name="**/*.java"/>
@@ -23,9 +24,14 @@
 	
     <target name="clean">
         <delete dir="bin"/>
+    	<delete dir="src/jorgedizpico/grammar"/>
+    	<delete file="player.txt"/>
+        <delete file="DetailedInfo.txt"/>
+    	<delete file="data/data.arff"/>
+    	<delete file="data/cluster.dat"/>
     </target>
 	
-    <target depends="init" name="build">
+    <target depends="init,schematics" name="build">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
             <src path="src"/>
@@ -33,25 +39,34 @@
         </javac>
     </target>
 	
-    <target name="DataFileParser">
+    <target depends="build" name="data">
         <java classname="jorgedizpico.cluster.DataFileParser" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
+			<arg value="data"/>
         </java>
     </target>
 	
-    <target name="PlayCustomized">
+    <target depends="data" name="cluster">
+        <java classname="jorgedizpico.cluster.ClusterGenerator" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+			<arg value="data/data.arff"/>
+        	<arg value="data/cluster.dat"/>
+        </java>
+    </target>
+	
+    <target depends="cluster" name="playc">
         <java classname="dk.itu.mario.engine.PlayCustomized" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
         </java>
     </target>
 	
-    <target name="Play">
+    <target name="play">
         <java classname="dk.itu.mario.engine.Play" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
         </java>
     </target>
 	
-	<target name="schematics">
+	<target depends="init" name="schematics">
 		<java classname="com.parse2.aparse.Parser" failonerror="true" fork="yes" >
 			<classpath refid="marioaichallenge.classpath"/>
 			<arg value="-destdir"/>

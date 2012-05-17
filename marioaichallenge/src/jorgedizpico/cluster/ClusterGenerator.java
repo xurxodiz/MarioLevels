@@ -1,6 +1,7 @@
 package jorgedizpico.cluster;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import weka.clusterers.ClusterEvaluation;
@@ -24,66 +25,72 @@ public class ClusterGenerator {
 	 * 
 	 */
 	
-	public static String dataFile = System.getProperty("user.dir") + "/data/data.arff";
-	public static String clusterFile = System.getProperty("user.dir") + "/data/cluster.dat";
-
-	public static void main(String[] args) throws Exception {
-				
-		Instances data = DataSource.read(dataFile);
-		    
-		// three clusters, a hundred iterations
-		String[] emOptions = {"-N", "3", "-I", "100"};
-		EM cl   = new EM();
-		cl.setOptions(emOptions);
+	public static void main(String[] args) {
 		
-		String[] remOptions = new String[2];
-		remOptions[0] = "-R"; // "range"
-		remOptions[1] = "1,2,3,5,7,15,17,27,28,29,30,32,33,34"; 
-		// ArmoredTurtlesKilled
-		// CannonBallKilled
-		// ChompFlowersKilled
-		// GreenTurtlesKilled
-		// RedTurtlesKilled
-		// EnemyKillByKickingShell
-		// kickedShells
-		// timesOfDeathByArmoredTurtle
-		// timesOfDeathByCannonBall
-		// timesOfDeathByChompFlower
-		// timesOfDeathByFallingIntoGap
-		// timesOfDeathByGreenTurtle
-		// timesOfDeathByJumpFlower
-		// timesOfDeathByRedTurtle
-		
-		// we ignore the attributes that are zero for all cases
-		Remove remove = new Remove();
-		remove.setOptions(remOptions);
-		remove.setInputFormat(data);
-		
-		FilteredClusterer fc = new FilteredClusterer();
-		fc.setFilter(remove); //add filter to remove attributes
-		fc.setClusterer(cl); //bind FilteredClusterer to original clusterer
-		fc.buildClusterer(data);
-		    
-		ClusterEvaluation eval = new ClusterEvaluation();
-		eval.setClusterer(fc);
-		eval.evaluateClusterer(new Instances(data));
-		System.out.println(eval.clusterResultsToString()); 
-		    
-		write(fc);
+		try {
+			
+			String dataFile = args[0];
+			String clusterFile = args[1];
+					
+			Instances data = DataSource.read(dataFile);
+			    
+			// three clusters, a hundred iterations
+			String[] emOptions = {"-N", "3", "-I", "100"};
+			EM cl   = new EM();
+			cl.setOptions(emOptions);
+			
+			String[] remOptions = new String[2];
+			remOptions[0] = "-R"; // "range"
+			remOptions[1] = "1,2,3,5,7,15,17,27,28,29,30,32,33,34"; 
+			// ArmoredTurtlesKilled
+			// CannonBallKilled
+			// ChompFlowersKilled
+			// GreenTurtlesKilled
+			// RedTurtlesKilled
+			// EnemyKillByKickingShell
+			// kickedShells
+			// timesOfDeathByArmoredTurtle
+			// timesOfDeathByCannonBall
+			// timesOfDeathByChompFlower
+			// timesOfDeathByFallingIntoGap
+			// timesOfDeathByGreenTurtle
+			// timesOfDeathByJumpFlower
+			// timesOfDeathByRedTurtle
+			
+			// we ignore the attributes that are zero for all cases
+			Remove remove = new Remove();
+			remove.setOptions(remOptions);
+			remove.setInputFormat(data);
+			
+			FilteredClusterer fc = new FilteredClusterer();
+			fc.setFilter(remove); //add filter to remove attributes
+			fc.setClusterer(cl); //bind FilteredClusterer to original clusterer
+			fc.buildClusterer(data);
+			    
+			ClusterEvaluation eval = new ClusterEvaluation();
+			eval.setClusterer(fc);
+			eval.evaluateClusterer(new Instances(data));
+			System.out.println(eval.clusterResultsToString()); 
+			
+			System.out.println("Performing cross-validation...");
+		    cl = new EM();
+		    double logllh = ClusterEvaluation.crossValidateModel(
+		           cl, data, 10, data.getRandomNumberGenerator(1));
+		    System.out.println("\nLog likelihood: " + logllh);
+			    
+			write(fc, clusterFile);
+			
+		} catch (Exception e) {
+			System.out.println("Unable to generate clusters: " + e.getMessage());
+		}
 	}
 	  
-		public static void write(Clusterer cl) {
-			
-			ObjectOutputStream out = null;
-			try {
-				FileOutputStream fos = new FileOutputStream(clusterFile);
-				out =  new ObjectOutputStream(fos);
-				out.writeObject(cl);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
+	public static void write(Clusterer cl, String clusterFile) throws IOException {
+		ObjectOutputStream out = null;
+		FileOutputStream fos = new FileOutputStream(clusterFile);
+		out =  new ObjectOutputStream(fos);
+		out.writeObject(cl);
+		
+	}
 	
 }

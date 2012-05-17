@@ -13,12 +13,11 @@ import dk.itu.mario.MarioInterface.GamePlay;
 
 public class DataFileParser {
 	
-	public static String dataFolderPath = System.getProperty("user.dir") + "/data/";
-	
 	public static void main(String[] args) {
 		try {
+			String dataFolderPath = args[0];
 			
-			File arffFile = new File(dataFolderPath + "data.arff");
+			File arffFile = new File(dataFolderPath + "/data.arff");
 			FileWriter arffWriter = new FileWriter(arffFile);
 			
 			writeHeader(arffWriter);
@@ -45,23 +44,18 @@ public class DataFileParser {
 			 arffWriter.close();
 			 
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Unable to parse Files: " + e.getMessage());
 		}
 	}
 	
-	protected static void writeHeader(FileWriter file) {
-		try {
-			Class<? extends GamePlay> cl = GamePlay.class;
-			Field[] flds = cl.getFields();
-			Arrays.sort(flds, new DataFileParser().new FieldComparator());
-			
-			file.write("@relation playerdata\n");
-			for (Field f : flds)
-				file.write("@ATTRIBUTE\t" + f.getName() + "\tNUMERIC\n");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+	protected static void writeHeader(FileWriter file) throws IOException {
+		Class<? extends GamePlay> cl = GamePlay.class;
+		Field[] flds = cl.getFields();
+		Arrays.sort(flds, new DataFileParser().new FieldComparator());
+		
+		file.write("@relation playerdata\n");
+		for (Field f : flds)
+			file.write("@ATTRIBUTE\t" + f.getName() + "\tNUMERIC\n");
 	}
 	
 	protected static void writeDataStartHeader(FileWriter file) throws IOException {
@@ -69,23 +63,21 @@ public class DataFileParser {
 	}
 	
 	protected static void dumpFileEntry(File entry, FileWriter file) {
-		try {
-			FileInputStream fis = new FileInputStream(entry);
-			ObjectInputStream in = new ObjectInputStream(fis);
-			GamePlay gp = (GamePlay)in.readObject();
-			
-			Field[] flds = GamePlay.class.getFields();
-			Arrays.sort(flds, new DataFileParser().new FieldComparator());
-			
-			for (Field f : flds)
-				file.write(f.get(gp).toString()+",");
-			
-		    file.write("\n");
-		} catch (Exception e) {
-			System.out.println(entry.getAbsolutePath());
-			e.printStackTrace();
-		}
+		try{
+		FileInputStream fis = new FileInputStream(entry);
+		ObjectInputStream in = new ObjectInputStream(fis);
+		GamePlay gp = (GamePlay)in.readObject();
 		
+		Field[] flds = GamePlay.class.getFields();
+		Arrays.sort(flds, new DataFileParser().new FieldComparator());
+		
+		for (Field f : flds)
+			file.write(f.get(gp).toString()+",");
+		
+	    file.write("\n");		
+		} catch (Exception e) {
+			System.out.println("Unable to read file " + entry.getAbsolutePath() + ", skipped.");
+		}
 	}
 	
 	public class FieldComparator implements Comparator<Field> {
