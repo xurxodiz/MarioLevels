@@ -1,6 +1,6 @@
-rulelist		=  1*( rule / (*c-wsp c-nl) ) ;
+transitions		=  1*( transition / (*c-wsp c-nl) ) ;
 
-rule			=  nonterminal *c-wsp "=" *c-wsp alternation ;
+transition		=  nonterminal *c-wsp "=" *c-wsp alternation ;
 
 alternation		=  concatenation
                    *(*c-wsp "|" *c-wsp concatenation) ;
