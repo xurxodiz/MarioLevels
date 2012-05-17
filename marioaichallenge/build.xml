@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="build" name="marioaichallenge">
+	
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.6"/>
+    <property name="source" value="1.6"/>
+	
+    <path id="marioaichallenge.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/weka.jar"/>
+        <pathelement location="lib/aparse-2.2.jar"/>
+    </path>
+	
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+	
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+	
+    <target depends="init" name="build">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="marioaichallenge.classpath"/>
+        </javac>
+    </target>
+	
+    <target name="DataFileParser">
+        <java classname="jorgedizpico.cluster.DataFileParser" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+        </java>
+    </target>
+	
+    <target name="PlayCustomized">
+        <java classname="dk.itu.mario.engine.PlayCustomized" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+        </java>
+    </target>
+	
+    <target name="Play">
+        <java classname="dk.itu.mario.engine.Play" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+        </java>
+    </target>
+	
+	<target name="schematics">
+		<java classname="com.parse2.aparse.Parser" failonerror="true" fork="yes" >
+			<classpath refid="marioaichallenge.classpath"/>
+			<arg value="-destdir"/>
+			<arg value="src/jorgedizpico/grammar"/>
+			<arg value="-package"/>
+			<arg value="jorgedizpico.grammar"/>
+			<arg value="gr/schematics.abnf"/>
+		</java>
+	</target>
+	
+</project>
