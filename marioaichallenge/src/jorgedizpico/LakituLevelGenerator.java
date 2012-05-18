@@ -50,7 +50,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 			LakituLevel lvl = aut.buildLevel();
 			
 			if (null == lvl)
-				throw new Exception("Error while building level from genes");
+				throw new Exception("Error while building level from genes.");
 				
 			return lvl;
 			

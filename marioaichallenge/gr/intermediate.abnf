@@ -1,89 +1,39 @@
-	protected void addTransitions() {
-		ArrayList<Transition> tr;
+initial			= hub ;
+
+flat			= FLAT hub ;
+
+hub				= coins flat, 17
+				| pipe flat , 12
+				| blocks flat , 20
+				| enemies flat , 20
+				| cannon flat , 8
+				| gaps flat , 19;
 		
-		// Initial : Start
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.START, 1.0));
-		transitions.put(WorkerState.INITIAL, tr);
+flat 			= FLAT flat, 5
+				| FLAT hub , 95;
+
+coins 			= COINS , 80
+				| COINS coins , 20;
+
+pipe 			= PIPE 
+				| PIPEPIRANHA ;
 		
-		// Start : Hub
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.FLAT, 1.0));
-		transitions.put(WorkerState.START, tr);
+blocks			= singleblock , 20
+				| singleblock blocks , 80 ;
 		
-		// Flat : Hub
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.FLAT, 0.05));
-		tr.add(new Transition(WorkerState.HUB, 0.95));
-		transitions.put(WorkerState.FLAT, tr);
+singleblock		= BLOCKPOWERUP
+				| BLOCKCOINS , 10
+				| BLOCKEMPTY , 50 ;
 		
-		// Hub : Pipe, Enemies, Flat, Gap, Blocks, Coins, Cannon
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.PIPE, 0.12));
-		tr.add(new Transition(WorkerState.ENEMIES, 0.20));
-		tr.add(new Transition(WorkerState.GAP, 0.19));
-		tr.add(new Transition(WorkerState.BLOCKS, 0.20));
-		tr.add(new Transition(WorkerState.COINS, 0.17));
-		tr.add(new Transition(WorkerState.CANNON, 0.08));
-		transitions.put(WorkerState.HUB, tr);
-		
-		// Pipe : PipePiranha, PipeOut
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.PIPEPIRANHA, 0.5));
-		tr.add(new Transition(WorkerState.PIPEOUT, 0.5));
-		transitions.put(WorkerState.PIPE, tr);
-		
-		// PipePiranha : PipeOut
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.PIPEOUT, 1.0));
-		transitions.put(WorkerState.PIPEPIRANHA, tr);
-		
-		// PipeOut : Flat
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.FLAT, 1.0));
-		transitions.put(WorkerState.PIPE, tr);
-		
-		// Gap : GapStd, GapStairsUp
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.GAPSTD, 0.75));
-		tr.add(new Transition(WorkerState.GAPSTAIRS, 0.25));
-		transitions.put(WorkerState.GAP, tr);
-		
-		// GapStd : GapOut
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.GAPOUT, 1.0));
-		transitions.put(WorkerState.GAPSTD, tr);
-		
-		// GapStairs : GapOut
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.GAPOUT, 1.0));
-		transitions.put(WorkerState.GAPSTAIRS, tr);
-		
-		// GapOut : Flat
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.FLAT, 1.0));
-		transitions.put(WorkerState.GAPOUT, tr);
-		
-		// Coins : Coins, Flat
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.COINS, 0.8));
-		tr.add(new Transition(WorkerState.FLAT, 0.2));
-		transitions.put(WorkerState.COINS, tr);
-		
-		// Cannon : Hub
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.FLAT, 1.0));
-		transitions.put(WorkerState.CANNON, tr);
-		
-		// Block : Enemies, Flat, Blocks
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.FLAT, 0.2));
-		tr.add(new Transition(WorkerState.BLOCKS, 0.8));
-		transitions.put(WorkerState.BLOCKS, tr);
-		
-		// Enemies : Block, Flat, Enemies
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(WorkerState.ENEMIES, 0.8));
-		tr.add(new Transition(WorkerState.FLAT, 0.2));
-		transitions.put(WorkerState.ENEMIES, tr);
-	}
+enemies			= singlenemy , 20
+				| singlenemy enemies , 80 ;
+				
+singlenemy		= GOOMBA , 10
+				| REDTURTLE , 3
+				| GREENTURTLE , 3
+				| SPIKY ;
+				
+cannon			= CANNON ;
+
+gaps			= GAP , 5
+				| STAIRSUP GAP STAIRSDOWN ;

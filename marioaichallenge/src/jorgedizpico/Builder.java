@@ -16,7 +16,7 @@ public class Builder {
 	protected int I_JUMP_OFFSET = -5;
 	protected int I_JUMP_RANGE = 10;
 	
-	protected int I_BLOCK_HOVER_HEIGHT = 4;
+	protected int I_HOVER_HEIGHT = 4;
 	protected int I_PIPE_HEIGHT = 2;
 	protected int I_CANNON_HEIGHT = 2;
 	
@@ -31,9 +31,9 @@ public class Builder {
 		return updateX(nx, I_LEN);
 	}
 	
-	private boolean updateX(int nx, int diff) {
+	private boolean updateX(int xx, int diff) {
 		int oldx = x;
-		x = nx;
+		x = xx;
 		return (x-oldx) == diff;
 	}
 	
@@ -56,60 +56,106 @@ public class Builder {
 		return updateX(xx);
 	}
 	
-	public boolean createGapStairs() {
-		return (createStairsUp() && createGap() && createStairsDown());
-	}
-	
 	public boolean createPipe() {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
 		if (xx-x != I_LEN) return false;
 		
-		lvl.placePipe(xx, y, I_PIPE_HEIGHT);
+		xx = lvl.placePipe(x+1, y, I_PIPE_HEIGHT);
 		return updateX(xx);
 	}
 	
 	public boolean createPipePiranha() {
-		if (!createPipe()) return false;
-		int y = lvl.getLastGroundHeight(x);
-		int xx = lvl.placePiranha(x, y);
-		return (xx == x);
-	}
-	
-	public boolean createEnemies() {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		for (int i = x; i < xx; i++)
-			if (i % 2 == 0)
-				lvl.placeGoomba(i, y-1);
+		if (xx-x != I_LEN) return false;
+		
+		lvl.placePipe(x+1, y, I_PIPE_HEIGHT);
+		lvl.placePiranha(x+1, y);
+		
 		return updateX(xx);
 	}
 	
 	public boolean createCannon() {
-		if (!createFlatLand()) return false;
 		int y = lvl.getLastGroundHeight(x);
-		int xx = lvl.placeCannon(x-1, y, I_CANNON_HEIGHT);
-		return (xx == x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		lvl.placeCannon(xx-1, y, I_CANNON_HEIGHT);
+		return updateX(xx);
 	}
 	
-	public boolean createBlocks() {
+	public boolean createGoomba() {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		for (int i = x; i < xx; i++)
-			switch (x%3) {
-				case 0:
-					lvl.placeBlockPowerUp(i, y-I_BLOCK_HOVER_HEIGHT);
-					break;
-				case 1:
-					lvl.placeBlockCoin(i, y-I_BLOCK_HOVER_HEIGHT);
-					break;
-				default:
-					lvl.placeBlockEmpty(i, y-I_BLOCK_HOVER_HEIGHT);
-					break;
-			}
+		for (int i = x+1; i <= xx; i++)
+			if (i % 2 == 0)
+				lvl.placeGoomba(i, y-1);
+		
+		return updateX(xx);
+	}
+	
+	public boolean createRedTurtle() {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		
+		for (int i = x+1; i <= xx; i++)
+			if (i % 2 == 0)
+				lvl.placeRedTurtle(i, y-1);
+		
+		return updateX(xx);
+	}
+	
+	public boolean createGreenTurtle() {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		
+		for (int i = x+1; i <= xx; i++)
+			if (i % 2 == 0)
+				lvl.placeGreenTurtle(i, y-1);
+		
+		return updateX(xx);
+	}
+	
+	public boolean createSpiky() {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		
+		for (int i = x+1; i <= xx; i++)
+			if (i % 2 == 0)
+				lvl.placeSpiky(i, y-1);
+		
+		return updateX(xx);
+	}
+	
+	public boolean createBlockPowerUp() {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		
+		for (int i = x+1; i <= xx; i++)
+			lvl.placeBlockPowerUp(x, y-I_HOVER_HEIGHT);
+
+		return updateX(xx);
+	}
+	
+	public boolean createBlockCoins() {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		
+		for (int i = x+1; i <= xx; i++)
+			lvl.placeBlockCoins(i, y-I_HOVER_HEIGHT);
+
+		return updateX(xx);
+	}
+	
+	public boolean createBlockEmpty() {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		
+		for (int i = x+1; i <= xx; i++)
+			lvl.placeBlockEmpty(i, y-I_HOVER_HEIGHT);
+
 		return updateX(xx);
 	}
 	
@@ -117,17 +163,17 @@ public class Builder {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		for (int i = x; i < xx; i++)
-			lvl.placeCoin(i, y-I_BLOCK_HOVER_HEIGHT);
+		for (int i = x+1; i <= xx; i++)
+			lvl.placeCoin(i, y-I_HOVER_HEIGHT);
 		
 		return updateX(xx);
 	}
 	
 	public boolean createStairsUp() {
 		int y = lvl.getLastGroundHeight(x);
-		int xx = lvl.addFlatLand(x,  I_LEN, y);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		for (int i = 0; i < xx-x; i++)
+		for (int i = 1; i <= xx-x; i++)
 			for (int h = 1; h <= i+1; h++)
 				lvl.placeRock(x+i, y-h);
 		
@@ -136,9 +182,9 @@ public class Builder {
 	
 	public boolean createStairsDown() {
 		int y = lvl.getLastGroundHeight(x);
-		int xx = lvl.addFlatLand(x,  I_LEN, y);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		for (int i = 0; i < xx-x; i++)
+		for (int i = 1; i <= xx-x; i++)
 			for (int h = 1; h <= xx-x+i; h++)
 				lvl.placeRock(x+i, y-h);
 		

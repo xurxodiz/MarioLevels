@@ -6,19 +6,29 @@ import jorgedizpico.Builder;
 
 public enum Gene implements State {
 	
-    FLAT ("createFlatLand"), // flat empty ground
+    FLAT ("createFlatLand"),
     
-    GAPSTD ("createGap"), // regular gap
-    GAPSTAIRS ("createGapStairs"), // gap surrounded by stairs
+    COINS("createCoins"), // two coins
 
-    PIPE ("createPipe"), // pipe
-	PIPEPIRANHA("createPipePiranha"), // pipe with piranha
+    PIPE ("createPipe"),
+	PIPEPIRANHA("createPipePiranha"),
+	
+	CANNON("createCannon"),
+    
+    GAP ("createGap"),
+    
+    STAIRSUP ("createStairsUp"),
+    STAIRSDOWN ("createStairsDown"),
 
-    COINS("createCoins"), // one coin
-    BLOCKS("createBlocks"), // one block
-    ENEMIES("createEnemies"), // one enemy
-
-	CANNON("createCannon"), // a cannon
+    BLOCKPOWERUP ("createBlockPowerUp"), // two blocks
+    BLOCKCOINS ("createBlockCoins"),     //     "
+    BLOCKEMPTY ("createBlockEmpty"),     //     "
+    
+    GOOMBA ("createGoomba"),
+    REDTURTLE ("createRedTurtle"),
+    GREENTURTLE ("createGreenTurtle"),
+    SPIKY ("createSpiky"),
+    
     ;
 	
 	private String createMethod;

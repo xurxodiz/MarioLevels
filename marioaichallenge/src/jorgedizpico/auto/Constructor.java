@@ -12,6 +12,7 @@ public class Constructor implements Visitor {
 	public Object visit(Rule$schematics rule) {
 		repo = new Repository();
 		visitRules(rule.rules);
+		repo.validate();
 		return repo;
 	}
 	
@@ -44,8 +45,12 @@ public class Constructor implements Visitor {
 		
 		ArrayList<Object> children = visitRules(rule.rules);
 		
-		Object o = children.remove(children.size()-1); // weight
-		ch.setOdds((Double)o);
+		// weight. it's optional, thus we check for it.
+		if (children.get(children.size()-1) instanceof Double) {
+			Object o = children.remove(children.size()-1);
+			ch.setOdds((Double)o);
+		} else
+			ch.setOdds(1.0);
 		
 		for (Object st : children)
 			if (st instanceof State) ch.addState((State)st);

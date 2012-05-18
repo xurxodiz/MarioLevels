@@ -1,10 +1,12 @@
 package jorgedizpico.auto;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.Random;
 
 
-public class Dummy implements State {
+public class Dummy implements State, Iterable<Chain> {
 	
 	private ArrayList<Chain> transitions = new ArrayList<Chain>();
 	
@@ -34,6 +36,12 @@ public class Dummy implements State {
 	
 	public boolean addChain(Chain ch) {
 		return transitions.add(ch);
+	}
+	
+	@Override
+	public Iterator<Chain> iterator() {
+        Iterator<Chain> i = Collections.unmodifiableList(transitions).iterator();
+        return i; 
 	}
 	
 	public boolean validateChains() {

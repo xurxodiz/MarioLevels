@@ -102,7 +102,7 @@ public class LakituLevel extends Level implements LevelInterface {
     	return x;
     }
     
-    public int placeBlockCoin(int x, int y) {
+    public int placeBlockCoins(int x, int y) {
     	x = capX(x);
     	y = capY(y);
     	setBlock(x, y, LakituLevel.BLOCK_COIN);
@@ -153,6 +153,27 @@ public class LakituLevel extends Level implements LevelInterface {
 		x = capX(x);
 		y = capY(y);
 		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_GOOMBA, false));
+		return x;
+	}
+	
+	public int placeRedTurtle(int x, int y) {
+		x = capX(x);
+		y = capY(y);
+		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_RED_KOOPA, false));
+		return x;
+	}
+	
+	public int placeGreenTurtle(int x, int y) {
+		x = capX(x);
+		y = capY(y);
+		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_GREEN_KOOPA, false));
+		return x;
+	}
+	
+	public int placeSpiky(int x, int y) {
+		x = capX(x);
+		y = capY(y);
+		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_SPIKY, false));
 		return x;
 	}
 	

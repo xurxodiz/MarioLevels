@@ -17,6 +17,16 @@ public class Repository {
 		dummy = new Dummy();
 		dummies.put(s, dummy);
 		return dummy;
-			
+	}
+	
+	public void validate() {
+		// ponder the odds between the total odds
+		for (Dummy dummy : dummies.values()) {
+			double accum = 0.0;
+			for (Chain ch : dummy)
+				accum += ch.getOdds();
+			for (Chain ch : dummy)
+				ch.setOdds(ch.getOdds()/accum);
+		}
 	}
 }
