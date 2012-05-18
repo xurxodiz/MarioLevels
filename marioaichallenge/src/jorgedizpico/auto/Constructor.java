@@ -1,7 +1,6 @@
 package jorgedizpico.auto;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import jorgedizpico.grammar.*;
 
@@ -18,17 +17,24 @@ public class Constructor implements Visitor {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Object visit(Rule$transition rule) {
-		ArrayList<Object> transitions = visitRules(rule.rules);
-		Dummy st = (Dummy) transitions.get(0);
-		ArrayList<Object> chains = (ArrayList<Object>) transitions.get(1);
+	public Object visit(Rule$transitions rule) {
+		ArrayList<Object> derivations = visitRules(rule.rules);
+		
+		Dummy dm = null;
+		ArrayList<Object> chains = null;
+		
+		for (Object o : derivations)
+			if (o instanceof Dummy) dm = (Dummy) o;
+			else if (o instanceof ArrayList<?>) chains = (ArrayList<Object>) o;
+		
 		for (Object o : chains)
-			st.addChain((Chain)o);
+			if (o instanceof Chain) dm.addChain((Chain)o);
+		
 		return null;
 	}
 	
 	@Override
-	public Object visit(Rule$alternation rule) {
+	public Object visit(Rule$options rule) {
 		return visitRules(rule.rules);
 	}
 	
@@ -36,13 +42,13 @@ public class Constructor implements Visitor {
 	public Object visit(Rule$concatenation rule) {
 		Chain ch = new Chain();
 		
-		Collection<Object> children = visitRules(rule.rules);
+		ArrayList<Object> children = visitRules(rule.rules);
 		
-		Object o = children.remove(children.size());
+		Object o = children.remove(children.size()-1); // weight
 		ch.setOdds((Double)o);
 		
 		for (Object st : children)
-			ch.addState((State)st);
+			if (st instanceof State) ch.addState((State)st);
 		return ch;
 	}
 	
@@ -77,22 +83,22 @@ public class Constructor implements Visitor {
 	}
 	
 	@Override
-	public Object visit(Rule$UPCASE rule) { /* won't be visited */ return rule.spelling; }
-	
-	@Override
-	public Object visit(Rule$LOWCASE rule) { /* won't be visited */ return rule.spelling; }
-	
-	@Override
-	public Object visit(Rule$DIGIT rule) { /* won't be visited */ return rule.spelling; }
-	
-	@Override
-	public Object visit(Rule$VCHAR rule) { /* won't be visited */ return rule.spelling; }
-	
-	@Override
 	public Object visit(Terminal$StringValue rule) { /* won't be visited */ return rule.spelling; }
 	
 	@Override
 	public Object visit(Terminal$NumericValue rule) { /* won't be visited */ return rule.spelling; }
+	
+	@Override
+	public Object visit(Rule$UPCASE rule) { /* won't be visited */ return null; }
+	
+	@Override
+	public Object visit(Rule$LOWCASE rule) { /* won't be visited */ return null; }
+	
+	@Override
+	public Object visit(Rule$DIGIT rule) { /* won't be visited */ return null; }
+	
+	@Override
+	public Object visit(Rule$VCHAR rule) { /* won't be visited */ return null; }
 	
 	@Override
 	public Object visit(Rule$c_wsp rule) { /* ignored */ return null; }

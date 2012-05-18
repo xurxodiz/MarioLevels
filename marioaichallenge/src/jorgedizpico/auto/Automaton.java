@@ -19,7 +19,7 @@ public class Automaton {
 
 	public Automaton (int type) throws Exception {
 
-		Rule schematics = Parser.parse("transitions", new File("automaton1.abnf"));
+		Rule schematics = Parser.parse("schematics", new File("gr/speeder.abnf"));
 
 		Constructor cons = new Constructor();
 		repo = (Repository) schematics.accept(cons);
@@ -39,7 +39,7 @@ public class Automaton {
 		stack.clear();
 		genotype.clear();
 		
-		stack.push(repo.getDummy("INITIAL"));
+		stack.push(repo.getDummy("initial"));
 		
 		while (genotype.size() < length) {
 			State st = stack.pop();
@@ -54,9 +54,15 @@ public class Automaton {
 		Builder lkb = new Builder(lvl);
 		generateGenotype(GENOTYPE_LENGTH);
 		
+		
 		lkb.createStartPlug();
+		
 		for (Gene g : genotype)
 			if (!g.genesis(lkb)) return null;
+
+		lkb.createEndPlug();
+		
+		lkb.fixLevel();
 		
 		return lvl;
 	}

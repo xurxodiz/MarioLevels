@@ -11,11 +11,20 @@ public class Dummy implements State {
 	public boolean execute(Automaton auto) {
 		double roll = new Random().nextDouble();
 		double accum = 0.0;
-				
+		
+		/*
+		 * ACHTUNG
+		 * the chain will be derived by the leftmost nonterminal first
+		 * so the chain has to be pushed to the automaton stack
+		 * IN REVERSE ORDER
+		 * (right tokens first)
+		 * so they are popped correctly
+		 */
+		
 		for (Chain ch : transitions) {
 			accum += ch.getOdds();
 			if (accum > roll) {
-				for (State st : ch)
+				for (State st : ch.flippedCopy())
 					auto.pushState(st);
 				return true;
 			}

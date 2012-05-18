@@ -24,6 +24,15 @@ public class Chain implements Iterable<State> {
 	public double getOdds() { return odds; }
 	public void setOdds(double odds) { this.odds = odds; }	
 
+	public Chain flippedCopy() {
+		Chain ch = new Chain();
+		ch.odds = odds;
+		ArrayList<State> copy = new ArrayList<State>(states);
+		Collections.reverse(copy);
+		ch.states = copy;
+		return ch;
+	}
+	
 	@Override
 	public Iterator<State> iterator() {
         Iterator<State> i = Collections.unmodifiableList(states).iterator();

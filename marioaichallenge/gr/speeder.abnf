@@ -1,0 +1,13 @@
+initial = hub, 1.0 ;
+
+hub = flat hub , 0.3
+		| pipe hub , 0.4
+		| coins hub , 0.3;
+		
+flat = FLAT , 1.0;
+
+pipe = PIPE , 0.5
+		| PIPEPIRANHA , 0.5;
+		
+coins = COINS , 0.8
+		| COINS coins , 0.2;

@@ -86,14 +86,14 @@ public class LakituLevel extends Level implements LevelInterface {
     	int i;
     	for (i = 0; i < length && x+i < width; i++)
     		setGroundHeight(x+i, y);
-    	return i;
+    	return x+i;
     }
     
     public int addGap(int x, int length) {
     	int i;
     	for (i = 0; i < length && x+i < width; i++)
     		setGroundHeight(capX(x+i), height);
-    	return i;
+    	return x+i;
     }
 
     public int placeBlockPowerUp(int x, int y) {

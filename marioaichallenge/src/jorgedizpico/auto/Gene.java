@@ -8,11 +8,11 @@ public enum Gene implements State {
 	
     FLAT ("createFlatLand"), // flat empty ground
     
-    GAPSTD("createGap"), // regular gap
-    GAPSTAIRS("createGapStairs"), // gap surrounded by stairs
+    GAPSTD ("createGap"), // regular gap
+    GAPSTAIRS ("createGapStairs"), // gap surrounded by stairs
 
-    PIPE("createPipe"), // pipe
-	PIPEPIRANHA("createPiranha"), // pipe with piranha
+    PIPE ("createPipe"), // pipe
+	PIPEPIRANHA("createPipePiranha"), // pipe with piranha
 
     COINS("createCoins"), // one coin
     BLOCKS("createBlocks"), // one block
@@ -32,12 +32,13 @@ public enum Gene implements State {
 			
 			Class<Builder> cl = Builder.class;
 			@SuppressWarnings("rawtypes")
-			Class parTypes[] = {Builder.class};
+			Class parTypes[] = {};
 			Method meth = cl.getMethod(this.createMethod, parTypes);
-			return (Boolean) meth.invoke(lkb);
+			boolean b = (Boolean) meth.invoke(lkb, (Object[]) parTypes);
+			return b;
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
 			return false;
 		}
 	}

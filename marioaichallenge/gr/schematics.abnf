@@ -1,17 +1,17 @@
-schematics		=  1*( transition / (*c-wsp c-nl) ) ;
+schematics		=  1*( transitions / (*c-wsp c-nl) ) ;
 
-transition		=  nonterminal *c-wsp "=" *c-wsp alternation ;
+transitions		=  nonterminal *c-wsp "=" *c-wsp options *c-wsp ";" ;
 
-alternation		=  concatenation
+options			=  concatenation
                    *(*c-wsp "|" *c-wsp concatenation) ;
 
 concatenation	=  (1*(*c-wsp terminal) / nonterminal) *(1*c-wsp nonterminal) *c-wsp "," *c-wsp weight ;
 
 element			=  nonterminal / terminal ;
 
-nonterminal		=  UPCASE *(UPCASE) ;
+nonterminal		=  LOWCASE *(LOWCASE) ;
 
-terminal		=  LOWCASE *(LOWCASE) ;
+terminal		=  UPCASE *(UPCASE) ;
 
 weight			=  1*(DIGIT) ["." 1*DIGIT] ;
 
@@ -19,7 +19,7 @@ c-wsp			=  WSP / (c-nl WSP) ;
 
 c-nl			=  comment / CRLF ;
 
-comment			=  ";" *(WSP / VCHAR) CRLF ;
+comment			=  "#" *(WSP / VCHAR) CRLF ;
 
 UPCASE			=  %x41-5A ;		# A-Z 
  
@@ -29,6 +29,6 @@ DIGIT			=  %x30-39 ;		# 0-9
                         
 VCHAR			=  %x21-7E ;		# visible (printing) characters
 
-CRLF			=  %x0D %x0A ;		# CR LF
+CRLF			=  *(%x0D/%x0A) ;		# CR LF
 
 WSP				=  %x20 / %x09 ;	# space or tab

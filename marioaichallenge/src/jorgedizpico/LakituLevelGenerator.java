@@ -16,7 +16,6 @@ import jorgedizpico.cluster.DataFileParser;
 import dk.itu.mario.MarioInterface.GamePlay;
 import dk.itu.mario.MarioInterface.LevelGenerator;
 import dk.itu.mario.MarioInterface.LevelInterface;
-import dk.itu.mario.level.Level;
 
 public class LakituLevelGenerator implements LevelGenerator {
 	
@@ -28,7 +27,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
 		try {
 						
-			Clusterer cl = readClusters(clusterFile);			
+			/*Clusterer cl = readClusters(clusterFile);			
 			Instance inst = makeInstance(playerMetrics);
 			int cluster = cl.clusterInstance(inst);
 			
@@ -42,13 +41,15 @@ public class LakituLevelGenerator implements LevelGenerator {
 				case 2: // explorer
 					lvl.setType(Level.TYPE_UNDERGROUND);
 					break;
-			}
+			}*/
+			
+			int cluster = 2;
 			
 			Automaton aut = new Automaton(cluster);
 			
 			LakituLevel lvl = aut.buildLevel();
 			
-			if (null != lvl)
+			if (null == lvl)
 				throw new Exception("Error while building level from genes");
 				
 			return lvl;

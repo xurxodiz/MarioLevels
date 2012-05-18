@@ -20,7 +20,6 @@ public class Builder {
 	protected int I_PIPE_HEIGHT = 2;
 	protected int I_CANNON_HEIGHT = 2;
 	
-	protected int oldx = 0;
 	protected int x = 0;
 	
 	public Builder(LakituLevel lvl) {
@@ -33,7 +32,7 @@ public class Builder {
 	}
 	
 	private boolean updateX(int nx, int diff) {
-		oldx = x;
+		int oldx = x;
 		x = nx;
 		return (x-oldx) == diff;
 	}
@@ -67,13 +66,14 @@ public class Builder {
 		
 		if (xx-x != I_LEN) return false;
 		
-		xx = lvl.placePipe(x, y, I_PIPE_HEIGHT);
+		lvl.placePipe(xx, y, I_PIPE_HEIGHT);
 		return updateX(xx);
 	}
 	
-	public boolean createPiranha() {
+	public boolean createPipePiranha() {
+		if (!createPipe()) return false;
 		int y = lvl.getLastGroundHeight(x);
-		int xx = lvl.placePiranha(x-I_LEN, y);
+		int xx = lvl.placePiranha(x, y);
 		return (xx == x);
 	}
 	

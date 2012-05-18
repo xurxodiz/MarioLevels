@@ -25,13 +25,13 @@
     <target name="clean">
         <delete dir="bin"/>
     	<delete dir="src/jorgedizpico/grammar"/>
-    	<delete file="player.txt"/>
-        <delete file="DetailedInfo.txt"/>
+    	<!--<delete file="player.txt"/>
+        <delete file="DetailedInfo.txt"/>-->
     	<delete file="data/data.arff"/>
     	<delete file="data/cluster.dat"/>
     </target>
 	
-    <target depends="init,schematics" name="build">
+    <target name="build">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
             <src path="src"/>
@@ -39,7 +39,7 @@
         </javac>
     </target>
 	
-    <target depends="build" name="data">
+    <target name="data">
         <java classname="jorgedizpico.cluster.DataFileParser" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
 			<arg value="data"/>
@@ -54,7 +54,7 @@
         </java>
     </target>
 	
-    <target depends="cluster" name="playc">
+    <target name="playc">
         <java classname="dk.itu.mario.engine.PlayCustomized" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
         </java>
