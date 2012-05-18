@@ -35,167 +35,525 @@
 \maketitle
 
 \begin{abstract}
-Content generation has been widely used in gaming
-to offer virtually infinite replayability.
-Its combination with adaptive techniques also provides a tighter fit between
-results and gameplay.
-A new approach for procedural level generation
-is presented based on a combination of clustering and finite state machines.
-The method has been designed and deployed as an entry for the 
-Level Generation track of the Mario AI Championship.
-The implemented architecture is shown to provide
-great flexibility for both refinement and
-extension to other games, and the
-experimental results are shown to prove
-the validity of this approach. 
 
 \end{abstract}
 
 % No keywords
 
 \section{Introduction}
-Procedural level generation, in one way or another, has been present since the inception of games history. Initially, its role was to make up for lack of storage memory for levels by creating them on the fly. It soon revealed its potential to make a game ``infinite'' by presenting the player with a fresh envinroment every time, a quality best exemplified in early 1980s adventure classic \textit{Rogue} (Toy and Wichman). Since then, it has been featured prominently in many commercially successful games such as the roleplaying series \textit{Diablo} (developed by Blizzard, 1996) or the exploration-based \textit{Minecraft} (Mojang, 2009). It's uses have even expanded to terrain creation \cite{rodenparberry2004} or quest design \cite{mmorpg06}.
-Mario AI Championship
-Lately, some of these techniques have been coupled with adaptive algorithms to make the content generated not only random but also tied to the characteristics of the player. One of the most remarkable examples is the \textit{``AI Director`''} found in \textit{Left 4 Dead 2} (Valve, 2009), that even goes as far as to adapt the challenges while the level is played if it finds the player low on health or ammunition \cite{l4d09}.
 
-In this work, a novel approach to adaptive level generation is presented after testing it on the platform provided by the Mario AI Championship. Previous instances of this competition have featured many worthy techniques \cite{mario2010}; inspired by them, an architecture was devised that can prove not only equally valid but quite flexible for expansion and adaptation as well.
+problem: levels are finite
+
+space constraints and design is costly
+
+to solve it: algorithms
+
+that is, pcg
+
+a way to generate levels
+
+rules
+
+is hs been used for all these things in these games
+
+like minecraft
+
+or diablo
+
+even tetris!
+
+adaptive: why?
+
+because it tailors better to tastes
+
+advantages? personalization empoers bonding
+
+hey i could probably find some sweet cites for this
+
+it has been used here and there
+
+sayy, brain training
+
+or, hey, l4d2
+
+our case: the mario competition
+
+what have people used?
+
+passes -> but no link
+
+clusters -> that's cool, but bad random
+
+hopper -> yeah that's cool
+
+so we'll try to do both and cool
+
+have one process guide the other
+
+and an open architecture ripe for flexibility
+
+we'll do this by separating functionality in layers
+
+and encoding levels in transformable ways
+
+urgh this is bad
+
+retake it once the rest is done
+
+you'll have a clearer idea
+
+\section{Background}
+
+mario is a game about platforms and jumps
+
+and enemies and coins
+
+and you have to get to the end
+
+the mario ai championship is about
+
+plenty of stuff
+
+but the level generation track is about
+
+forming the best level there was
+
+the framework is based on infinite mario by notch
+
+which is
+
+top notch
+
+haha
+
+so yeah
+
+our goal is to make a good architecture for it
+
+that can be flexible, random every time, adaptive, and not too tailored to the game
+
+how  did we do it?
+
+keep reading
 
 \section{Methodology}
 
-The presented approach tries to offer a new insight into adaptively generating random levels. It is comprised of two main parts: a data-driven clustering process (mostly offline), and a finite state machine execution (online). A third layer, a library of functions that actually build the level, serves as the link between the adaptive generator system and the game API. 
+this is our architecture
 
-\begin{figure*}[htp]
-\centerline{\includegraphics[width=1.2\columnwidth]{layers.png}}
-\caption{Layers and modules of the proposed architecture}
-\label{layers}
-\end{figure*}
+there are FOUR LIGHTS
 
-\subsection{Clustering}
+but three layers
 
-The topmost layer undertakes a clustering process on data collected from user play. This approach bases the decisions on empirical metrics and avoids overguessing. This execution can be run offline once and then stored for use afterwards, reducing the computational load on the level generation process. It only needs to be rerun when new samples are collected, to refine and recheck the clustering.
+two mostly
 
-The suggested method for collecting samples is to present a vast array of different players with roughly similar levels (ideally, the same). Having them face comparable challenges makes possible to extrapolate on their gameplay style. So as to not overtrain on a particular player, it is recommended to keep just one significant sample per player. Those collections are then clustered as mentioned before.
+layer figure
 
-Now, when a new player comes to the game, he is made to play a test level in the same vein as the ones used in the aforementioned process. The records of his gameplay are fed to a clusterer that will assign him to one of groups found.
+top takes care of identifying the user
 
-It must be noted that the classification shown here is the most basic approach. Clustering could be further refined, perhaps selecting different parameters at different executions, obtaining the player's position along two different axis; or supporting it with additional inputs like the preferred difficulty. There have been successful experiences working with rhythmic patterns \cite{rhythm09} and identifying emotional response from frustation or challenge \cite{shaker10}.
+how does he like it
 
-\subsection{Finite state machines}
+second, generating the level
 
-Once the player has been identified as belonging to a given group, this association is used to further assign him an automaton. This is done on a one-to-one basis: each group has a finite state machine modeled and tailored to its detected needs, defined upon inspection of their characteristic metrics.
+the user identification gudies the process
 
-These machines have each their own states and transitions, but most importantly, those transitions are defined as probabilistic. Traversing an automaton is done by picking between the next available states from the current one, weighted by the probability associated to that movement. This feature adds the random component needed to keep the levels generated fresh and unique every time, even though the automata themselves are always the same.
+because
 
-This probabilistic nature in which the next state is only based on the current one makes the automata a model of a Markov chain of order one. Statistical considerations can be calculated on the overall probability that each state is reached when the automaton is traversed, opening the door to reducing frequencies in a controlled manner.
+that's the way
 
-To further enforce modularity, the automata sit on top of a builder layer that acts as an API through its several level constructing functions. Each state delegates its world-building function to this layer, preventing code repetition on the states and promoting code sharing and reuse.
+u-hu, u-hu
 
-A diagram of the flow is shown in figure~\ref{layers}.
+he likes it
+
+u-hu
+
+for the top layer we decided to cluster
+
+it gives a point of reference
+
+he prefers this way, in comparison to others
+
+judging in a vacuum is hard
+
+also makes them feel special
+
+the second, grammars
+
+levels are a succession of repeated basic symbols
+
+also, what comes now relies on what came before
+
+we can model that as a directed graph
+
+an automata, for example
+
+built from the grammar
+
+we can make new "paths", signifying possibilities, parts of the screen
+
+by adding new states or links
+
+automata are flexible
+
+and expressing them as grammars, quite intuitive
+
+they rock
+
+okay then
+
+\section{Clustering}
+
+we want to base player profiling based on data
+
+we think it's more faithful
+
+player's don't know what they want
+
+and badly estimate themselves
+
+cite here
+
+or at least steve jobs quote
+
+so let's take data
+
+mario stores two kinds of data
+
+metrics and logs
+
+we'll focus on the metrics
+
+why? because we don't want specific timestamped events
+
+but overarching behavior
+
+so mario challenge stores all this data on the player
+
+they refer to this categories: deaths, blah
+
+we are going to try to infer the different existing styles
+
+so we'll take one sample per person, for these reasons
+
+we need to provide them with comparable challenges
+
+for these reasons
+
+once gathered, we will try to find groups of palayers with similar behaviour
+
+we want three
+
+why three? they are everywhere
+
+experience proves it, but also
+
+the speeder prototype comes from speedruns, light-and-nimble characters, aggresive strategies
+
+explorers come from detail-intensive games, hevy armoured charactered, controllish, slow plans
+
+they form a spectrum, with two extremes
+
+so we decided to model with three, allocating for a mixed intermediate position
+
+also, not a lot of samples
+
+now to choose the algorithm
+
+we decided to rely on the weka library
+
+its cool and awesome and proven. source:
+
+weka offers these algorithms that are the most commonly used.
+
+we'll use this metric to compare them
+
+since it's density blah
+
+we need to blah
+
+we could add a parameter by the user's preferred difficulty
+
+but that's intrusive
+
+and they are bad at it anyway
+
+if you need to choose it before palying, you have no idea
+
+if you've alrady played, we have the metrics thankyouverymuch
+
+ok so we have the clusters
+
+stored safely somewhere
+
+this process is made so it can be run offline
+
+the clustering of the data, i mean
+
+so then a player comes
+
+and we assign them one of those clusters
+
+\section{Grammars}
+
+whew that was long
+
+ok so now to fsms
+
+when we assign the player to a cluster, we implicitly assign him a grammar
+
+since each cluster has a grammar associated
+
+the grammars are called schematics and describe how to build the level
+
+in a pseudo-bnf way
+
+take a look at this simple example
+
+HERE BE FIGURE
+
+the derivation rules have weights
+
+a heavier rule has more probabilities of being chosen
+
+the schematics are context-free grammars
+
+and expands on the right
+
+so in the example we start the level
+
+and we can have a pipe or a coin or flat
+
+and we loop
+
+(ok explain this a bit longer)
+
+the schematic is designed to be infinite
+
+to be able to generate levels of any length
+
+this is a sample of a trace
+
+BLA PIPE COIN RICK ROLL
+
+the schematics are done by hand
+
+the terminals are predefined
+
+they are the available "chunks" that the system can build
+
+for example, a small gap
+
+or a pipe
+
+or a couple of blocks
+
+in this case we made every chunk of the same length, two
+
+we wanted the smallest possible to make it more flexible
+
+the arching structure can be obtained with the rules of the schematic
+
+forcing pieces to be together
+
+but if we wanted to control little details, we need little chunks
+
+but we couldn't do one, because pipes for example are two blocks
+
+and gaps of length one are not very mario-like
+
+we needed chunks of the same size so we had a calculable relation
+
+between chunks used and level length
+
+for the number of iterations
+
+we want this length, ok so we iterate this n of times
+
+also, levels of same length, same number of states
+
+so we can compare them
+
+the choice of cluster from the step before
+
+determines what schematic we read
+
+each one has derivations and weights tailored to their needs
+
+but, as we said, same nonterminals
+
+alright so we read the schematic to construct an automaton representing these transitions
+
+we use the parse2 library
+
+we defined a grammar for the schematics
+
+then parse2 reads the schematics and transform the rules into transitions
+
+with their weights of course
+
+the resulting graph
+
+can be seen also as a tree with cycles
+
+see the figure for the tree for our example from before
+
+HERE
+
+in this tree model, we'd be traversing it depth-first
+
+we store the terminals we follow, forming a string of chunks to place
+
+we call this string a "genotype", because it represents the level
+
+two equal genotypes represent the same level
+
+an executor later traverses the chunks
+
+from starting node
+
+choses a random transition
+
+pushes the derivation chain into the stack
+
+then pop top node
+
+if it's terminal, we add it to genotype
+
+if it's nonterminal, we pick a random transition and push it to stack
+
+always proceed with the leftmost element of the chain first
+
+because we build the level from left to right
 
 \section{Results}
 
-Work was started by collecting data from many different players. Each participant was asked to play one of the levels generated by the standard, random algorithm found in the Mario AI Championship platform, and return the resulting records. Social networks and word of mouth were used to recruit volunteers, managing to get 115 different user profiles at the time of this article.
+god damn that was a lot to tell
 
+so what happened
 
-\begin{table}
-\begin{center}
-\renewcommand{\arraystretch}{1.3}
-\caption{Log Likelihood of the different clusterers}
-\label{tableloglikelihood}
-\begin{tabular}{|c|c|}
-\hline
-HierarchicalCluster: & 79.28\\
-\hline
-FarthestFirst: & 80.70\\
-\hline
-XMeans: & 84.83 \\
-\hline
-SimpleKMeans: & 84.03 \\
-\hline
-EM: & 86.64 \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+we used social networks, like twitter, facebook and reddit, and word of mouth
 
-Several clustering algorithms were then tried to detect the different playstyles: \textit{HierarchicalClusterer}, \textit{FarthestFirst}, \textit{XMeans}, \textit{SimpleKMeans} and \textit{EM}.
-All algorithms, except EM, were wrapped in MakeDensityBasedClusters to compare their log likelihoods, which can be checked above in table~\ref{tableloglikelihood} .The best value was obtained with \textit{Expectation-Maximization}, with \textit{SimpleKMeans} and \textit{XMeans} close behind. 
+to get the data
 
-The parameters wre configured as standard for the Weka library, except for the number of clusters, that was set to three after several tries. There were two factors to balance: a bigger number meant a better personalization; a small number meant sometimes obtaining clusters with only a handful of players. Four and five clusters were consistently distorting the personality of the clusters (no meaningful conclusions could be extracted from them) and therefore were discarded.
+117 entries
 
+each person was given a package with ready-to-play game
 
-\begin{table*}
-\begin{center}
-\renewcommand{\arraystretch}{1.7}
-\caption{Clusters and their parameters ranks}
-\label{tableparameters}
-\begin{tabular}{|c|c|c|}
-\hline
-	Nickname & highest & lowest
-\\
-\hline
-	``explorers'' 
-	& \begin{minipage}[c]{0.7\columnwidth}GoombasKilled, aimlessJumps, coinBlocksDestroyed, coinsCollected, completionTime, duckNumber, emptyBlocksDestroyed, enemyKillByFire, jumpsNumber, percentageBlocksDestroyed, percentageCoinBlocksDestroyed, percentageEmptyBlocksDestroyed, percentagePowerBlockDestroyed, timeRunningLeft, timeRunningRight, timeSpentDucking, timesPressedRun, timesSwitchingPower, totalEmptyBlocks, totalTime, totalTimeFireMode, totalTimeLargeMode, totalTimeLittleMode, totalPowerBlocks\end{minipage}
-	& \begin{minipage}[c]{0.7\columnwidth}timeSpentRunning\end{minipage}
-\\
-\hline
-	``speeders''
-	& \begin{minipage}[c]{0.7\columnwidth}timeSpentRunning, timesofDeathByGoomba\end{minipage}
-	& \begin{minipage}[c]{0.7\columnwidth}GoombasKilled, aimlessJumps, coinBlocksDestroyed, coinsCollected, completionTime, duckNumber, emptyBlocksDestroyed, enemyKillByFire, jumpsNumber, percentageBlocksDestroyed, percentageCoinBlocksDestroyed, percentageEmptyBlocksDestroyed, percentagePowerBlockDestroyed, timeRunningLeft, timeRunningRight, timeSpentDucking, timesPressedRun, timesSwitchingPower, totalCoinBlocks, totalCoins, totalEmptyBlocks, totalEnemies, totalTime, totalTimeFireMode, totalTimeLargeMode, totalPowerBlocks\end{minipage}
-\\
-\hline
-	``intermediates''
-	& \begin{minipage}[c]{0.7\columnwidth}totalCoinBlocks, totalCoins, totalEnemies\end{minipage}
-	& \begin{minipage}[c]{0.7\columnwidth}timesofDeathByGoomba, totalTimeLittleMode\end{minipage}
-\\
-\hline
-\end{tabular}
-\end{center}
-\end{table*}
+the game would provide a regular random level from the framework
 
-The Mario AI Championship platform stores 45 metrics of user gameplay, mostly related to time spent performing actions and items collected. But some of them were filtered due to the characteristics of the sample level that the platform generates. There are no flower piranhas, no gaps, and no enemies other than goombas. Therefore, all the following metrics were excluded from the study and custering, since their value was always zero: \textit{ArmoredTurtlesKilled}, \textit{CannonBallKilled}, \textit{ChompFlowersKilled}, \textit{GreenTurtlesKilled}, \textit{RedTurtlesKilled}, \textit{enemyKillByKickedShell}, \textit{kickedShells}, \textit{timesofDeathByArmoredTurtle}, \textit{timesofDeathByCannonBall}, \textit{timesofDeathByChompFlower}, \textit{timesofDeathByFallingIntoGap}, \textit{timesofDeathByGreenTurtle}, \textit{timesofDeathByJumpFlower}, \textit{timesofDeathByRedTurtle}.
+they were asked to just play, with no other worries about completing the stage, or training before hand
 
-As mentioned, with three clusters a ``personality'' for their players could be inferred from their values. One of the them was identifiable by the high number of blocks broken and enemies killed, as well as long completion times. The users in this group were nicknamed ``explorers''. Another cluster was characteristic for its quick completion time, long use of running mode, and disregard for powerups. They were nicknamed ```speeders''. Finally, the remaining cluster, presenting a more neutral set of attributes, were nicknamed ``intermediates''. A full classification of the parameters can be consulted in table~\ref{tableparameters}. Figure~\ref{wekaplot} shows a plot of one of the parameters, \textit{timeRunningLeft} (some jittering was added for easier visualization). This value can be interpreted as a measure of backtracking to interact with missed elements, and is shown here to be quite crucial in telling apart the clusters. 
+and send back the results
 
-\begin{figure}[htp]
-\centerline{\includegraphics[width=0.9\columnwidth]{timeRunningLeft_.png}}
-\caption{timeRunningLeft plotted against cluster membership}
-\label{wekaplot}
-\end{figure}
+we fed into weka 
 
-Per this observation, and reflecting on the meaning of those user profiles, three automata were designed, attending to the inferred needs of those clusters. For example, speeders may frown upon blocks of ``stairs'' because they often force a stop of the running flow. Similarly, explorers tend to enjoy double rows of blocks, an aspect overlooked by the other types of players. 
+but we filtered some parameters
 
-\begin{figure}[htp]
-\centerline{\includegraphics[width=0.75\columnwidth]{automaton.png}}
-\caption{Simplified automaton designed for intermediates (probabilities removed for clarity)}
-\label{automaton}
-\end{figure}
+because the default stage
 
-\begin{figure}[htp]
-\centerline{\includegraphics[width=0.75\columnwidth]{screenshot.png}}
-\caption{Screenshot of a random level generated by the above automaton}
-\label{screenshot}
-\end{figure}
+has no gaps, or enemies other than goombas
 
-Figure~\ref{automaton} and figure~\ref{screenshot} show a suggested simple automaton for intermediates, with all basic elements present, and a level generated by it, respectively. Transition probabilities are not shown for size constraints and clarity. Dashed states are ``empty'', that is, they place no elements on the level and exist only for convenience in design.
+so soe parameters were always zero
 
-The general flow of this automaton is to build its initial platform ({\bf S}), some flat land ({\bf F}) and then cyclically go from the global hub ({\bf H}) into branches, each representing a different part of the scene that could be built. At the end of each branch, some flat land is added for buffering. Lots of different elements immediately adjacent resulted in not only visually unpleasant, bur rhythmically dissonant segments and severely hurt pacing. Spacing between them helped to offer a smoother cadence.
+those parameters:
 
-Let's focus now, for example, on the branch for \textit{gaps}. State {\bf G} serves as entry point for all kinds of gaps, accesible from the hub {\bf H}. This transition provides an opportunity to regulate the overall frequency of gaps in our level. Then, two states bifurcate the way: {\bf GS} places a gap with stairs surrounding it, while {\bf GT} places a regular, bare gap. It's here when the individual probability of each gap can be weighted. Finally, both of them go out through dummy state {\bf GO} (for {\it gap out}).
+we used those, though:
 
-In this case {\bf GO} only goes to {\bf F} as mentioned before, but it could be made to loop on itself. This is how blocks ({\bf B}), coins ({\bf C}) or enemies ({\bf E}) are implemented. Each pass through the state places but one sprite on the level. It's the loop that creates a row. Tuning the probability moderates the average number of coins (for instance) that are expected to be found on a given strike.
+then we tried the five clustering algorithms with default settings
+
+except three clusters as explained
+
+(why only the five? er...)
+
+you can see the results of the log likelihood here
+
+em rocked
+
+the three clusters found represented the profiles we hoped
+
+check this sweet table
+
+isn't it gorgeous
+
+plus they are well separated
+
+check this graph
+
+you like it huh?
+
+speeders like this
+
+explorers like that
+
+and my milkshake brings all the boys to the yard
+
+so we made some grammars
+
+here, take a ride in my intermediate
+
+here's the diagram
+
+and a sample trace for good measure
+
+ok a screenshot too
+
+let me explain some design choices
+
+like, this branch here
 
 \section{Conclusions}
 
-Records belonging to the three different clusters were fed to the algorithm, and playtest showed that each of the levels generated had the capacity of feeling different to the others.
+the separation of layers means that the way you identify users
 
-The architecture shown in this paper offers great expansion potential. Its modularity expressed through several layers diminishes the interferences of the different parts. For instance, new player types may be detected in the clustering layer, and the changes in the automata layer would be minimal -- just adding a new FSM that does not break existing functionality. Similarly, changes in an existing FSM would not affect neither the clustering layer nor the other FSMs of the system. Furthermore, new states and transitions may be added without the need for modifications on the underlying library of builder functions they call upon.
+is not thoroughly linked to how you use that information to guide the building
 
-In summary, as different preferences and goals are accounted for, the approach allows for great flexibility on the process followed for each user. Reducing the space of all possible players into a small number of aggregated playstyles also tones down the number of needed automata as to be few enough to be designed by hand. Manually crafting the states and transitions improves the overall arching flow, per the control over sequentially adjacent ``chunks'' of the level. Albeit keeping its characteristic randomness, the levels are ensured to have an orderly sense instead of being just a messy sequence of pieces.
+grammars meant
+
+that we used the same basic chunks
+
+in different ways each
+
+tailoring for styles
+
+grammars are easily intuitive and modifiable
+
+you can control what goes next to what
+
+and how often
+
+and offer choices, different "paths" for the build
+
+we also produced a way of identifying and storing a level
+
+by its genotype of chunks
+
+(did you define chunk? go and do it!)
 
 \subsection*{Future work}
 
-One of the most promising aspects of the presented architecture is its flexibility to be enhanced in several ways. We consider combination with evolutionary techniques to be the most rewarding path. Even though determining the existence of transitions (links) between states can be left to the designer's choice, the actual weight of those transitions can be easily obtained by evolution, pondering user feedback from the level play until finding a fine-tuned balance. Similarly, players can be better represented by percentages of similarity to given clusters than by hard assignment. Using those percentages, the automata can be mixed and matched to offer a more personalized experience, by encoding them as grammars and using grammatical evolution.
+we hope
+
+to evaluate this system
+
+with some group control
+
+also
+
+genotypes allow us to use genetic techniques
+
+for example
+
+if the clustering layers defines a player
+
+instad of one membership
+
+with shared membership
+
+we can generate levels from different automata
+
+and mix them
+
+we can also alternate picking derivation rules between grammars by those same percentages
+
 
 \section*{Acknowledgments}
 This work has been supported by the
