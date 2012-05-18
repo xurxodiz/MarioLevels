@@ -1,11 +1,11 @@
-transitions		=  1*( transition / (*c-wsp c-nl) ) ;
+schematics		=  1*( transition / (*c-wsp c-nl) ) ;
 
 transition		=  nonterminal *c-wsp "=" *c-wsp alternation ;
 
 alternation		=  concatenation
                    *(*c-wsp "|" *c-wsp concatenation) ;
 
-concatenation	=  element *(1*c-wsp element) *c-wsp "," *c-wsp weight ;
+concatenation	=  (1*(*c-wsp terminal) / nonterminal) *(1*c-wsp nonterminal) *c-wsp "," *c-wsp weight ;
 
 element			=  nonterminal / terminal ;
 

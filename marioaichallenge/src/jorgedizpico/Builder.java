@@ -4,27 +4,23 @@ public class Builder {
 	
 	public LakituLevel lvl;
 	
-	protected int I_START_PLATFORM = 5;
-	protected int I_END_PLATFORM = 7;
+	protected int I_START_PLATFORM = 10;
+	protected int I_END_PLATFORM = 10;
 	protected int I_EXIT_OFFSET = 5; // offset always smaller than end platform
 	
 	protected int I_HEIGHT_MARGIN = 2;
 	protected int I_HEIGHT_MIN = 2;
 	
-	protected int I_LEN_FLAT = 2;
-	protected int I_LEN_BLOCKS = 4;
-	protected int I_LEN_ENEMIES = 4;
-	protected int I_LEN_COINS = 4;
-	protected int I_LEN_GAP = 2;
-	protected int I_LEN_STAIRS = 4;
+	protected int I_LEN = 2;
 	
 	protected int I_JUMP_OFFSET = -5;
 	protected int I_JUMP_RANGE = 10;
 	
 	protected int I_BLOCK_HOVER_HEIGHT = 4;
 	protected int I_PIPE_HEIGHT = 2;
-	protected int I_CANNON_HEIGHT = 1;
+	protected int I_CANNON_HEIGHT = 2;
 	
+	protected int oldx = 0;
 	protected int x = 0;
 	
 	public Builder(LakituLevel lvl) {
@@ -32,130 +28,133 @@ public class Builder {
 		this.x = 0;
 	}
 	
-	public int currentX() {
-		return x;
+	private boolean updateX(int nx) {
+		return updateX(nx, I_LEN);
+	}
+	
+	private boolean updateX(int nx, int diff) {
+		oldx = x;
+		x = nx;
+		return (x-oldx) == diff;
 	}
 	
 	public int getLevelWidth() {
 		return lvl.getWidth();
 	}
 	
-	public int createFlatLand() {
-		int y = lvl.getLastGroundHeight(x);
-		x += lvl.addFlatLand(x, I_LEN_FLAT, y);
+	public int getLevelWidthSoFar() {
 		return x;
 	}
 	
-	public int createGap() {
-		x += lvl.addGap(x, I_LEN_GAP);
-		return x;
-	}
-	
-	public int createGapStairs() {
-		createStairsUp();
-		createGap();
-		createStairsDown();
-		return currentX();
-	}
-	
-	public int createPipe() {
+	public boolean createFlatLand() {
 		int y = lvl.getLastGroundHeight(x);
-		lvl.addFlatLand(x, 2, y);
-		x = lvl.placePipe(x, y, I_PIPE_HEIGHT);
-		return ++x;
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		return updateX(xx);
 	}
 	
-	public int createPiranha() {
-		int y = lvl.getLastGroundHeight(x);
-		lvl.placePiranha(x-2, y);
-		return x;
+	public boolean createGap() {
+		int xx = lvl.addGap(x, I_LEN);
+		return updateX(xx);
 	}
 	
-	public int createEnemies() {
-		//boolean winged = false;
+	public boolean createGapStairs() {
+		return (createStairsUp() && createGap() && createStairsDown());
+	}
+	
+	public boolean createPipe() {
 		int y = lvl.getLastGroundHeight(x);
-		int w = lvl.addFlatLand(x,  1, y);
-		//int type = Enemy.ENEMY_GOOMBA;
+		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		//for (int i = 0; i< w; i++)
-			if (x % 2 == 0)
-				lvl.placeGoomba(x, y-1);
-		x += w;
-		return x;
-	}
-	
-	public int createCannon() {
-		createFlatLand();
-		int y = lvl.getLastGroundHeight(x);
-		lvl.placeCannon(x-1, y, I_CANNON_HEIGHT);
-		return currentX();
-	}
-	
-	public int createBlocks() {
-		int y = lvl.getLastGroundHeight(x);
-		int w = lvl.addFlatLand(x,  1, y);
+		if (xx-x != I_LEN) return false;
 		
-		//for (int i = 0; i< w; i++)
+		xx = lvl.placePipe(x, y, I_PIPE_HEIGHT);
+		return updateX(xx);
+	}
+	
+	public boolean createPiranha() {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.placePiranha(x-I_LEN, y);
+		return (xx == x);
+	}
+	
+	public boolean createEnemies() {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		
+		for (int i = x; i < xx; i++)
+			if (i % 2 == 0)
+				lvl.placeGoomba(i, y-1);
+		return updateX(xx);
+	}
+	
+	public boolean createCannon() {
+		if (!createFlatLand()) return false;
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.placeCannon(x-1, y, I_CANNON_HEIGHT);
+		return (xx == x);
+	}
+	
+	public boolean createBlocks() {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		
+		for (int i = x; i < xx; i++)
 			switch (x%3) {
 				case 0:
-					lvl.placeBlockPowerUp(x, y-I_BLOCK_HOVER_HEIGHT);
+					lvl.placeBlockPowerUp(i, y-I_BLOCK_HOVER_HEIGHT);
 					break;
 				case 1:
-					lvl.placeBlockCoin(x, y-I_BLOCK_HOVER_HEIGHT);
+					lvl.placeBlockCoin(i, y-I_BLOCK_HOVER_HEIGHT);
 					break;
 				default:
-					lvl.placeBlockEmpty(x, y-I_BLOCK_HOVER_HEIGHT);
+					lvl.placeBlockEmpty(i, y-I_BLOCK_HOVER_HEIGHT);
 					break;
 			}
-		x += w;
-		return x;
+		return updateX(xx);
 	}
 	
-	public int createCoins() {
+	public boolean createCoins() {
 		int y = lvl.getLastGroundHeight(x);
-		int w = lvl.addFlatLand(x,  1, y);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		//for (int i = 0; i < w; i++)
-			lvl.placeCoin(x, y-I_BLOCK_HOVER_HEIGHT);
+		for (int i = x; i < xx; i++)
+			lvl.placeCoin(i, y-I_BLOCK_HOVER_HEIGHT);
 		
-		x += w;
-		return x;
+		return updateX(xx);
 	}
 	
-	public int createStairsUp() {
+	public boolean createStairsUp() {
 		int y = lvl.getLastGroundHeight(x);
-		int w = lvl.addFlatLand(x,  I_LEN_STAIRS, y);
+		int xx = lvl.addFlatLand(x,  I_LEN, y);
 		
-		for (int i = 0; i < w; i++)
+		for (int i = 0; i < xx-x; i++)
 			for (int h = 1; h <= i+1; h++)
 				lvl.placeRock(x+i, y-h);
 		
-		x += w;
-		return x;
+		return updateX(xx);
 	}
 	
-	public int createStairsDown() {
+	public boolean createStairsDown() {
 		int y = lvl.getLastGroundHeight(x);
-		int w = lvl.addFlatLand(x,  I_LEN_STAIRS, y);
+		int xx = lvl.addFlatLand(x,  I_LEN, y);
 		
-		for (int i = 0; i < w; i++)
-			for (int h = 1; h <= w-i; h++)
+		for (int i = 0; i < xx-x; i++)
+			for (int h = 1; h <= xx-x+i; h++)
 				lvl.placeRock(x+i, y-h);
 		
-		x += w;
-		return x;
+		return updateX(xx);
 	}
 	
-	public int createStartPlug() {
-		x += lvl.addFlatLand(x, I_START_PLATFORM, lvl.getHeight()-I_HEIGHT_MIN);
-		return x;
+	public boolean createStartPlug() {
+		int xx = lvl.addFlatLand(x, I_START_PLATFORM, lvl.getHeight()-I_HEIGHT_MIN);
+		return updateX(xx, I_START_PLATFORM);
 	}
 	
-	public int createEndPlug() {
-		int w = lvl.addFlatLand(lvl.getWidth()-I_END_PLATFORM, I_END_PLATFORM, lvl.getHeight()-I_HEIGHT_MIN);
-		lvl.cleanSprites(lvl.getWidth()-I_EXIT_OFFSET, lvl.getWidth());
-		lvl.setExit(lvl.getWidth()-I_EXIT_OFFSET);
-		return w;
+	public boolean createEndPlug() {
+		int xx = lvl.addFlatLand(x, I_END_PLATFORM, lvl.getHeight()-I_HEIGHT_MIN);
+		lvl.cleanSprites(x, xx);
+		lvl.setExit(xx-I_EXIT_OFFSET);
+		return updateX(xx, I_END_PLATFORM);
 	}
 	
 	public void fixLevel() {

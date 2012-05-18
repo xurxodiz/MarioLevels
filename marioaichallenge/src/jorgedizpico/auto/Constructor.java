@@ -1,54 +1,64 @@
 package jorgedizpico.auto;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import jorgedizpico.grammar.*;
 
 public class Constructor implements Visitor {
 	
-	@Override
-	public Object visit(Rule$transitions rule) {
-		visitRules(rule.rules);
-		return null;
-	}
+	private Repository repo;
 	
 	@Override
+	public Object visit(Rule$schematics rule) {
+		repo = new Repository();
+		visitRules(rule.rules);
+		return repo;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
 	public Object visit(Rule$transition rule) {
-		// array = visitRules
-		// array[0] -> state-dummy
-		// array[0] -> [[chain,weight]]
-		// automata.add(state, chain)
+		ArrayList<Object> transitions = visitRules(rule.rules);
+		Dummy st = (Dummy) transitions.get(0);
+		ArrayList<Object> chains = (ArrayList<Object>) transitions.get(1);
+		for (Object o : chains)
+			st.addChain((Chain)o);
 		return null;
 	}
 	
 	@Override
 	public Object visit(Rule$alternation rule) {
-		// visitRules returns a list of [chain,weight]
-		// it's probably ok to return it as is
-		return null;
+		return visitRules(rule.rules);
 	}
 	
 	@Override
 	public Object visit(Rule$concatenation rule) {
-		// visitRules returns a list of elements and a weight at the end
-		// we should return [chain, weight]
-		return null;
+		Chain ch = new Chain();
+		
+		Collection<Object> children = visitRules(rule.rules);
+		
+		Object o = children.remove(children.size());
+		ch.setOdds((Double)o);
+		
+		for (Object st : children)
+			ch.addState((State)st);
+		return ch;
 	}
 	
 	@Override
 	public Object visit(Rule$element rule) {
-		// return an element, as per definition (state/token)
-		return null;
+		return rule.rules.get(0).accept(this);
 	}
 	
 	@Override
 	public Object visit(Rule$nonterminal rule) {
-		return new String(rule.spelling); // dummystate
+		return repo.getDummy(rule.spelling);
 	}
 	
 	@Override
 	public Object visit(Rule$terminal rule) {
-		return new String(rule.spelling); // workerstate
+		return repo.getGene(rule.spelling);
 	}
 	
 	@Override

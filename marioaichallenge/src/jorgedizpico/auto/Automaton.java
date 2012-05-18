@@ -1,150 +1,64 @@
 package jorgedizpico.auto;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.Stack;
 
 import jorgedizpico.Builder;
+import jorgedizpico.LakituLevel;
+import jorgedizpico.grammar.Parser;
+import jorgedizpico.grammar.Rule;
 
 public class Automaton {
 	
-	protected State state;
-	protected HashMap<State, ArrayList<Transition>> transitions;
+	private static int GENOTYPE_LENGTH = 150;
+	
+	protected Repository repo;
+	protected Stack<State> stack = new Stack<State>();
+	protected ArrayList<Gene> genotype  = new ArrayList<Gene>();
 
-	public Automaton (int type){
-		transitions = new HashMap<State, ArrayList<Transition>>();
-		// load transitions from file
-		// meanwhile...
-		addTransitions();
+	public Automaton (int type) throws Exception {
+
+		Rule schematics = Parser.parse("transitions", new File("automaton1.abnf"));
+
+		Constructor cons = new Constructor();
+		repo = (Repository) schematics.accept(cons);
 	}
 	
-	public void execute(Builder lkb) {
-		int err = 1;
+	
+	void pushState(State st) {
+		stack.push(st);
+	}
+	
+	boolean addGene(Gene gene) {
+		return genotype.add(gene);
+	}
+	
+	private void generateGenotype(int length) {
 		
-		state = State.INITIAL;
+		stack.clear();
+		genotype.clear();
 		
-		while (err < lkb.getLevelWidth()) {
-			state = transition(state);
-			err = state.genesis(lkb);
+		stack.push(repo.getDummy("INITIAL"));
+		
+		while (genotype.size() < length) {
+			State st = stack.pop();
+			st.execute(this);
 		}
+		
+		stack.clear();
 	}
 
-
-	protected State transition(State state) {
-		double roll = new Random().nextDouble();
-		double accum = 0.0;
-				
-		for (Transition t : transitions.get(state)) {
-			accum += t.getOdds();
-			if (accum > roll)
-				return t.getState();
-		}
+	public LakituLevel buildLevel() {
+		LakituLevel lvl = new LakituLevel();
+		Builder lkb = new Builder(lvl);
+		generateGenotype(GENOTYPE_LENGTH);
 		
-		// fallback
-		return State.FLAT;
-	}
-	
-	protected void addTransitions() {
-		ArrayList<Transition> tr;
+		lkb.createStartPlug();
+		for (Gene g : genotype)
+			if (!g.genesis(lkb)) return null;
 		
-		// Initial : Start
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.START, 1.0));
-		transitions.put(State.INITIAL, tr);
-		
-		// Start : Hub
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.FLAT, 1.0));
-		transitions.put(State.START, tr);
-		
-		// Flat : Hub
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.FLAT, 0.05));
-		tr.add(new Transition(State.HUB, 0.95));
-		transitions.put(State.FLAT, tr);
-		
-		// Hub : Pipe, Enemies, Flat, Gap, Blocks, Coins, Cannon
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.PIPE, 0.12));
-		tr.add(new Transition(State.ENEMIES, 0.20));
-		tr.add(new Transition(State.GAP, 0.19));
-		tr.add(new Transition(State.BLOCKS, 0.20));
-		tr.add(new Transition(State.COINS, 0.17));
-		tr.add(new Transition(State.CANNON, 0.08));
-		transitions.put(State.HUB, tr);
-		
-		// Pipe : PipePiranha, PipeOut
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.PIPEPIRANHA, 0.5));
-		tr.add(new Transition(State.PIPEOUT, 0.5));
-		transitions.put(State.PIPE, tr);
-		
-		// PipePiranha : PipeOut
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.PIPEOUT, 1.0));
-		transitions.put(State.PIPEPIRANHA, tr);
-		
-		// PipeOut : Flat
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.FLAT, 1.0));
-		transitions.put(State.PIPE, tr);
-		
-		// Gap : GapStd, GapStairsUp
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.GAPSTD, 0.75));
-		tr.add(new Transition(State.GAPSTAIRS, 0.25));
-		transitions.put(State.GAP, tr);
-		
-		// GapStd : GapOut
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.GAPOUT, 1.0));
-		transitions.put(State.GAPSTD, tr);
-		
-		// GapStairs : GapOut
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.GAPOUT, 1.0));
-		transitions.put(State.GAPSTAIRS, tr);
-		
-		// GapOut : Flat
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.FLAT, 1.0));
-		transitions.put(State.GAPOUT, tr);
-		
-		// Coins : Coins, Flat
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.COINS, 0.8));
-		tr.add(new Transition(State.FLAT, 0.2));
-		transitions.put(State.COINS, tr);
-		
-		// Cannon : Hub
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.FLAT, 1.0));
-		transitions.put(State.CANNON, tr);
-		
-		// Block : Enemies, Flat, Blocks
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.FLAT, 0.2));
-		tr.add(new Transition(State.BLOCKS, 0.8));
-		transitions.put(State.BLOCKS, tr);
-		
-		// Enemies : Block, Flat, Enemies
-		tr = new ArrayList<Transition>();
-		tr.add(new Transition(State.ENEMIES, 0.8));
-		tr.add(new Transition(State.FLAT, 0.2));
-		transitions.put(State.ENEMIES, tr);
+		return lvl;
 	}
 
-}
-
-class Transition {
-	protected State state;
-	protected Double odds;
-	
-	public Transition(State state, double odds) {
-		this.state = state;
-		this.odds = odds;
-	}
-	
-	public State getState() { return state; }
-	public double getOdds() { return odds; }
 }

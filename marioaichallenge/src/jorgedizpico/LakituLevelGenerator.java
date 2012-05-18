@@ -28,8 +28,6 @@ public class LakituLevelGenerator implements LevelGenerator {
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
 		try {
 						
-			lvl = new LakituLevel();
-	
 			Clusterer cl = readClusters(clusterFile);			
 			Instance inst = makeInstance(playerMetrics);
 			int cluster = cl.clusterInstance(inst);
@@ -47,11 +45,12 @@ public class LakituLevelGenerator implements LevelGenerator {
 			}
 			
 			Automaton aut = new Automaton(cluster);
-			Builder lkb = new Builder(lvl);
 			
-			aut.execute(lkb);
-			lkb.fixLevel();
+			LakituLevel lvl = aut.buildLevel();
 			
+			if (null != lvl)
+				throw new Exception("Error while building level from genes");
+				
 			return lvl;
 			
 		} catch (Exception e) {
