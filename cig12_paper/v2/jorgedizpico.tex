@@ -262,129 +262,41 @@ always proceed with the leftmost element of the chain first
 
 because we build the level from left to right
 
-\section{Results}
-
-Testing of the system required data from user play to detect the clusters. To collect the player records, social networks like Twitter[FN], Facebook[FN] and Reddit[FN], and word of mouth, were used to encourage participation in this research.
-
-Users were directed to a webpage where they were instructed to download a package. It was a zip file, with a copy of the platform and easy instructions to follow. Scripts were made for every major platform (Windows, OSX, Linux) so the process of playing was reduced to double click a file. After that, participants were instructed to mail back the text files that had been generated after the game (the log records).
-
-No indications about the goals for the game where given except to ``play normally'' to have fun and not worry about completing the level or waiting until practice made you better. At the time of this article, 118 different player records had been received.
-
-
-we fed into weka 
-
-but we filtered some parameters
-
-because the default stage
-
-has no gaps, or enemies other than goombas
-
-so soe parameters were always zero
-
-those parameters:
-
-we used those, though:
-
-then we tried the five clustering algorithms with default settings
-
-except three clusters as explained
-
-(why only the five? er...)
-
-you can see the results of the log likelihood here
-
-em rocked
-
-the three clusters found represented the profiles we hoped
-
-check this sweet table
-
-isn't it gorgeous
-
-plus they are well separated
-
-check this graph
-
-you like it huh?
-
-speeders like this
-
-explorers like that
-
-and my milkshake brings all the boys to the yard
-
-so we made some grammars
-
-here, take a ride in my intermediate
-
-here's the diagram
-
-and a sample trace for good measure
-
-ok a screenshot too
-
-let me explain some design choices
-
-like, this branch here
-
 \section{Execution}
 
 Remember to talk about the two-block chunks. yeah, again.
 
+\section{Results}
+
+Testing of the system required data from user play to detect the clusters. To collect the player records, social networks like Twitter[FN], Facebook[FN] and Reddit[FN], and word of mouth, were used to encourage participation in this research.
+
+Users were directed to a webpage where they were instructed to download a package. It was a zip file, with a copy of the platform as provided by the competition organization (no modifications) and easy instructions to follow. Scripts were made for every major platform (Windows, OSX, Linux) so the process of playing was reduced to double clicking a file. After that, participants were instructed to mail back the text files that had been generated after the game (the log records). No indications about the goals for the game where given except to ``play normally'' to have fun and not worry about completing the level or waiting until practice made you better.
+
+At the time of this article, 118 different player records had been received. Before analyzing them, some parameters were filtered in preprocessing. The default random level generation algorithm of the Mario AI Championship platform does not create gaps or enemies other than goombas. Parameters related to interaction with those elements were therefore always zero in the records, and thus they were excluded from the study. In Table X, those elements have a \textit{n/a} (not available) mark on all columns.
+
+The data was then fed to Weka, where the available clusteirng algorithms were tested. As shown in Table Z, the best results, as per the log likelihood value that is common to employ in these cases, was obtained by the Expectation-Maximization algorithm. Not only that, but the clusters represented the three profiles looked for, as shown in Table W. Attention must be brought to the clear difference in averages for most parameters, like totalTime, enemiesKilled or timeSpentRunning. Figure F shows this last metric plotted against cluster assignation.
+
+For each of those clusters, a grammar was written per the methodology in section K. Figure M shows the rules associated to the ``speeder'' profile. Notice must be taken on how all branches sprouting from the ``hub'' end in some flat ground, as spacing between elements. Cluttered screens seemed to impact as messy and unfocused. Also remarkable is the low probability for gaps with stairs, since they were found to be frustrating for those players as they break the flow of running. It is also lacking double rows of blocks, that were severely disregarded by speeders as well.
+
+FIGURE M
+
+A sample run through the automaton built from this grammar can be seen in the trace in Figure N, and a screenshot from the stage built from that trace in Figure B.
+
+Figure N
+
+Figure B.
+
 \section{Conclusions}
 
-the separation of layers means that the way you identify users
+The architecture presented here combines clustering for player identification with grammars for level structure definition. The separation of functionality means that the parameters guiding the process are not intermixed with the actual generation process and either of those two parts may be swapped out for another approach.
 
-is not thoroughly linked to how you use that information to guide the building
+Use of grammars resulted in a random, yet ordered way of producing levels. New possibilities can be added to a level just by creating rules that combine the available chunks in different ways or with different frequencies. At the same time, having different grammars for each profile means diverse necessities and styles can be catered for while not disturbing other players for whom the changes are not meant.
 
-grammars meant
-
-that we used the same basic chunks
-
-in different ways each
-
-tailoring for styles
-
-grammars are easily intuitive and modifiable
-
-you can control what goes next to what
-
-and how often
-
-and offer choices, different "paths" for the build
-
-we also produced a way of identifying and storing a level
-
-by its genotype of chunks
-
-(did you define chunk? go and do it!)
+By defining a genotype for levels as output of the derivation process, before its execution into a playable level itself, an easy, unequivocal way of storing levels for later reference has been developed. Levels can now be compared, mixed or measured against other metrics by statistical analysis on its components.  
 
 \subsection*{Future work}
 
-we hope
-
-to evaluate this system
-
-with some group control
-
-also
-
-genotypes allow us to use genetic techniques
-
-for example
-
-if the clustering layers defines a player
-
-instad of one membership
-
-with shared membership
-
-we can generate levels from different automata
-
-and mix them
-
-we can also alternate picking derivation rules between grammars by those same percentages
-
+We hope to refine this methodology by group control evaluation, further tuning the grammar derivations and frequencies. We also hope to explore the possibilities that the genotype opens for genetic combination of levels, guided perhaps by percentages of profiling obtained by fuzzy clustering (that is, each player has a degree of belonging to a cluster, instead of being all-or-nothing). Another option, using the same profiling technique, would be to use those percentages to pick between derivation rules of different grammars.
 
 \section*{Acknowledgments}
 This work has been supported by the
