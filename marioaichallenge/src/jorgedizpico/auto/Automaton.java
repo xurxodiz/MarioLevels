@@ -4,10 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Stack;
 
-import jorgedizpico.Builder;
-import jorgedizpico.LakituLevel;
 import jorgedizpico.grammar.Parser;
 import jorgedizpico.grammar.Rule;
+import jorgedizpico.level.Builder;
+import jorgedizpico.level.LakituLevel;
 
 public class Automaton {
 	

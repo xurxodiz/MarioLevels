@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import jorgedizpico.LakituLevelGenerator;
+import jorgedizpico.level.LakituLevelGenerator;
 
 import dk.itu.mario.level.BgLevelGenerator;
 import dk.itu.mario.MarioInterface.GamePlay;

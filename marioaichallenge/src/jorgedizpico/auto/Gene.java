@@ -2,7 +2,7 @@ package jorgedizpico.auto;
 
 import java.lang.reflect.Method;
 
-import jorgedizpico.Builder;
+import jorgedizpico.level.Builder;
 
 public enum Gene implements State {
 	

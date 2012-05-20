@@ -1,4 +1,4 @@
-package jorgedizpico;
+package jorgedizpico.level;
 
 
 import java.util.ArrayList;

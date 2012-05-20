@@ -1,4 +1,4 @@
-package jorgedizpico;
+package jorgedizpico.level;
 
 public class Builder {
 	
