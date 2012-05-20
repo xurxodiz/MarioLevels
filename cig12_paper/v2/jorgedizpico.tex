@@ -35,12 +35,25 @@
 \maketitle
 
 \begin{abstract}
-
-public abstract voi-- ha ha you funny guy i kill you last
+	
+	Procedural content generation has been widely used to expand games
+	of very diverse genres. Creating levels on the fly offers a fresh
+	take on every run and infinite replayability. Adaptive techniques,
+	on the other hand, strive to make this generation tailored to the user
+	preferences, needs or skills. This paper offers a new take at
+	an architecture that implements both by combining clustering
+	for player profiling and grammars for defining level structure.
+	Levels are created by traversing the derivation tree and
+	generating a unique trace of level parts that can be
+	used for identifying and comparing them. The system has
+	been developed and tested for the Mario AI Championship competition,
+	making use of their experimental platform.
 
 \end{abstract}
 
 % No keywords
+
+
 
 \section{Introduction}
 
@@ -59,6 +72,10 @@ In this paper, we propose an architecture for adaptive level generation and test
 In the 2010 competition [CITE], six entries were presented, ranging from genetic algorithms (C) to multi-pass random generators (A). (E), from (X), took an interesting approach. They used heuristics to classify players in three levels of difficulty (low, medium, and hard) and flag the existence of traits from three styles (speed-run, enemy-kill, discovery). Then, this classification set the frequency parameters that were be checked when randomly choosing the next element as the level was constructed left to right.
 
 The architecture presented in this paper is related to that idea, albeit with some new modifications. The classification, for instance, is not a process based on heuristics, but data-driven from records of players. After an assignation has been made, this results in the selection of a set of rules; they affect not only the frequency of elements as in the above model, but also their placement adjacent to each other. This is done to enforce level aesthetics as envisioned by the designer and improve the sense of order.
+
+
+
+
 
 \section{Overview}
 
@@ -100,6 +117,10 @@ Finally the trace is interpreted by the execution layer. Each item on the list p
 
 In the next sections we'll explore the different layers more in detail, then at the end we'll review the results obtained upon their application.
 
+
+
+
+
 \section{Profiling}
 
 This first step of the system is intended to ``get to know'' the user to control the rest of the process in the right direction. The goals for this layer are to differentiate the player by finding his characteristic playstyle, without the need of asking him, since sometimes, user input can be misleading. For example, when polling the players on their proficiency, newcomer players are known to badly estimate their skills [CITE HERE].
@@ -124,147 +145,56 @@ The clustering was performed trying to find three specific clusters, identified 
 
 These profiles can be thought as a spectrum ranging from quick rush to slow walk, from simple play to extensive interaction. Equivalents can be drawn to similar spectrums in other games. For example, in the card game \textit{Magic: the Gathering}, the two main strategies for winning are \textit{aggro}, consisting in quickly overwhelming the opponents with simple creatures; and \textit{control}, that slowly builds dominion over the game until dealing the final blow. Other archetypes like \textit{midrange} or \textit{aggro-control} lie somewhere in the middle [CITE ME]. \footnote{A third common strategy, combo, exploits peculiarities in the interaction between some elements of the game to win the match instantly. This is, however, a unique strategy exclusive to \textit{Magic}. } 
 
-To find those three clusters, it was decided to rely on the Weka library for the process. It is a powerful, proved library that offers a wide range of clustering algorithms. As a metric to compare their performance, the value of their log likelihood was chosen, which is a popular paramter for this purpose. Log likelihood, however, can't be calculated for non-density-based algorithms, so X, Y and Z had to be wrapped in Weka's MakeDensityBasedCluster to provide this value.
+To find those three clusters, it was decided to rely on the Weka [FOOTNOTE] library for the process. It is a powerful, proved library that offers a wide range of clustering algorithms. As a metric to compare their performance, the value of their log likelihood was chosen, which is a popular paramter for this purpose. Log likelihood, however, can't be calculated for non-density-based algorithms, so X, Y and Z had to be wrapped in Weka's MakeDensityBasedCluster to provide this value.
 
 Finally, this process has the advantage of being able to be run offline, that is, previous to the actual level generation. Once the clusters are found in the sampled data, the results can be stored, and accessed just when a new player comes. It is at that moment when they are read, the player assigned to one of those clusters, and the assignation passed down to the next layer.
 
-\section{Grammars}
 
-whew that was long
 
-ok so now to fsms
 
-when we assign the player to a cluster, we implicitly assign him a grammar
+\section{Derivation}
 
-since each cluster has a grammar associated
+When we assign the player to a cluster, we implicitly assign him a grammar, per its cluster. Those grammars, called ``schematics'', define the structure of a level using a pseudo BNF syntax. Figure H shows an example of a reduced schematic.
 
-the grammars are called schematics and describe how to build the level
+Figure H
 
-in a pseudo-bnf way
+Tokens in uppercase are terminal symbols; tokens in lowercase are nonterminals. The numbers at the end of rules are weights. The schematics explain how to build a level; a rule with a bigger weight has more probabilities of being chosen. Schematics are written by hand by the designers, although the terminals are predefined by the execution layer (see section T) and depend on the level building parts offered by the game API (called ``chunks''). For example, in the example schematic from figure H, the terminals are PIPE, COIN and FLAT, representing the production of a pipe, a coin and some flat ground.
 
-take a look at this simple example
+Grammars defined in schematics are context-free, and cycle on their right (that is, the nonterminals on the left of a derivation chain are always expanded first and resolve to terminals). Going back to the schematic on figure H, from the start symbol we can derive PH, CH or FH. The choice would be random, albeit conditioned by the weights of the rules. P would resolve to PIPE (a pipe), C to a row of COINs (a coin), and F to FLAT (a strip of flat ground). Then, H would go back to the start symbol and the process will be repeated. The reason for having a neverending cycle is that schematics are designed to be infinite, so levels of any length can be produced. Derivation is stopped whe the desired level size is reached.
 
-HERE BE FIGURE
+As it was said, each cluster determines what schematic is picked, as it has derivations and weights tailored to the needs of its corresponding profile (but same available set of terminals, although it may decide not to use some of them). To read the schematics, the parse2 library[FOOTNOTE] was used to convert schematics into Java objects, that in turn became automata by creating a weighted directed graph. Symbols are turned into states and derivation rules into weighted transitions (links between states). The schematic from figure H is shown as an automaton in figure D .
 
-the derivation rules have weights
+Figure D
 
-a heavier rule has more probabilities of being chosen
+Traversing the automaton is alike to create the derivation tree. From the top node, or rule, a transition is chosen giving bigger odds to those with bigger weights. Terminals are added to the trace, nonterminals are pushed to a temporary stack. Then the top element of the stack is poped, and the process repeats until stopped. Figures J and C show a sample trace and its derivation tree from the schematic in figure H after ten iterations:
 
-the schematics are context-free grammars
+Figure J
 
-and expands on the right
+Figure C
 
-so in the example we start the level
+Because schematics are expanded towards their right, that means the tree is traversed depth-first. The resulting trace will be the basis for later construction of the level, since it uniquely identifies the parts that would have to be placed in it, and in what order. More accurately, it defines the \textit{actions} that will have to be called by the execution layer. It's like a plan for building the level. Two equal traces define the same level.
 
-and we can have a pipe or a coin or flat
-
-and we loop
-
-(ok explain this a bit longer)
-
-the schematic is designed to be infinite
-
-to be able to generate levels of any length
-
-this is a sample of a trace
-
-BLA PIPE COIN RICK ROLL
-
-the schematics are done by hand
-
-the terminals are predefined
-
-they are the available "chunks" that the system can build
-
-for example, a small gap
-
-or a pipe
-
-or a couple of blocks
-
-in this case we made every chunk of the same length, two
-
-we wanted the smallest possible to make it more flexible
-
-the arching structure can be obtained with the rules of the schematic
-
-forcing pieces to be together
-
-but if we wanted to control little details, we need little chunks
-
-but we couldn't do one, because pipes for example are two blocks
-
-and gaps of length one are not very mario-like
-
-we needed chunks of the same size so we had a calculable relation
-
-between chunks used and level length
-
-for the number of iterations
-
-we want this length, ok so we iterate this n of times
-
-also, levels of same length, same number of states
-
-so we can compare them
-
-the choice of cluster from the step before
-
-determines what schematic we read
-
-each one has derivations and weights tailored to their needs
-
-but, as we said, same nonterminals
-
-alright so we read the schematic to construct an automaton representing these transitions
-
-represented by a directed graph where the edges are weighted by their probabilities of being traversed
-
-we use the parse2 library
-
-we defined a grammar for the schematics
-
-then parse2 reads the schematics and transform the rules into transitions
-
-with their weights of course
-
-the resulting graph
-
-can be seen also as a tree with cycles
-
-see the figure for the tree for our example from before
-
-HERE
-
-in this tree model, we'd be traversing it depth-first
-
-we store the terminals we follow, forming a string of chunks to place
-
-we call this string a "genotype", because it represents the level
-
-two equal genotypes represent the same level
-
-an executor later traverses the chunks
-
-from starting node
-
-choses a random transition
-
-pushes the derivation chain into the stack
-
-then pop top node
-
-if it's terminal, we add it to genotype
-
-if it's nonterminal, we pick a random transition and push it to stack
-
-always proceed with the leftmost element of the chain first
-
-because we build the level from left to right
 
 \section{Execution}
 
-Remember to talk about the two-block chunks. yeah, again.
+The final part of the system is to take the trace produced in the derivation layer, and execute the plan in it. Each terminal or ``gene'' in it represents a call to a level-building function. Those functions were written as wrappers over the game API, and produce a small part of the level, a ``chunk''.
+
+For convenience, all chunks were made to be two blocks length. As long as all chunks were the same size:
+
+\begin{itemize}
+
+	\item traces of equal length produced levels of equal length
+
+	\item and conversedly, levels of equal size had traces of equal length, so
+
+	\item the number of genes in the trace for a level of a given length could be predicted
+
+\end{itemize}
+
+The actual size was not important, although since schematics offer a way to control macrostrecture, smaller chunks meant more control on microstructure. One block was to small, since pipes occupy two, and one-block gaps are never found in Mario games.
+
+The reason behind separating the trace and actual level building is threefold. First, it allows for visual or gameplay changes to happen through all levels thanks to the decoupling of symbol and functionality. For example, coins could be removed from the game at once by simply changing the parsing of the gene \textbf{COIN} from calling the coin chunk function to the flat ground chunk function. Secondly, it allows the level to be produced independently of the framework, so it can be reinterpreted by being processed on another API. And finally, it provides a method for identifying levels; they can be compared, analyzed or stored in a library as their trace.
+
 
 \section{Results}
 
@@ -286,17 +216,19 @@ Figure N
 
 Figure B.
 
+
+
 \section{Conclusions}
 
 The architecture presented here combines clustering for player identification with grammars for level structure definition. The separation of functionality means that the parameters guiding the process are not intermixed with the actual generation process and either of those two parts may be swapped out for another approach.
 
 Use of grammars resulted in a random, yet ordered way of producing levels. New possibilities can be added to a level just by creating rules that combine the available chunks in different ways or with different frequencies. At the same time, having different grammars for each profile means diverse necessities and styles can be catered for while not disturbing other players for whom the changes are not meant.
 
-By defining a genotype for levels as output of the derivation process, before its execution into a playable level itself, an easy, unequivocal way of storing levels for later reference has been developed. Levels can now be compared, mixed or measured against other metrics by statistical analysis on its components.  
+By defining a unique trace for each level as output of the derivation process, before its execution into a playable level itself, an easy, unequivocal way of storing levels for later reference has been developed. Levels can now be compared, mixed or measured against other metrics by statistical analysis on its components.  
 
 \subsection*{Future work}
 
-We hope to refine this methodology by group control evaluation, further tuning the grammar derivations and frequencies. We also hope to explore the possibilities that the genotype opens for genetic combination of levels, guided perhaps by percentages of profiling obtained by fuzzy clustering (that is, each player has a degree of belonging to a cluster, instead of being all-or-nothing). Another option, using the same profiling technique, would be to use those percentages to pick between derivation rules of different grammars.
+We hope to refine this methodology by group control evaluation, further tuning the grammar derivations and frequencies. We also hope to explore the possibilities that the trace opens for genetic combination of levels, guided perhaps by percentages of profiling obtained by fuzzy clustering (that is, each player has a degree of belonging to a cluster, instead of being all-or-nothing). Another option, using the same profiling technique, would be to use those percentages to pick between derivation rules of different grammars.
 
 \section*{Acknowledgments}
 This work has been supported by the
