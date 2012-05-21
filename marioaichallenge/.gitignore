@@ -8,4 +8,4 @@ bin
 data/*.arff
 data/*.exp
 src/jorgedizpico/grammar
-gr/*.auto
+sch/*.auto

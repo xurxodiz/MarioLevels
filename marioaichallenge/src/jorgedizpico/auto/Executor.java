@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class Executor {
 	
-	protected static String repoFile = "gr/intermediate.abnf.rep";
+	protected static String autoFile = "sch/intermediate.auto";
 	
 	protected Automaton auto;
 
@@ -15,7 +15,7 @@ public class Executor {
 			FileInputStream fis = null;
 			ObjectInputStream in = null;
 			
-			fis = new FileInputStream(repoFile);
+			fis = new FileInputStream(autoFile);
 			in = new ObjectInputStream(fis);
 			
 			auto = (Automaton)in.readObject();

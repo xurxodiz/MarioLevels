@@ -1,5 +1,6 @@
 package jorgedizpico.cluster;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -27,10 +28,14 @@ public class ClusterGenerator {
 	
 	public static void main(String[] args) {
 		
+		if (args.length < 1) {
+			System.out.println("Usage: ClusterGenerator <arffInput>");
+		}
+		
 		try {
 			
 			String dataFile = args[0];
-			String clusterFile = args[1];
+			String clusterFile = new File(dataFile).getParent() + "cluster.dat";
 					
 			Instances data = DataSource.read(dataFile);
 			    

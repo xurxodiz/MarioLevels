@@ -1,6 +1,5 @@
 package jorgedizpico.level;
 
-
 import java.util.ArrayList;
 
 import dk.itu.mario.MarioInterface.LevelInterface;
@@ -102,7 +101,7 @@ public class LakituLevel extends Level implements LevelInterface {
     	return x;
     }
     
-    public int placeBlockCoins(int x, int y) {
+    public int placeBlockCoin(int x, int y) {
     	x = capX(x);
     	y = capY(y);
     	setBlock(x, y, LakituLevel.BLOCK_COIN);
@@ -149,33 +148,45 @@ public class LakituLevel extends Level implements LevelInterface {
 		return x;
 	}
 	
-	public int placeGoomba(int x, int y) {
+	public int placeEnemy(int x, int y, int type, boolean winged) {
 		x = capX(x);
 		y = capY(y);
-		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_GOOMBA, false));
+		setSpriteTemplate(x, y, new SpriteTemplate(type, winged));
 		return x;
+	}
+	
+	public int placeGoomba(int x, int y) {
+		return placeEnemy(x, y, Enemy.ENEMY_GOOMBA, false);
 	}
 	
 	public int placeRedTurtle(int x, int y) {
-		x = capX(x);
-		y = capY(y);
-		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_RED_KOOPA, false));
-		return x;
+		return placeEnemy(x, y, Enemy.ENEMY_RED_KOOPA, false);
 	}
 	
 	public int placeGreenTurtle(int x, int y) {
-		x = capX(x);
-		y = capY(y);
-		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_GREEN_KOOPA, false));
-		return x;
+		return placeEnemy(x, y, Enemy.ENEMY_GREEN_KOOPA, false);
 	}
 	
 	public int placeSpiky(int x, int y) {
-		x = capX(x);
-		y = capY(y);
-		setSpriteTemplate(x, y, new SpriteTemplate(Enemy.ENEMY_SPIKY, false));
-		return x;
+		return placeEnemy(x, y, Enemy.ENEMY_SPIKY, false);
 	}
+	
+	public int placeGoombaWinged(int x, int y) {
+		return placeEnemy(x, y, Enemy.ENEMY_GOOMBA, true);
+	}
+	
+	public int placeRedTurtleWinged(int x, int y) {
+		return placeEnemy(x, y, Enemy.ENEMY_RED_KOOPA, true);
+	}
+	
+	public int placeGreenTurtleWinged(int x, int y) {
+		return placeEnemy(x, y, Enemy.ENEMY_GREEN_KOOPA, true);
+	}
+	
+	public int placeSpikyWinged(int x, int y) {
+		return placeEnemy(x, y, Enemy.ENEMY_SPIKY, true);
+	}
+
 	
 	public int placeCannon(int x, int y, int height) {
 		x = capX(x);

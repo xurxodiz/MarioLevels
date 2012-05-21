@@ -14,6 +14,12 @@ import dk.itu.mario.MarioInterface.GamePlay;
 public class DataFileParser {
 	
 	public static void main(String[] args) {
+		
+		if (args.length < 1) {
+			System.out.println("Usage: DataFileParser <data_folder>");
+			return;
+		}
+		
 		try {
 			String dataFolderPath = args[0];
 			

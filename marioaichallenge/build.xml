@@ -11,6 +11,17 @@
         <pathelement location="lib/weka.jar"/>
         <pathelement location="lib/aparse-2.2.jar"/>
     </path>
+
+	
+    <target name="clean">
+        <delete dir="bin"/>
+    	<delete dir="src/jorgedizpico/grammar"/>
+    	<!--<delete file="player.txt"/>
+        <delete file="DetailedInfo.txt"/>-->
+    	<delete file="data/*.*"/>
+    	<delete file="gr/*.auto"/>
+    </target>
+	
 	
     <target name="init">
         <mkdir dir="bin"/>
@@ -22,43 +33,52 @@
         </copy>
     </target>
 	
-    <target name="clean">
-        <delete dir="bin"/>
-    	<delete dir="src/jorgedizpico/grammar"/>
-    	<!--<delete file="player.txt"/>
-        <delete file="DetailedInfo.txt"/>-->
-    	<delete file="data/*.*"/>
-    	<delete file="gr/*.auto"/>
-    </target>
+	
+	<target name="grammar" depends="init">
+		<java classname="com.parse2.aparse.Parser" failonerror="true" fork="yes" >
+			<classpath refid="marioaichallenge.classpath"/>
+			<arg value="-destdir"/>
+			<arg value="src/jorgedizpico/grammar"/>
+			<arg value="-package"/>
+			<arg value="jorgedizpico.grammar"/>
+			<arg value="sch/schematics.abnf"/>
+		</java>
+	</target>
+	
 	
     <target name="build">
         <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
             <src path="src"/>
             <classpath refid="marioaichallenge.classpath"/>
         </javac>
     </target>
 	
+	
+    <target name="schematics" depends="build">
+        <java classname="jorgedizpico.auto.Constructor" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+        	<arg value="sch/intermediate.abnf"/>
+        	<arg value="sch/speeder.abnf"/>
+        </java>
+    </target>
+	
+	
     <target name="data">
         <java classname="jorgedizpico.cluster.DataFileParser" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
-			<arg value="data"/>
+			<arg value="data/"/>
         </java>
     </target>
+	
 	
     <target depends="data" name="cluster">
         <java classname="jorgedizpico.cluster.ClusterGenerator" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
 			<arg value="data/data.arff"/>
-        	<arg value="data/cluster.dat"/>
         </java>
     </target>
 	
-    <target name="playc">
-        <java classname="dk.itu.mario.engine.PlayCustomized" failonerror="true" fork="yes">
-            <classpath refid="marioaichallenge.classpath"/>
-        </java>
-    </target>
 	
     <target name="play">
         <java classname="dk.itu.mario.engine.Play" failonerror="true" fork="yes">
@@ -66,22 +86,10 @@
         </java>
     </target>
 	
-	<target depends="init" name="grammar">
-		<java classname="com.parse2.aparse.Parser" failonerror="true" fork="yes" >
-			<classpath refid="marioaichallenge.classpath"/>
-			<arg value="-destdir"/>
-			<arg value="src/jorgedizpico/grammar"/>
-			<arg value="-package"/>
-			<arg value="jorgedizpico.grammar"/>
-			<arg value="gr/schematics.abnf"/>
-		</java>
-	</target>
 	
-    <target name="schematics">
-        <java classname="jorgedizpico.auto.Constructor" failonerror="true" fork="yes">
+    <target name="playc">
+        <java classname="dk.itu.mario.engine.PlayCustomized" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
-			<arg value="gr/intermediate.abnf"/>
-        	<arg value="gr/speeder.abnf"/>
         </java>
     </target>
 	

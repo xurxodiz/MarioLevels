@@ -11,23 +11,32 @@ public class Constructor implements Visitor {
 	
 	protected Automaton auto;
 	
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
+		
+		if (args.length < 1) {
+			System.out.println("Usage: Constructor [<files>]");
+			return;
+		}
+		
 		try {
-			
+						
 			for (String fileName : args) {
+				
 				Rule schematic = Parser.parse("schematics", new File(fileName));
 
 				Constructor cons = new Constructor();
 				Automaton auto = (Automaton) schematic.accept(cons);
 							
-				FileOutputStream fos = new FileOutputStream(fileName + ".auto");
+				String autoName = fileName.substring(0, fileName.lastIndexOf('.')) + ".auto";
+				
+				FileOutputStream fos = new FileOutputStream(autoName);
 				ObjectOutputStream out =  new ObjectOutputStream(fos);
 				out.writeObject(auto);
 				out.close();
 				fos.close();
 			}
 		} catch (Exception e) {
-			System.out.println("Unable to read schematics or dump repositories.");
+			System.out.println("Unable to read schematics or write automata.");
 			e.printStackTrace();
 		}
 	}
