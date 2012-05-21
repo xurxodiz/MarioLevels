@@ -1,50 +1,55 @@
 package jorgedizpico.auto;
 
 import java.lang.reflect.Method;
+import java.util.Stack;
 
 import jorgedizpico.level.Builder;
 
 public enum Gene implements State {
 	
-    FLAT ("createFlatLand"),
+    FLAT ("createFlatLand", null),
     
-    COINS("createCoins"), // two coins
+    COINS("createCoins", null), // two coins
 
-    PIPE ("createPipe"),
-	PIPEPIRANHA("createPipePiranha"),
+    PIPE ("createPipe", null),
+	PIPEPIRANHA("createPipePiranha", null),
 	
-	CANNON("createCannon"),
+	CANNON("createCannon", null),
     
-    GAP ("createGap"),
+    GAP ("createGap", null),
     
-    STAIRSUP ("createStairsUp"),
-    STAIRSDOWN ("createStairsDown"),
+    STAIRSUP ("createStairsUp", null),
+    STAIRSDOWN ("createStairsDown", null),
 
-    BLOCKPOWERUP ("createBlockPowerUp"), // two blocks
-    BLOCKCOINS ("createBlockCoins"),     //     "
-    BLOCKEMPTY ("createBlockEmpty"),     //     "
+    BLOCKPOWERUP ("createBlockPowerUp", null), // two blocks
+    BLOCKCOINS ("createBlockCoins", null),     //     "
+    BLOCKEMPTY ("createBlockEmpty", null),     //     "
     
-    GOOMBA ("createGoomba"),
-    REDTURTLE ("createRedTurtle"),
-    GREENTURTLE ("createGreenTurtle"),
-    SPIKY ("createSpiky"),
+    GOOMBA ("createGoomba", null),
+    REDTURTLE ("createRedTurtle", null),
+    GREENTURTLE ("createGreenTurtle", null),
+    SPIKY ("createSpiky", null),
     
     ;
 	
 	private String createMethod;
 	
-	private Gene(String s) {
+	@SuppressWarnings("rawtypes")
+	private Class[] parTypes;
+	
+
+	@SuppressWarnings("rawtypes")
+	private Gene(String s, Class[] p) {
 		this.createMethod = s;
+		this.parTypes = p;
 	}
 	
 	public boolean genesis(Builder lkb) {
 		try {
 			
 			Class<Builder> cl = Builder.class;
-			@SuppressWarnings("rawtypes")
-			Class parTypes[] = {};
 			Method meth = cl.getMethod(this.createMethod, parTypes);
-			boolean b = (Boolean) meth.invoke(lkb, (Object[]) parTypes);
+			boolean b = (Boolean) meth.invoke(lkb, (Object[]) this.parTypes);
 			return b;
 			
 		} catch (Exception e) {
@@ -54,8 +59,8 @@ public enum Gene implements State {
 	}
 
 	@Override
-	public boolean execute(Automaton auto) {
-		return auto.addGene(this);
+	public boolean execute(Stack<State> stack, Trace trace) {
+		return trace.addGene(this);
 	}
 
 

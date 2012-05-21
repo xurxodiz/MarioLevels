@@ -1,19 +1,43 @@
 package jorgedizpico.auto;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import jorgedizpico.grammar.*;
 
 public class Constructor implements Visitor {
 	
-	private Repository repo;
+	protected Automaton auto;
+	
+	public static void main(String args[]) {
+		try {
+			
+			for (String fileName : args) {
+				Rule schematic = Parser.parse("schematics", new File(fileName));
+
+				Constructor cons = new Constructor();
+				Automaton auto = (Automaton) schematic.accept(cons);
+							
+				FileOutputStream fos = new FileOutputStream(fileName + ".auto");
+				ObjectOutputStream out =  new ObjectOutputStream(fos);
+				out.writeObject(auto);
+				out.close();
+				fos.close();
+			}
+		} catch (Exception e) {
+			System.out.println("Unable to read schematics or dump repositories.");
+			e.printStackTrace();
+		}
+	}
 	
 	@Override
 	public Object visit(Rule$schematics rule) {
-		repo = new Repository();
+		auto = new Automaton();
 		visitRules(rule.rules);
-		repo.validate();
-		return repo;
+		auto.validate();
+		return auto;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -64,12 +88,12 @@ public class Constructor implements Visitor {
 	
 	@Override
 	public Object visit(Rule$nonterminal rule) {
-		return repo.getDummy(rule.spelling);
+		return auto.getDummy(rule.spelling);
 	}
 	
 	@Override
 	public Object visit(Rule$terminal rule) {
-		return repo.getGene(rule.spelling);
+		return auto.getGene(rule.spelling);
 	}
 	
 	@Override

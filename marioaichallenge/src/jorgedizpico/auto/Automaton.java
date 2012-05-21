@@ -1,83 +1,35 @@
 package jorgedizpico.auto;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Stack;
+import java.io.Serializable;
+import java.util.HashMap;
 
-import jorgedizpico.grammar.Parser;
-import jorgedizpico.grammar.Rule;
-import jorgedizpico.level.Builder;
-import jorgedizpico.level.LakituLevel;
-
-public class Automaton {
+public class Automaton implements Serializable {
 	
-	private static int GENOTYPE_LENGTH = 150;
+	private static final long serialVersionUID = 777L;
 	
-	protected Repository repo;
-	protected Stack<State> stack = new Stack<State>();
-	protected ArrayList<Gene> genotype  = new ArrayList<Gene>();
+	private HashMap<String,Dummy> dummies
+		= new HashMap<String,Dummy>();
 
-	public Automaton (int type) throws Exception {
+	public Gene getGene(String s) {
+		return Enum.valueOf(Gene.class, s);
+	}
 
-		Rule schematics = Parser.parse("schematics", new File("gr/intermediate.abnf"));
-
-		Constructor cons = new Constructor();
-		repo = (Repository) schematics.accept(cons);
+	public Dummy getDummy(String s) {
+		Dummy dummy = dummies.get(s);
+		if (null != dummy) return dummy;
+		dummy = new Dummy();
+		dummies.put(s, dummy);
+		return dummy;
 	}
 	
-	
-	void pushState(State st) {
-		stack.push(st);
-	}
-	
-	boolean addGene(Gene gene) {
-		return genotype.add(gene);
-	}
-	
-	private void generateGenotype(int length) throws Exception {
-		try {
-			stack.clear();
-			genotype.clear();
-			
-			stack.push(repo.getDummy("initial"));
-			
-			while (genotype.size() < length) {
-				State st = stack.pop();
-				st.execute(this);
-			}
-			
-			stack.clear();
-			
-		} catch (Exception e) {
-			System.out.println("Error while generating genotype.");
-			throw e;
+	public void validate() {
+		// ponder the odds between the total odds
+		for (Dummy dummy : dummies.values()) {
+			double accum = 0.0;
+			for (Chain ch : dummy)
+				accum += ch.getOdds();
+			for (Chain ch : dummy)
+				ch.setOdds(ch.getOdds()/accum);
 		}
 	}
-
-	public LakituLevel buildLevel() {
-		try { 
-			LakituLevel lvl = new LakituLevel();
-			Builder lkb = new Builder(lvl);
-			generateGenotype(GENOTYPE_LENGTH);
-			
-			
-			lkb.createStartPlug();
-			
-			for (Gene g : genotype)
-				if (!g.genesis(lkb)) {
-					System.out.println(g);
-					return null;
-				}
-	
-			lkb.createEndPlug();
-			
-			lkb.fixLevel();
-			
-			return lvl;
-			
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
 }

@@ -86,11 +86,11 @@ public class ClusterGenerator {
 	}
 	  
 	public static void write(Clusterer cl, String clusterFile) throws IOException {
-		ObjectOutputStream out = null;
 		FileOutputStream fos = new FileOutputStream(clusterFile);
-		out =  new ObjectOutputStream(fos);
+		ObjectOutputStream out =  new ObjectOutputStream(fos);
 		out.writeObject(cl);
-		
+		out.close();
+		fos.close();
 	}
 	
 }

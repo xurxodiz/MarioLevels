@@ -1,16 +1,30 @@
 package jorgedizpico.auto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Stack;
 
-
-public class Dummy implements State, Iterable<Chain> {
+public class Dummy implements State, Iterable<Chain>, Serializable {
+	
+	private static final long serialVersionUID = 39L;
 	
 	private ArrayList<Chain> transitions = new ArrayList<Chain>();
 	
-	public boolean execute(Automaton auto) {
+	public boolean addChain(Chain ch) {
+		return transitions.add(ch);
+	}
+	
+	@Override
+	public Iterator<Chain> iterator() {
+        Iterator<Chain> i = Collections.unmodifiableList(transitions).iterator();
+        return i; 
+	}
+
+	@Override
+	public boolean execute(Stack<State> stack, Trace trace) {
 		double roll = new Random().nextDouble();
 		double accum = 0.0;
 		
@@ -27,27 +41,11 @@ public class Dummy implements State, Iterable<Chain> {
 			accum += ch.getOdds();
 			if (accum > roll) {
 				for (State st : ch.flippedCopy())
-					auto.pushState(st);
+					stack.push(st);
 				return true;
 			}
 		}
 		return false;
-	}
-	
-	public boolean addChain(Chain ch) {
-		return transitions.add(ch);
-	}
-	
-	@Override
-	public Iterator<Chain> iterator() {
-        Iterator<Chain> i = Collections.unmodifiableList(transitions).iterator();
-        return i; 
-	}
-	
-	public boolean validateChains() {
-		// do magic to make all odds add up to 1
-		// make sure there is at least one chain!
-		return true;
 	}
 
 }

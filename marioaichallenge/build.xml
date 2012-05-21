@@ -27,8 +27,8 @@
     	<delete dir="src/jorgedizpico/grammar"/>
     	<!--<delete file="player.txt"/>
         <delete file="DetailedInfo.txt"/>-->
-    	<delete file="data/data.arff"/>
-    	<delete file="data/cluster.dat"/>
+    	<delete file="data/*.*"/>
+    	<delete file="gr/*.auto"/>
     </target>
 	
     <target name="build">
@@ -66,7 +66,7 @@
         </java>
     </target>
 	
-	<target depends="init" name="schematics">
+	<target depends="init" name="grammar">
 		<java classname="com.parse2.aparse.Parser" failonerror="true" fork="yes" >
 			<classpath refid="marioaichallenge.classpath"/>
 			<arg value="-destdir"/>
@@ -76,5 +76,13 @@
 			<arg value="gr/schematics.abnf"/>
 		</java>
 	</target>
+	
+    <target name="schematics">
+        <java classname="jorgedizpico.auto.Constructor" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+			<arg value="gr/intermediate.abnf"/>
+        	<arg value="gr/speeder.abnf"/>
+        </java>
+    </target>
 	
 </project>

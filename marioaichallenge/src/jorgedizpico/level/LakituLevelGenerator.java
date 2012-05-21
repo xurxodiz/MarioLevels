@@ -10,7 +10,8 @@ import weka.clusterers.Clusterer;
 import weka.core.Instance;
 import weka.core.SparseInstance;
 
-import jorgedizpico.auto.Automaton;
+import jorgedizpico.auto.Executor;
+import jorgedizpico.auto.Trace;
 import jorgedizpico.cluster.DataFileParser;
 
 import dk.itu.mario.MarioInterface.GamePlay;
@@ -45,9 +46,13 @@ public class LakituLevelGenerator implements LevelGenerator {
 			
 			int cluster = 2;
 			
-			Automaton aut = new Automaton(cluster);
-			
-			LakituLevel lvl = aut.buildLevel();
+			Executor exec = new Executor(cluster);
+			// 320 blocks length for the level
+			// start and end platform are 10 each
+			// and chunks are 2 each
+			// [320 - (10+10)] / 2 = 150
+			Trace trace = exec.generateTrace(150);
+			LakituLevel lvl = trace.buildLevel();
 			
 			if (null == lvl)
 				throw new Exception("Error while building level from genes.");

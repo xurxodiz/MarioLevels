@@ -1,5 +1,11 @@
 */.DS_store
-bin
 .classpath
+
 DetailedInfo.txt
 player.txt
+
+bin
+data/*.arff
+data/*.exp
+src/jorgedizpico/grammar
+gr/*.auto

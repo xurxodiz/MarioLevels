@@ -1,10 +1,13 @@
 package jorgedizpico.auto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-public class Chain implements Iterable<State> {
+public class Chain implements Iterable<State>, Serializable {
+	
+	private static final long serialVersionUID = 42L;
 	
 	protected ArrayList<State> states  = new ArrayList<State>();
 	protected Double odds = 0.0;
