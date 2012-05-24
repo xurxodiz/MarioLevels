@@ -74,7 +74,7 @@
     </target>
 	
 	
-    <target depends="data" name="cluster">
+    <target name="cluster">
         <java classname="jorgedizpico.cluster.ClusterGenerator" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
 			<arg value="${data.dataFile}"/>

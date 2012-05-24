@@ -5,6 +5,7 @@
 ./player.txt
 
 ./bin
+./data/*.dat
 ./data/*.arff
 ./data/*.exp
 ./src/jorgedizpico/grammar
