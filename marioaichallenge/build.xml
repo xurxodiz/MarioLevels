@@ -79,6 +79,7 @@
             <classpath refid="marioaichallenge.classpath"/>
 			<arg value="${data.dataFile}"/>
         	<arg value="${data.clusterFile}"/>
+        	<arg value="${data.csvFile}"/>
         </java>
     </target>
 	

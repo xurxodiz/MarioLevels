@@ -3,9 +3,13 @@
 DetailedInfo.txt
 player.txt
 
-bin
-data/cluster.dat
+bin/*
+
+data/*.dat
 data/*.arff
 data/*.exp
-src/jorgedizpico/grammar
+data/*.csv
+
+src/jorgedizpico/grammar/*
+
 sch/*.auto

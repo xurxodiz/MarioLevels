@@ -2,6 +2,7 @@ package jorgedizpico.cluster;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
@@ -30,14 +31,15 @@ public class ClusterGenerator {
 	
 	public static void main(String[] args) {
 		
-		if (args.length < 2) {
-			System.out.println("Usage: ClusterGenerator <arffInput> <clusterOutput>");
+		if (args.length < 3) {
+			System.out.println("Usage: ClusterGenerator <arffInput> <clusterOutput> <csvOutput>");
 		}
 		
 		try {
 			
 			String dataFile = args[0];
 			String clusterFile = args[1];
+			String csvFile = args[2];
 					
 			Instances data = DataSource.read(dataFile);
 			    
@@ -80,19 +82,15 @@ public class ClusterGenerator {
 			eval.evaluateClusterer(new Instances(data));
 			System.out.println(eval.clusterResultsToString()); 
 			
-			for (int i = 0; i < data.numInstances(); i++) {
-				double[] prob =	dbc.logDensityPerClusterForInstance(data.instance(i));
-				System.out.println("Instance " + i + ":");
-				for (int j = 0; j < prob.length; j++)
-					System.out.println("cluster " + j + ": " + prob[j] + ", ");
-			}
+			writeLogProbabilities(dbc, data, csvFile);
+
 			
 			System.out.println("Performing cross-validation...");
 		    double logllh = ClusterEvaluation.crossValidateModel(
 		           dbc, data, 10, data.getRandomNumberGenerator(1));
 		    System.out.println("\nLog likelihood: " + logllh);
 			
-			write(new MakeDensityBasedClusterer(fc), clusterFile);
+			write(dbc, clusterFile);
 			
 
 			
@@ -100,11 +98,28 @@ public class ClusterGenerator {
 			System.out.println("Unable to generate clusters: " + e.getMessage());
 		}
 	}
-	  
-	public static void write(DensityBasedClusterer cl, String clusterFile) throws IOException {
+	
+	public static void writeLogProbabilities(DensityBasedClusterer dbc, Instances data, String csvFile)
+		throws Exception {
+		
+		FileWriter csvWriter = new FileWriter(new File(csvFile));
+		
+		for (int i = 0; i < data.numInstances(); i++) {
+			double[] prob =	dbc.logDensityPerClusterForInstance(data.instance(i));
+			for (int j = 0; j < prob.length; j++) {
+				csvWriter.write(Double.toString(prob[j]));
+				if (j < prob.length-1) csvWriter.write(",");
+			}
+			csvWriter.write("\n");
+		}
+		
+		csvWriter.close();
+	}
+	
+	public static void write(DensityBasedClusterer dbc, String clusterFile) throws IOException {
 		FileOutputStream fos = new FileOutputStream(clusterFile);
 		ObjectOutputStream out =  new ObjectOutputStream(fos);
-		out.writeObject(cl);
+		out.writeObject(dbc);
 		out.close();
 		fos.close();
 	}
