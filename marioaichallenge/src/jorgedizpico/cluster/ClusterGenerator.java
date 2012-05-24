@@ -28,14 +28,14 @@ public class ClusterGenerator {
 	
 	public static void main(String[] args) {
 		
-		if (args.length < 1) {
-			System.out.println("Usage: ClusterGenerator <arffInput>");
+		if (args.length < 2) {
+			System.out.println("Usage: ClusterGenerator <arffInput> <clusterOutput>");
 		}
 		
 		try {
 			
 			String dataFile = args[0];
-			String clusterFile = new File(dataFile).getParent() + "cluster.dat";
+			String clusterFile = args[1];
 					
 			Instances data = DataSource.read(dataFile);
 			    

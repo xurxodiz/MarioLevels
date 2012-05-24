@@ -1,11 +1,11 @@
-*/.DS_store
+.DS_store
 .classpath
 
-DetailedInfo.txt
-player.txt
+./DetailedInfo.txt
+./player.txt
 
-bin
-data/*.arff
-data/*.exp
-src/jorgedizpico/grammar
-sch/*.auto
+./bin
+./data/*.arff
+./data/*.exp
+./src/jorgedizpico/grammar
+./sch/*.auto

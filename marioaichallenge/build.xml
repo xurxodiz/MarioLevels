@@ -5,11 +5,12 @@
     <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.6"/>
     <property name="source" value="1.6"/>
+	<property file="build.properties"/>
 	
     <path id="marioaichallenge.classpath">
         <pathelement location="bin"/>
-        <pathelement location="lib/weka.jar"/>
-        <pathelement location="lib/aparse-2.2.jar"/>
+        <pathelement location="lib/aparse-2.2.jar"/> 
+    	<pathelement location="lib/weka.jar"/>
     </path>
 
 	
@@ -34,14 +35,14 @@
     </target>
 	
 	
-	<target name="grammar" depends="init">
+	<target name="grammar">
 		<java classname="com.parse2.aparse.Parser" failonerror="true" fork="yes" >
 			<classpath refid="marioaichallenge.classpath"/>
 			<arg value="-destdir"/>
-			<arg value="src/jorgedizpico/grammar"/>
+			<arg value="${grammar.sourceFolder}"/>
 			<arg value="-package"/>
-			<arg value="jorgedizpico.grammar"/>
-			<arg value="sch/schematics.abnf"/>
+			<arg value="${grammar.packageName}"/>
+			<arg value="${grammar.grammarFile}"/>
 		</java>
 	</target>
 	
@@ -55,11 +56,11 @@
     </target>
 	
 	
-    <target name="schematics" depends="build">
+    <target name="schematics">
         <java classname="jorgedizpico.auto.Constructor" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
-        	<arg value="sch/intermediate.abnf"/>
-        	<arg value="sch/speeder.abnf"/>
+        	<arg value="${schematics.explorer}"/>
+        	<arg value="${schematics.speeder}"/>
         </java>
     </target>
 	
@@ -67,7 +68,8 @@
     <target name="data">
         <java classname="jorgedizpico.cluster.DataFileParser" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
-			<arg value="data/"/>
+			<arg value="${data.dataFolder}"/>
+        	<arg value="${data.dataFile}"/>
         </java>
     </target>
 	
@@ -75,7 +77,8 @@
     <target depends="data" name="cluster">
         <java classname="jorgedizpico.cluster.ClusterGenerator" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
-			<arg value="data/data.arff"/>
+			<arg value="${data.dataFile}"/>
+        	<arg value="${data.clusterFile}"/>
         </java>
     </target>
 	

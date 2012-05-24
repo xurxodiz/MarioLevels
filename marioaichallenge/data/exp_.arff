@@ -1,0 +1,87 @@
+@relation InstanceResultListener
+
+@attribute Key_Dataset {playerdata}
+@attribute Key_Run {1,2,3,4,5,6,7,8,9,10}
+@attribute Key_Scheme {weka.clusterers.MakeDensityBasedClusterer,weka.clusterers.EM}
+@attribute Key_Scheme_options {'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1','-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"','-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1','-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10','-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10','-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42','-I 100 -N 3 -M 1.0E-6 -S 100'}
+@attribute Key_Scheme_version_ID {-5643302427972186631,8348181483812829475}
+@attribute Date_time numeric
+@attribute Number_of_training_instances numeric
+@attribute Number_of_testing_instances numeric
+@attribute Log_likelihood numeric
+@attribute Number_of_clusters numeric
+@attribute Time_training numeric
+@attribute Time_testing numeric
+
+@data
+
+playerdata,1,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1',-5643302427972186631,20120520.164,74,39,-86.151473,3,0.001,0.001
+playerdata,2,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1',-5643302427972186631,20120520.164,75,38,-87.520384,3,0.001,0.001
+playerdata,3,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1',-5643302427972186631,20120520.164,74,39,-84.066512,3,0.001,0.001
+playerdata,4,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1',-5643302427972186631,20120520.164,75,38,-84.636118,3,0.001,0.001
+playerdata,5,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1',-5643302427972186631,20120520.164,75,38,-89.233375,3,0.002,0.001
+playerdata,6,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1',-5643302427972186631,20120520.164,75,38,-85.371626,3,0.001,0.001
+playerdata,7,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1',-5643302427972186631,20120520.164,75,38,-85.582192,3,0.001,0.001
+playerdata,8,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1',-5643302427972186631,20120520.164,75,38,-86.919172,3,0.001,0.001
+playerdata,9,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1',-5643302427972186631,20120520.164,75,38,-86.417827,3,0.001,0.001
+playerdata,10,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.FarthestFirst -- -N 3 -S 1',-5643302427972186631,20120520.164,74,39,-88.514784,3,0.013,0
+playerdata,1,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"',-5643302427972186631,20120520.164,74,39,-87.416366,3,0.014,0.003
+playerdata,2,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"',-5643302427972186631,20120520.164,75,38,-86.911334,3,0.014,0.002
+playerdata,3,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"',-5643302427972186631,20120520.164,74,39,-86.118488,3,0.014,0.006
+playerdata,4,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"',-5643302427972186631,20120520.164,75,38,-89.401863,3,0.017,0.003
+playerdata,5,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"',-5643302427972186631,20120520.164,75,38,-88.071423,3,0.014,0.004
+playerdata,6,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"',-5643302427972186631,20120520.164,75,38,-87.006728,3,0.014,0.002
+playerdata,7,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"',-5643302427972186631,20120520.164,75,38,-85.967977,3,0.013,0.002
+playerdata,8,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"',-5643302427972186631,20120520.164,75,38,-87.309388,3,0.013,0.002
+playerdata,9,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"',-5643302427972186631,20120520.164,75,38,-86.988101,3,0.015,0.002
+playerdata,10,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.HierarchicalClusterer -- -N 3 -L SINGLE -P -A \"weka.core.EuclideanDistance -R first-last\"',-5643302427972186631,20120520.164,74,39,-91.084931,3,0.012,0.002
+playerdata,1,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1',-5643302427972186631,20120520.164,74,39,-83.240523,3,0.523,0.001
+playerdata,2,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1',-5643302427972186631,20120520.164,75,38,-82.049839,3,0.026,0.001
+playerdata,3,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1',-5643302427972186631,20120520.164,74,39,-82.911418,3,0.025,0.001
+playerdata,4,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1',-5643302427972186631,20120520.164,75,38,-87.656354,3,0.022,0.001
+playerdata,5,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1',-5643302427972186631,20120520.164,75,38,-82.556687,3,0.031,0
+playerdata,6,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1',-5643302427972186631,20120520.164,75,38,-83.692645,3,0.023,0.001
+playerdata,7,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1',-5643302427972186631,20120520.164,75,38,-83.459045,3,0.022,0.001
+playerdata,8,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1',-5643302427972186631,20120520.164,75,38,-83.097393,3,0.03,0.006
+playerdata,9,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1',-5643302427972186631,20120520.164,75,38,-83.543727,3,0.063,0.001
+playerdata,10,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.sIB -- -I 100 -M 0 -N 3 -R 5 -S 1',-5643302427972186631,20120520.164,74,39,-86.42673,3,0.042,0.001
+playerdata,1,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10',-5643302427972186631,20120520.164,74,39,-80.300099,3,0.009,0.001
+playerdata,2,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10',-5643302427972186631,20120520.164,75,38,-85.331481,3,0.004,0.007
+playerdata,3,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10',-5643302427972186631,20120520.164,74,39,-82.034466,3,0.019,0.001
+playerdata,4,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10',-5643302427972186631,20120520.164,75,38,-84.745906,3,0.004,0.001
+playerdata,5,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10',-5643302427972186631,20120520.164,75,38,-84.790667,3,0.009,0.001
+playerdata,6,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10',-5643302427972186631,20120520.164,75,38,-82.708817,3,0.011,0.008
+playerdata,7,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10',-5643302427972186631,20120520.164,75,38,-82.061729,3,0.004,0.009
+playerdata,8,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10',-5643302427972186631,20120520.164,75,38,-80.753773,3,0.014,0.001
+playerdata,9,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10',-5643302427972186631,20120520.164,75,38,-80.977519,3,0.016,0.001
+playerdata,10,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.XMeans -- -I 1 -M 1000 -J 1000 -L 3 -H 3 -B 1.0 -C 0.5 -D \"weka.core.EuclideanDistance -R first-last\" -S 10',-5643302427972186631,20120520.164,74,39,-86.208803,3,0.003,0.001
+playerdata,1,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10',-5643302427972186631,20120520.164,74,39,-82.982952,3,0.023,0.001
+playerdata,2,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10',-5643302427972186631,20120520.164,75,38,-81.663345,3,0.005,0.001
+playerdata,3,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10',-5643302427972186631,20120520.164,74,39,-81.612083,3,0.033,0.001
+playerdata,4,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10',-5643302427972186631,20120520.164,75,38,-82.714093,3,0.015,0.001
+playerdata,5,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10',-5643302427972186631,20120520.164,75,38,-82.060386,3,0.033,0.001
+playerdata,6,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10',-5643302427972186631,20120520.164,75,38,-85.976687,3,0.004,0.012
+playerdata,7,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10',-5643302427972186631,20120520.164,75,38,-80.001758,3,0.009,0.005
+playerdata,8,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10',-5643302427972186631,20120520.164,75,38,-80.09949,3,0.018,0.009
+playerdata,9,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10',-5643302427972186631,20120520.164,75,38,-84.190265,3,0.015,0
+playerdata,10,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.SimpleKMeans -- -N 3 -A \"weka.core.EuclideanDistance -R first-last\" -I 500 -S 10',-5643302427972186631,20120520.164,74,39,-85.401414,3,0.021,0.001
+playerdata,1,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42',-5643302427972186631,20120520.164,74,39,-84.852388,78,1.171,0.017
+playerdata,2,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42',-5643302427972186631,20120520.164,75,38,-84.795142,81,0.803,0.017
+playerdata,3,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42',-5643302427972186631,20120520.164,74,39,-85.064087,79,0.462,0.019
+playerdata,4,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42',-5643302427972186631,20120520.164,75,38,-85.143365,78,0.643,0.016
+playerdata,5,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42',-5643302427972186631,20120520.164,75,38,-85.407066,81,0.367,0.017
+playerdata,6,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42',-5643302427972186631,20120520.164,75,38,-84.956631,81,0.577,0.016
+playerdata,7,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42',-5643302427972186631,20120520.164,75,38,-84.739889,80,0.449,0.017
+playerdata,8,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42',-5643302427972186631,20120520.164,75,38,-84.372793,81,0.632,0.018
+playerdata,9,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42',-5643302427972186631,20120520.164,75,38,-85.141568,82,0.358,0.018
+playerdata,10,weka.clusterers.MakeDensityBasedClusterer,'-M 1.0E-6 -W weka.clusterers.Cobweb -- -A 1.0 -C 0.0028209479177387815 -S 42',-5643302427972186631,20120520.164,74,39,-85.749251,80,0.397,0.017
+playerdata,1,weka.clusterers.EM,'-I 100 -N 3 -M 1.0E-6 -S 100',8348181483812829475,20120520.164,74,39,-79.571328,3,0.075,0.001
+playerdata,2,weka.clusterers.EM,'-I 100 -N 3 -M 1.0E-6 -S 100',8348181483812829475,20120520.164,75,38,-78.910491,3,0.066,0
+playerdata,3,weka.clusterers.EM,'-I 100 -N 3 -M 1.0E-6 -S 100',8348181483812829475,20120520.164,74,39,-78.387325,3,0.125,0.001
+playerdata,4,weka.clusterers.EM,'-I 100 -N 3 -M 1.0E-6 -S 100',8348181483812829475,20120520.164,75,38,-83.320497,3,0.072,0.001
+playerdata,5,weka.clusterers.EM,'-I 100 -N 3 -M 1.0E-6 -S 100',8348181483812829475,20120520.164,75,38,-83.043899,3,0.056,0.001
+playerdata,6,weka.clusterers.EM,'-I 100 -N 3 -M 1.0E-6 -S 100',8348181483812829475,20120520.164,75,38,-82.896259,3,0.058,0
+playerdata,7,weka.clusterers.EM,'-I 100 -N 3 -M 1.0E-6 -S 100',8348181483812829475,20120520.164,75,38,-80.951171,3,0.053,0.001
+playerdata,8,weka.clusterers.EM,'-I 100 -N 3 -M 1.0E-6 -S 100',8348181483812829475,20120520.164,75,38,-79.198856,3,0.053,0.001
+playerdata,9,weka.clusterers.EM,'-I 100 -N 3 -M 1.0E-6 -S 100',8348181483812829475,20120520.164,75,38,-82.183868,3,0.063,0
+playerdata,10,weka.clusterers.EM,'-I 100 -N 3 -M 1.0E-6 -S 100',8348181483812829475,20120520.164,74,39,-82.963634,3,0.051,0

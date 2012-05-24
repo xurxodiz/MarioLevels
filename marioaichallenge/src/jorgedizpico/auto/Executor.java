@@ -6,7 +6,8 @@ import java.util.Stack;
 
 public class Executor {
 	
-	protected static String autoFile = "sch/intermediate.auto";
+	protected static String speederAutoFile  = "sch/speeder.auto";
+	protected static String explorerAutoFile = "sch/explorer.auto";
 	
 	protected Automaton auto;
 
@@ -15,7 +16,7 @@ public class Executor {
 			FileInputStream fis = null;
 			ObjectInputStream in = null;
 			
-			fis = new FileInputStream(autoFile);
+			fis = new FileInputStream(speederAutoFile);
 			in = new ObjectInputStream(fis);
 			
 			auto = (Automaton)in.readObject();

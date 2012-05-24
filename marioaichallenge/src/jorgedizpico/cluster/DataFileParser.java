@@ -15,22 +15,19 @@ public class DataFileParser {
 	
 	public static void main(String[] args) {
 		
-		if (args.length < 1) {
-			System.out.println("Usage: DataFileParser <data_folder>");
+		if (args.length < 2) {
+			System.out.println("Usage: DataFileParser <data_folder> <data_file>");
 			return;
 		}
 		
 		try {
-			String dataFolderPath = args[0];
+			File dataFolder = new File(args[0]);
+			File arffFile = new File(args[1]);
 			
-			File arffFile = new File(dataFolderPath + "/data.arff");
 			FileWriter arffWriter = new FileWriter(arffFile);
-			
 			writeHeader(arffWriter);
-			
 			writeDataStartHeader(arffWriter);
 			
-			File dataFolder = new File(dataFolderPath);
 			File[] entries = dataFolder.listFiles();
 			Arrays.sort(entries, new DataFileParser().new FileComparator());
 			 
