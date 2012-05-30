@@ -1,0 +1,67 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Manejo de figuras}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+En este capítulo se dan unas nociones bísicas para el manejo de figuras en Latex.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Címo introducir figuras y referenciarlas en el texto.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Así introduzco una figura:
+
+\begin{figure}[H]
+    \centerline{\includegraphics[width=5cm]{\figuras/logoudc.eps}}
+    \label{fig:mifigura}\caption{Este sería el pie de figura.}
+\end{figure}
+
+Y ahora la referencio en el texto diciendo que la Figura \ref{fig:mifigura} es muy bonita.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Manejo de subfiguras.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Ahora incluyo otra figura pero que contiene varias subfiguras dentro de ella. Ademís se puede referencia toda la figura, por ejemplo figura \ref{fig:subfiguras} o bien alguna subfigura en concreto, por ejemplo a las subfiguras \ref{fig:subfig2} y \ref{fig:subfig3}.
+
+%
+\begin{figure}[H]
+\begin{center}
+    \subfigure[Subtítulo de la primera subfigura] {\label{fig:ssubfig1}
+        \includegraphics[width=3.5cm]{\figuras/logoudc.eps}
+    }
+    \hspace{1em} % Permite meter espacio entre las sufiguras. ítil para separar los subtítulos si quedan muy pegados
+                 % Si no se precisa se puede eliminar.
+    \subfigure[Subtítulo de la la segunda subfigura] {\label{fig:subfig2}
+        \includegraphics[width=3.5cm]{\figuras/logoudc.eps}
+    }
+    \hspace{1em} % Permite meter espacio entre las sufiguras. ítil para separar los subtítulos si quedan muy pegados
+                 % Si no se precisa se puede eliminar.
+    \subfigure[Subtítulo de la la tercera subfigura] {\label{fig:subfig3}
+        \includegraphics[width=3.5cm]{\figuras/logoudc.eps}
+    }
+    \caption{Ejemplo de una figura con varias subfiguras.}
+    \label{fig:subfiguras}
+\end{center}
+\end{figure}
+
+Finalmente, tambiín se pueden rotar las imígenes e introducir otros efectos, como por ejemplo un cuadro alrededor, tal y como se muestra en la figura \ref{fig:subfiguras2}.
+\begin{figure}[H]
+\begin{center}
+    \subfigure[Logo rotado 45 grados] {\label{fig:subfig21}
+        \includegraphics[angle=45,height=2.5cm]{\figuras/logoudc.eps}
+    }
+    \hspace{3em} % Permite meter espacio entre las sufiguras. ítil para separar los subtítulos si quedan muy pegados
+                 % Si no se precisa se puede eliminar.
+    \subfigure[Logo rotado 90 grados] {\label{fig:subfig22}
+        \includegraphics[angle=90,height=2.5cm]{\figuras/logoudc.eps}
+    }
+    \\
+    \subfigure[Figura con un cuadro alrededor] {\label{fig:subfig24}
+        \fbox{ % El comando \fbox permite crear un cuadro alrededor de la figura
+            \includegraphics[width=2.5cm]{\figuras/logoudc.eps}
+        }
+    }
+    \caption{Otro ejemplo de una figura con varias subfiguras y con algunos efectos.}
+    \label{fig:subfiguras2}
+\end{center}
+\end{figure}

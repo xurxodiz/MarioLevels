@@ -1,0 +1,330 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% DOCUMENTACIÓN DE LA CLASE fiudcPFC
+%%
+%% $Id$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,10pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[latin1]{inputenc}
+\usepackage[dvipdfm]{hyperref}
+
+\newcommand{\BibTeX}{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em\TeX}}
+
+% Title Page
+\title{Clase para los Proyectos Fin de Carrera y Tesis Doctorales de la Facultad de Informática
+(Universidad de A Coruña)}
+\author{Juan A. Suárez Romero\thanks{ja@udc.es} \and Oscar Fontenla
+Romero\thanks{oscarfon@udc.es}}
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Esta clase permite escribir en \LaTeX{} las memorias de los Proyectos Fin de
+Carrera de las tres titulaciones impartidas en la Facultad de Informática de la
+Universidad de A Coruña así como para Tesis Doctorales.
+\end{abstract}
+
+\section{Introducción}
+
+La clase \emph{fiudcPFC} está basada en la clase \emph{book}, y permite
+escribir las memorias de los Proyectos Fin de Carrera de las titulaciones
+Ingeniería Técnica en Informática de Gestión, Ingeniería Técnica en Informática
+de Sistemas e Ingeniería Informática, impartidas en la Facultad de Informática
+de la Universidad de A Coruña.
+
+Se ha adaptado la clase \emph{book} de cara a respetar el formato
+establecido en la normativa de presentación de los Proyectos Fin de Carrera de
+dicha facultad. Entre otras cosas, dicha normativa establece el tamaño de papel
+a emplear, los márgenes a establecer y el interlineado a usar.
+
+El formato de presentación de la memoria constará de una página inicial de
+título, seguida a continuación de otro con la dedicatoria y agradecimientos,
+ambas en hojas separadas. Posteriormente le seguirá un pequeño resumen del
+proyecto y las palabras clave relacionadas con el mismo. Finalmente irán los
+índices, la memoria en sí, los apéndices y la bibliografía. Opcionalmente se
+podrá incluir al final diversos tipos de índices, como lista de acrónimos,
+glosario, etc.
+
+Un primer ejemplo de uso de la clase es la siguiente:
+
+\begin{small}
+\begin{verbatim}
+   \documentclass[oneside]{fiudcPFC}
+   \usepackage[dvipdfm]{hyperref}
+
+   \title{Reservas hoteleras a través de Internet con acceso a bases de datos
+   utilizando lenguaje JAVA}
+   \department{Computación}
+   \degree{g}
+   \author{Manuel Lorenzo García}
+   \tutor{Juan A. Suárez Romero}
+   \director{Óscar Fontenla Romero}
+   \pfcdate{Xullo de 2004}
+   \dedication{A mi familia}
+
+   \begin{document}
+
+   \maketitle
+
+   \frontmatter
+
+   \begin{acknowledgements}[Manuel Lorenzo García]
+   Quiero agradecer todo este esfuerzo a la gente que me ha apoyado durante todo
+   este tiempo, incluyendo a mis compañeros de estudios.
+   \end{acknowledgements}
+
+   \begin{summary}
+   El objetivo de este proyecto es el desarrollo de un sistema de gestión de
+   tareas en red para los sistemas de monitorización en tiempo real, basado en
+   la
+   tecnología de Agentes Inteligentes.
+
+   Y el resumen seguiría [\...]
+
+   \keywords{Agentes Inteligentes, Monitorización}
+   \end{summary}
+
+   \tableofcontents
+
+   \mainmatter
+
+   \include{Capitulo1}
+   \include{Capitulo2}
+
+   \backmatter
+
+   \bibliographystyle{aplain}
+   \bibliography{prueba}
+
+   \end{document}
+\end{verbatim}
+\end{small}
+
+\section{Documentación}
+
+A continuación explicaremos las opciones que se pueden emplear al cargar la
+clase \emph{fiudcPFC}, así como los nuevos comandos y entornos que se definen o
+redefinen.
+
+\subsection{Opciones}
+
+Cuando se carga la clase \emph{fiudcPFC} mediante el comando
+\verb+\documentclass+ se dispone de una serie de opciones para personalizar la
+memoria. A continuación describimos las opciones disponibles\footnote{Las
+opciones encuadradas son las establecidas por defecto}:
+
+\begin{description}
+\item[10pt, \fbox{11pt}, 12pt:] Establece el tamaño de letra a emplear en la
+documentación.
+
+\item[\fbox{castellano}, galego:] Determina el idioma que se empleará en el documento. Esto permite que todas las partes del documento (portada, resumen, índices, etc.) usen el idioma elegido.
+
+\item[\fbox{openright}, openany:] Indica si los capítulos comenzarán siempre en
+una impresa a la derecha, o por el contrario podrán comenzar en cualquier página
+nueva, indistintamente de si ésta se encuentra a derecha o a izquierda. Cabe
+señalar aquí que cuando se imprime el documento a una sóla cara, todas las
+páginas son a derecha.
+
+\item[\fbox{oneside}, twoside:] Estas opciones deciden si el documento se
+preparará para ser impreso a una cara o a dos caras.
+\end{description}
+
+\subsection{Comandos}
+
+La clase \emph{fiudcPFC} redefine algunos comandos ya existentes en la clase
+\emph{book}, a la vez que  define nuevos comandos en relación a
+las necesidades de los Proyectos Fin de Carrera. Estos deben ser empleados
+antes del comando \verb+\maketitle+, puesto que definen el formato de la página
+de título.
+
+\begin{description}
+\item[\texttt{\textbackslash title\{\textit{Título del proyecto}\}}] El título
+del Proyecto Fin de Carrera.
+
+\item[\texttt{\textbackslash department\{\textit{Nombre del departamento}\}}] El
+nombre del departamento en el cual se ha relizado el proyecto. Por ejemplo, para
+indicar que el proyecto se ha realizado en el Departamento de Computación habría
+que escribir \texttt{\textbackslash department\{Computación}\}.
+
+\item[\texttt{\textbackslash degree\{\textit{Titulación}\}}] Este comando
+permite indicar a qué titulación corresponde el documentos. Admite
+cuatro opciones: \texttt{\textbackslash degree\{g\}} para indicar que el proyecto
+corresponde a la Ingeniería Técnica en Informática de Gestión,
+\texttt{\textbackslash degree\{s\}} para indicar que el proyecto corresponde a
+la Ingeniería Técnica en Informática de Sistemas, \texttt{\textbackslash
+degree\{i\}} para indicar que el proyecto corresponde a la Ingeniería
+Informática y \texttt{\textbackslash degree\{t\}} en el caso de que sea una Tesis Doctoral.
+
+\item[\texttt{\textbackslash author[\textit{sexo}]\{\textit{Autor del proyecto}\}}] El nombre
+del autor del Proyecto Fin de Carrera. El argumento opcional \textit{sexo} puede tomar dos valores \textit{f} y \textit{m} indicando si es femenino o masculino. Si no se especifica este argumento por defecto asume masculino.
+
+\item[\texttt{\textbackslash tutor[\textit{sexo}]\{\textit{Tutor del proyecto}\}}] El nombre
+del profesor que tutora tanto la dirección del proyecto como la realización del
+mismo. El argumento opcional \textit{sexo} tiene el mismo funcionamiento que en el comando \textbackslash author.
+
+\item[\texttt{\textbackslash director[\textit{sexo}]\{\textit{Director del proyecto}\}}] El
+nombre de la persona que dirige la realización del proyecto. Se puede usar el comando varias veces para definir varios directores. Cuando el tutor del proyecto como el director sean la misma persona se deberá emplear el
+comando \verb+\director+ y no el comando \verb+\tutor+ para establecer el
+nombre de la misma. El argumento opcional \textit{sexo} tiene el mismo funcionamiento que en el comando \textbackslash author.
+
+\item[\texttt{\textbackslash pfcdate\{\textit{Fecha del proyecto}\}}] La fecha
+en al que se presenta el proyecto. Por ejemplo, \verb+\pfcdate{Xullo de 2004}+.
+Si no se indica la fecha de presentación del proyecto entonces se establecerá
+dicha fecha a \verb+\today+.
+
+\item[\texttt{\textbackslash dedication\{\textit{Dedicatoria}\}}] Establece la
+dedicatoria del proyecto. Por ejemplo, \verb+\dedication{A mi familia}+.
+
+\item[\texttt{\textbackslash indices\{\textit{Separacion}\}\{\textit{Indices}\}}] Define los índices a usar en el documento y el espacio entre los epígrafes incluidos en ellos.\\
+    Por ejemplo, \verb+\indices{0.5em}{\listoffigures\listoftables}+ añade en el documento el índice de figuras y de tablas y define la separación entre epígrafes de estos índices en 0.5em.
+
+\end{description}
+
+\subsection{Entornos}
+
+La clase \emph{fiudcPFC} define dos entornos, uno para escribir los
+agradecimientos, y otro para definir un pequeño resumen del Proyecto Fin de
+Carrera.
+
+\begin{itemize}
+\item El entorno \emph{acknowledgements} permite escribir los
+agradecimientos del autor. Su uso es el siguiente:
+\begin{verbatim}
+   \begin{acknowledgements}[Firma]
+      Agradecimientos
+   \end{acknowledgements}
+\end{verbatim}
+La \emph{Firma} es una opción que en caso de usarla permite establecer la firma
+que aparecerá al final de los agradecimientos. Un ejemplo de uso de este
+entorno es el siguiente:
+\begin{verbatim}
+   \begin{acknowledgements}[Manuel Lorenzo García \\ Julio de 2004]
+      Quiero agradecer todo este esfuerzo a la gente que me ha
+      apoyado durante todo este tiempo, incluyendo a mis
+      compañeros de estudios.
+   \end{acknowledgements}
+\end{verbatim}
+
+\item El entorno \emph{summary} permite realizar un pequeño resumen
+del proyecto. Su uso es el siguiente:
+\begin{verbatim}
+   \begin{summary}
+      Resumen
+
+      \keywords{Lista de palabras clave}
+   \end{summary}
+\end{verbatim}
+Dentro de este entorno existe el comando \verb+\keywords+, que permite enumerar
+las palabras clave del proyecto. A continuación se muestra un ejemplo de uso de
+este entorno:
+\begin{verbatim}
+   \begin{summary}
+      El objetivo de este proyecto es el desarrollo de un
+      sistema de gestión de tareas en red para los sistemas
+      de monitorización en tiempo real, basado en la
+      tecnología de Agentes Inteligentes.
+
+      \keywords{Agentes Inteligentes, Monitorización}
+   \end{summary}
+\end{verbatim}
+
+\item El entorno \emph{algoritmo} permite crear un objeto flotante en el texto para incluir un algoritmo. Dentro de este entorno se pueden usar todos los comandos de un objeto flotante como las figuras y tablas, por ejemplo, \verb+\caption+ o \verb+\label+. Además, permite el uso de la opción \verb+[H]+ que permite fijar el algoritmo en un punto determinado en el texto. A continuación se muestra un ejemplo de uso de este entorno:
+\begin{verbatim}
+    \begin{algoritmo}[H]
+        1) Este es el primer paso del algoritmo.\\
+        2) Este es el segundo.\\
+        3) Y el tercero.
+        \caption{Algoritmo Ensemble Learning}
+        \label{mialgoritmo2}
+    \end{algoritmo}
+\end{verbatim}
+
+\end{itemize}
+
+\section{Paquetes empleados}
+
+Al cargar la clase \emph{fiudcPFC} automáticamente se cargan también una serie
+de paquetes de \LaTeX{}:
+
+\begin{itemize}
+\item El paquete \texttt{inputenc}, con la opción \emph{latin1}, y que permite
+escribir directamente letras con acentos, la eñe, etc.
+
+\item El paquete \texttt{babel}, con la opción \emph{spanish}, y que hace que
+el \LaTeX{} tenga en cuenta que el documento está siendo escrito en español a
+la hora de dividir las palabras, escribir los títulos, etc.
+
+\item El paquete \texttt{geometry}, con las opciones \emph{a4paper},
+\emph{left=4cm}, \emph{top=4cm}, \emph{bottom=4cm}, \emph{right=2.5cm},
+y \emph{twosideshift=0cm}, el cual permite indicar el tamaño de papel a
+emplear y los márgenes a establecer, tal y como se indica en la normativa de la
+presentación de los Proyectos Fin de Carrera.
+
+\item El paquete \texttt{fancyhdr}, que permite personalizar el estilo de las
+cabeceras y de los pies de página.
+
+\item El paquete \texttt{graphicx}, con la opción \emph{dvips}\footnote{A la
+hora de generar un fichero en formato PDF, es necesario generar primero el DVI
+y posteriormente el PDF a partir del mismo, ya que si se genera el fichero PDF
+directamente desde el código \LaTeX{} no se verán los archivos PostScript que
+se incluyan}, y que permite cargar archivos de PostScript y PostScript
+Encapsulado.
+
+\item El paquete \texttt{graphicx}, que permite incluir entornos flotantes en el texto y fijarlos en una determinada posición en relación al texto. Se emplea para definir el entorno de un algoritmo.
+
+\end{itemize}
+
+\section{Paquetes recomendados}
+
+A continuación mostramos una serie de paquetes que nos ayudarán a realizar
+ciertas tareas a la hora de escribir la memoria del Proyecto Fin de Carrera. No
+se trata de una lista exhaustiva, por lo que para realizar alguna tarea
+concreta deberemos consultar en la bibliografía o en Internet para buscar si
+existe algún paquete que la facilite.
+
+\begin{itemize}
+\item Se recomienda emplear el paquete \texttt{hyperref} con la opción
+\emph{dvipdfm}. De esta forma cuando se convierta la memoria a formato PDF se
+incluirán un índice de acceso rápido en el documento. Además las referencias
+funcionarán a modo de hiperenlace, permitiendo navegar de forma cómoda por el
+documento. Finalmente, si se carga este comando la clase \emph{fiudcPFC}
+establecerá el título, el autor, el tema y las palabras clave\footnote{Debido
+a un pequeño defecto sin una solución satisfactoria en la clase \emph{fiudcPFC},
+las palabras  clave del documento PDF hay que establecerlas manualmente antes del
+comando \texttt{\textbackslash maketitle}, empleando el comando
+\texttt{\textbackslash hypersetup}, de la forma \texttt{\textbackslash
+hypersetup\{pdfkeywords=\{\textit{Lista de palabras clave}\}\}}}, del documento
+PDF a las establecidas en el proyecto.
+
+\item Por defecto,  \LaTeX{} realiza una separación silábica de las palabras
+para ajutar la longitud de cada línea. Si se desea que ajuste la longitud sin
+cortar las palabras se puede emplear el paquete \texttt{hyphenat} con la opción
+\emph{none}. Así cuando una palabra no quepa en una línea \LaTeX{} la pasará a
+la línea siguiente. Al emplear esta opción es posible que \TeX{} no ajuste bien
+los tamaños de línea. Se recomienda emplear el comando \verb+\sloppy+ para
+evitar este problema.
+\end{itemize}
+
+\section{Bibliografía}
+
+Junto con la clase \emph{fiudcPFC} se incluye un fichero de estilo para la
+bibliografía llamado \emph{aplain}, que permite que la bibliografía tenga el
+mismo formato que los ejemplos que aparecen en la normativa de los Proyectos
+Fin de Carrera.
+
+Este estilo está especialmente indicado para referencias bibliográficas, no
+para referencias a Internet. Si se está empleando \BibTeX{} se puede escribir
+una referencia a Internet como sigue:
+
+\begin{verbatim}
+   @misc{enlace,
+       title = "Laboratorio de Investigación y Desarrollo en
+                Inteligencia Artificial",
+       howpublished = "http://www.dc.fi.udc.es/lidia",
+       note = "Último acceso: 20-03-2004" }
+\end{verbatim}
+
+\end{document}

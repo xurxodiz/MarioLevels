@@ -1,0 +1,17 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Incorporando un glosario de tírminos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+En este capítulo se muestra un ejemplo del uso e incorporaciín de glosarios de tírminos en el documento. Para ello es necesario usar el paquete makeidx y usar los comandos makeindex y printindex. Ademís, en el texto se usarí el comando index para indicar cada una de las palabras que se usarín en el glosario.
+
+Finalmente, el documento ha de ser compilado por la aplicaciín MakeIndex que se proporciona con la propia instalaciín de Latex.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Ejemplo de uso de un glosario de tírminos o índice alfabítico.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+En esta secciín se nombran algunos tírminos que se emplearín en el glosario. Por ejemplo: software\index{software}, hardware\index{hardware}, matriz diagonal\index{matriz!diagonal}, matriz identidad\index{matriz!identidad} y matriz singular\index{matriz!singular}.
+
+Para crear cada una de las entradas del glosario se usa en comando index al lado de la palabra. Finalmente, el índice se crea en el lugar en el que se use el comando printindex en el texto.
+
+Hay que tener cuidado con las palabras acentuadas ya que por defecto no las ordena correctamente en el índice alfabítico. Para que lograr una ordenaciín correcta en Cas\-te\-llano, con estas palabras hay que usar el comando index de la siguiente forma: \verb+\index{palabra sin acento@palabra con acento}+. Ahora se aíaden otras palabras para completar este índice: íptica\index{optica@íptica}, olvidar\index{olvidar}, patraía\index{patraía}, patrín\index{patron@patrín}, aprendizaje por refuerzo\index{aprendizaje!por refuerzo}, aprendizaje competitivo\index{aprendizaje!competitivo}, aprendizaje supervisado\index{aprendizaje!supervisado}, aprendizaje por ípocas\index{aprendizaje!por epocas@por ípocas}, convergencia\index{convergencia}, mítodos de segundo orden\index{metodos de segundo orden@mítodos de segundo orden}, algoritmo\index{algoritmo}, descenso de gradiente\index{descenso de gradiente}, puente\index{puente}, activaciín\index{activacion@activaciín}, coste\index{coste}, neurona\index{neurona}, capa oculta\index{capa oculta}, agrupamiento\index{agrupamiento}, distancia\index{distancia}, desdeía\index{desdeía}, mítrica\index{metrica@mítrica}, cardinalidad\index{cardinalidad}, mínimo\index{minimo@mínimo}, neutro\index{neutro}, convexo\index{convexo}, superficie\index{superficie}, circunferencia\index{circunferencia}, horizonte de predicciín\index{horizonte de prediccion@horizonte de predicciín}, sinapsis\index{sinapsis}, prototipo\index{prototipo}, onda\index{onda} y pala\index{pala}. 

@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Un capítulo para el uso de algoritmos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+En este capítulo se muestran algunos ejemplos del uso del entorno de algoritmos y el modo de referenciarlos. Este entorno es flotante al igual que una tabla o figura lo cual significa que su posiciín se ajustarí en funciín del texto. Tambiín admite todas las opciones de los entornos flotantes para fijar el algoritmo en un punto determinado, por ejemplo, usando el paquete float y la opciín [H] al definir el algortimo.
+
+\emph{Informítica} es una palabra de origen francís formada por la contracciín de dos vo\-ca\-blos \texttt{Infor}maciín y
+Auto\texttt{mítica}. La Real Academia Espaíola (RAE)\footnote{http://www.rae.es} define la informítica como el
+conjunto de conocimientos científicos y tícnicas que hacen posible el tratamiento automítico de la informaciín por medio de
+ordenadores. La palabra informítica suele utilizarse como sinínimo de \texttt{Ciencia e Ingeniería de las Computadoras (Computer Science)}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Címo introducir algoritmos y referenciarlos en el texto.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+A continuaciín se muestra el modo introducir un algoritmo en el texto:
+
+\begin{algorithm}[H]
+ \begin{enumerate}
+ \item Este es el primer paso del algoritmo.
+ \item Este es el segundo.
+    \begin{enumerate}
+        \item Este es el subpaso 1 del segundo paso
+        \item Otro mís
+        \item y el íltimo
+    \end{enumerate}
+ \item Y el tercero.
+ \end{enumerate}
+ \caption{Algoritmo AdaBoost}
+ \label{mialgoritmo1}
+\end{algorithm}
+
+En el caso anterior se ha usado la opciín [H] por lo tanto se fuerza a que el algoritmo quede siempre situado a continuaciín de la línea de texto anterior a íl.
+
+Y ahora otro ejemplo de otro algoritmo con otro formato:
+
+\begin{algorithm}                      % enter the algorithm environment
+\caption{Calculate $y = x^n$}          % give the algorithm a caption
+\label{mialgoritmo2}                           % and a label for \ref{} commands later in the document
+\begin{algorithmic}                    % enter the algorithmic environment
+    \Require $n \geq 0 \vee x \neq 0$
+    \Ensure $y = x^n$
+    \State $y \Leftarrow 1$
+    \If{$n < 0$}
+        \State $X \Leftarrow 1 / x$
+        \State $N \Leftarrow -n$
+    \Else
+        \State $X \Leftarrow x$
+        \State $N \Leftarrow n$
+    \EndIf
+    \While{$N \neq 0$}
+        \If{$N$ is even}
+            \State $X \Leftarrow X \times X$
+            \State $N \Leftarrow N / 2$
+        \Else[$N$ is odd]
+            \State $y \Leftarrow y \times X$
+            \State $N \Leftarrow N - 1$
+        \EndIf
+    \EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+Finalmente los referencio en el texto diciendo que los algoritmos \ref{mialgoritmo1} y \ref{mialgoritmo2} son espectaculares.
