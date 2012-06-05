@@ -9,8 +9,9 @@
 	
     <path id="marioaichallenge.classpath">
         <pathelement location="bin"/>
-        <pathelement location="lib/aparse-2.2.jar"/> 
-    	<pathelement location="lib/weka.jar"/>
+    	<fileset dir="lib/"><include name="*.jar"/></fileset>
+    	<fileset dir="lib/org.jzy3d-0.9-dependencies/"><include name="*.jar"/></fileset>
+    	<fileset dir="lib/org.jzy3d-0.9-dependencies/jogl/"><include name="*.jar"/></fileset>
     </path>
 
 	
@@ -83,6 +84,17 @@
         </java>
     </target>
 	
+    <target name="graphs3d">
+        <java classname="jorgedizpico.cluster.Graphs3D" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+        </java>
+    </target>
+	
+    <target name="graphs2d">
+        <java classname="jorgedizpico.cluster.Graphs2d" failonerror="true" fork="yes">
+            <classpath refid="marioaichallenge.classpath"/>
+        </java>
+    </target>
 	
     <target name="play">
         <java classname="dk.itu.mario.engine.Play" failonerror="true" fork="yes">

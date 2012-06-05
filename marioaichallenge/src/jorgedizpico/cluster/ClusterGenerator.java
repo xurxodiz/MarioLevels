@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import weka.clusterers.ClusterEvaluation;
-import weka.clusterers.Clusterer;
 import weka.clusterers.DensityBasedClusterer;
 import weka.clusterers.EM;
 import weka.clusterers.FilteredClusterer;
