@@ -20,7 +20,8 @@ import dk.itu.mario.MarioInterface.LevelInterface;
 
 public class LakituLevelGenerator implements LevelGenerator {
 	
-	public static String clusterFile = System.getProperty("user.dir") + "/data/cluster.dat";
+	public static String clusterFile = "data/cluster.dat";
+	
   	protected static Random rand = new Random();
   	protected LakituLevel lvl;
 	

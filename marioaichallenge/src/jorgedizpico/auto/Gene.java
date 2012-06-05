@@ -67,8 +67,8 @@ public enum Gene implements State {
 	}
 
 	@Override
-	public boolean execute(Stack<State> stack, Trace trace) {
-		return trace.addGene(this);
+	public Gene execute(Stack<State> stack) {
+		return this;
 	}
 
 }

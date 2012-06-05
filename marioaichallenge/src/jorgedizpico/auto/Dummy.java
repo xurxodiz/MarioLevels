@@ -24,7 +24,7 @@ public class Dummy implements State, Iterable<Chain>, Serializable {
 	}
 
 	@Override
-	public boolean execute(Stack<State> stack, Trace trace) {
+	public Gene execute(Stack<State> stack) {
 		double roll = new Random().nextDouble();
 		double accum = 0.0;
 		
@@ -42,10 +42,9 @@ public class Dummy implements State, Iterable<Chain>, Serializable {
 			if (accum > roll) {
 				for (State st : ch.flippedCopy())
 					stack.push(st);
-				return true;
 			}
 		}
-		return false;
+		return null;
 	}
 
 }

@@ -2,16 +2,23 @@ package jorgedizpico.auto;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Stack;
 
 public class Automaton implements Serializable {
 	
 	private static final long serialVersionUID = 777L;
 	
-	private HashMap<String,Dummy> dummies
+	protected HashMap<String,Dummy> dummies
 		= new HashMap<String,Dummy>();
+	
+	protected Stack<State> stack;
 
 	public Gene getGene(String s) {
 		return Enum.valueOf(Gene.class, s);
+	}
+	
+	public void init() {
+		stack = new Stack<State>();
 	}
 
 	public Dummy getDummy(String s) {
@@ -31,5 +38,10 @@ public class Automaton implements Serializable {
 			for (Chain ch : dummy)
 				ch.setOdds(ch.getOdds()/accum);
 		}
+	}
+	
+	public Gene step() {
+		State st = stack.pop();
+		return st.execute(stack);
 	}
 }

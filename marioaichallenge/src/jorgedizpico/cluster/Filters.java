@@ -21,10 +21,17 @@ public class Filters {
 		"timesOfDeathByRedTurtle"
 	};
 
-    public static boolean isOutlierPoint(double x, double y, double z) {
-    	return (x < -250 || y < -1000);
+    public static boolean isOutlierPoint(double x, double y, double z, double t) {
+    	return (x < -200 || z < -175 || t < -500);
     }
     
+    public static boolean isOutlierPoint(double x, double y, double z) {
+    	return (x < -200 || z < -175);
+    }
+    
+    public static boolean isOutlierPoint(double x, double y) {
+    	return (x < -75 || y < -200);
+    } 
 	
 	public static boolean isUsefulField(String s) {
 		return !(Arrays.asList(filteredFields).contains(s));

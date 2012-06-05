@@ -23,6 +23,14 @@ public class Trace implements Iterable<Gene> {
 		return trace.size();
 	}
 	
+	public Trace copy() {
+		return (Trace) trace.clone();
+	}
+	
+	public Gene getGene(int i) {
+		return trace.get(i);
+	}
+	
 	@Override
 	public Iterator<Gene> iterator() {
         Iterator<Gene> i = Collections.unmodifiableList(trace).iterator();

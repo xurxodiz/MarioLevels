@@ -113,4 +113,10 @@
         </java>
     </target>
 	
+    <target name="weka">
+        <java jar="lib/weka.jar" failonerror="true" fork="yes">
+            <jvmarg value="-Xmx512m" />
+        </java>
+    </target>
+	
 </project>

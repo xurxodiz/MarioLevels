@@ -4,6 +4,6 @@ import java.util.Stack;
 
 public interface State {
 	
-	public boolean execute(Stack<State> stack, Trace trace);
+	public Gene execute(Stack<State> stack);
 
 }
