@@ -13,8 +13,6 @@ import org.jzy3d.chart.controllers.mouse.ChartMouseController;
 import org.jzy3d.chart.controllers.mouse.interactives.ScatterMouseSelector;
 import org.jzy3d.chart.controllers.thread.ChartThreadController;
 import org.jzy3d.colors.Color;
-import org.jzy3d.colors.ColorMapper;
-import org.jzy3d.colors.colormaps.ColorMapRainbow;
 import org.jzy3d.maths.Coord3d;
 import org.jzy3d.plot3d.primitives.interactive.InteractiveScatter;
 import org.jzy3d.plot3d.rendering.view.Renderer2d;
@@ -66,7 +64,7 @@ public class Graphs3D {
         	  		}
         	  		holding = false;
         	  		message = MESSAGE_SELECTION_MODE;
-        	  		chart.render(); // update message display
+        	  		chart.updateProjectionsAndRender(); // update message display
         	  	}
         	  	public void keyTyped(KeyEvent e) {
         	  		if(!holding){
@@ -76,7 +74,7 @@ public class Graphs3D {
         	  			}
         	  		holding = true;
         	  		message = MESSAGE_ROTATION_MODE;
-        	  		chart.render();
+        	  		chart.updateProjectionsAndRender();
         	  		}
         	  	}
         	  	protected boolean holding = false;

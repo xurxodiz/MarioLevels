@@ -47,6 +47,7 @@ public class ClusterGenerator {
 			EM cl   = new EM();
 			cl.setOptions(clOptions);
 			
+			/*
 			String[] remOptions = new String[2];
 			remOptions[0] = "-R"; // "range"
 			remOptions[1] = "1,2,3,5,7,15,17,27,28,29,30,32,33,34"; 
@@ -65,6 +66,7 @@ public class ClusterGenerator {
 			// timesOfDeathByJumpFlower
 			// timesOfDeathByRedTurtle
 			
+			
 			// we ignore the attributes that are zero for all cases
 			Remove remove = new Remove();
 			remove.setOptions(remOptions);
@@ -74,6 +76,9 @@ public class ClusterGenerator {
 			fc.setFilter(remove);
 			fc.setClusterer(cl);
 			DensityBasedClusterer dbc = new MakeDensityBasedClusterer(fc);
+			*/
+			
+			DensityBasedClusterer dbc = new MakeDensityBasedClusterer(cl);
 			dbc.buildClusterer(data);
 			    
 			ClusterEvaluation eval = new ClusterEvaluation();

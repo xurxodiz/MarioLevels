@@ -58,7 +58,8 @@ public class DataFileParser {
 		
 		file.write("@relation playerdata\n");
 		for (Field f : flds)
-			file.write("@ATTRIBUTE\t" + f.getName() + "\tNUMERIC\n");
+			if (isUsefulField(f.getName()))
+				file.write("@ATTRIBUTE\t" + f.getName() + "\tNUMERIC\n");
 	}
 	
 	protected static void writeDataStartHeader(FileWriter file) throws IOException {
@@ -75,12 +76,36 @@ public class DataFileParser {
 		Arrays.sort(flds, new DataFileParser().new FieldComparator());
 		
 		for (Field f : flds)
-			file.write(f.get(gp).toString()+",");
+			if (isUsefulField(f.getName()))
+					file.write(f.get(gp).toString()+",");
 		
 	    file.write("\n");		
 		} catch (Exception e) {
 			System.out.println("Unable to read file " + entry.getAbsolutePath() + ", skipped.");
 		}
+	}
+	
+	public static boolean isUsefulField(String s) {
+		
+		String[] filteredFields = new String[]{
+			"ArmoredTurtlesKilled",
+			"CannonBallKilled",
+			"ChompFlowersKilled",
+			"GreenTurtlesKilled",
+			"RedTurtlesKilled",
+			"EnemyKillByKickingShell",
+			"kickedShells",
+			"timesOfDeathByArmoredTurtle",
+			"timesOfDeathByCannonBall",
+			"timesOfDeathByChompFlower",
+			"timesOfDeathByFallingIntoGap",
+			"timesOfDeathByGreenTurtle",
+			"timesOfDeathByJumpFlower",
+			"timesOfDeathByRedTurtle"
+		};
+		
+		return !(Arrays.asList(filteredFields).contains(s));
+		
 	}
 	
 	public class FieldComparator implements Comparator<Field> {
