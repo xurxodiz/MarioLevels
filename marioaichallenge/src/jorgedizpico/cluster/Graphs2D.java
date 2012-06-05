@@ -1,8 +1,8 @@
 package jorgedizpico.cluster;
 
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
@@ -12,77 +12,98 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class Graphs2D {
+import au.com.bytecode.opencsv.CSVReader;
 
-	public static void main(String[] args) throws IOException {
-		String dataFileName = "data/logprob.csv";
-		Double[][] dataValues = getData(dataFileName);
+public class Graphs2D {
+	
+	protected static boolean exp = false;
+
+	public static void main(String[] args) {
 		
-        XYSeriesCollection dataset01 = new XYSeriesCollection();
-        XYSeries data01 = new XYSeries("data 0-1");
-        for (Double[] d : dataValues)
-        	data01.add(d[0], d[1]);
-        
-        dataset01.addSeries(data01);
-        showGraph(dataset01);
-        
-        XYSeriesCollection dataset02 = new XYSeriesCollection();
-        XYSeries data02 = new XYSeries("data 0-2");
-        for (Double[] d : dataValues)
-        	data02.add(d[0], d[2]);
-        
-        dataset02.addSeries(data02);
-        showGraph(dataset02);
-        
-        XYSeriesCollection dataset12 = new XYSeriesCollection();
-        XYSeries data12 = new XYSeries("data 1-2");
-        for (Double[] d : dataValues)
-        	data12.add(d[1], d[2]);
-        
-        dataset12.addSeries(data12);
-        showGraph(dataset12);
+		if (args.length < 1) {
+			System.out.println("Usage: Graph2D <csvInput> [log]");
+		}
+		
+		try {
+			
+			if (2 <= args.length)
+				exp = (args[1].equals("exp"));
+			
+			String csvFile = args[0];
+			ArrayList<Double[]> dataValues = getData(csvFile);
+			
+	        XYSeriesCollection dataset01 = new XYSeriesCollection();
+	        XYSeries data01 = new XYSeries("data 0-1");
+	        for (Double[] d : dataValues)
+	        	data01.add(d[0], d[1]);
+	        
+	        dataset01.addSeries(data01);
+	        showGraph(dataset01);
+	        
+	        XYSeriesCollection dataset02 = new XYSeriesCollection();
+	        XYSeries data02 = new XYSeries("data 0-2");
+	        for (Double[] d : dataValues)
+	        	data02.add(d[0], d[2]);
+	        
+	        dataset02.addSeries(data02);
+	        showGraph(dataset02);
+	        
+	        XYSeriesCollection dataset12 = new XYSeriesCollection();
+	        XYSeries data12 = new XYSeries("data 1-2");
+	        for (Double[] d : dataValues)
+	        	data12.add(d[1], d[2]);
+	        
+	        dataset12.addSeries(data12);
+	        showGraph(dataset12);
+	        
+		} catch (Exception e) {
+			System.out.println("Unable to draw 2D plots: " + e.getMessage());
+		}
 	}
 		
-	public static Double[][] getData(String dataFileName) throws IOException {
+	public static ArrayList<Double[]> getData(String csvFile) throws IOException {
 		
-		Double[][] data = new Double[97][3];
-		
-		BufferedReader bReader = new BufferedReader(new FileReader(dataFileName));
-		String s;
+		ArrayList<Double[]> list = new ArrayList<Double[]>();
+		double x, y, z;
 		int i = 0;
-		while ((s=bReader.readLine())!=null){
-			String datavalue [] = s.split(",");
-			data[i][0] = Double.parseDouble(datavalue[0]);
-			data[i][1] = Double.parseDouble(datavalue[1]);
-			data[i][2] = Double.parseDouble(datavalue[2]);
+		
+      	CSVReader reader = new CSVReader(new FileReader(csvFile));
+        String [] nextLine;
+        
+      	while (null != (nextLine = reader.readNext())) {
+      		x = Double.parseDouble(nextLine[0]);
+      		y = Double.parseDouble(nextLine[1]);
+      		z = Double.parseDouble(nextLine[2]);
 			
-			if (data[i][0] < -75 || data[i][1] < -250)
-				System.out.println(data[i][0] + "," + data[i][1] + "," + data[i][2]);
+			if (Filters.isOutlierPoint(x,y,z))
+				System.out.println("outlier [" + i + "]: " + x + "," + y + "," + z + " (skipped)");
+			
 			else {
-
-			
-				data[i][0] = Math.pow(1.1,data[i][0]);
-				data[i][1] = Math.pow(1.1,data[i][1]);
-				data[i][2] = Math.pow(1.1,data[i][2]);
-			
-				i++;
+				if (exp) {
+					x = Math.pow(1.1,x);
+					y = Math.pow(1.1,y);
+					z = Math.pow(1.1,z);
+				}
+				list.add(new Double[]{x,y,z});
 			}
+			i++;
 
 		}
-		bReader.close();
-		return data;
+		reader.close();
+    	System.out.println("Total points plotted: " + list.size());
+		return list;
 	}
         
-    private static void showGraph(XYDataset dataset) {
+    protected static void showGraph(XYDataset dataset) {
         final JFreeChart chart = createChart(dataset);
         
-        ChartFrame frameGeo=new ChartFrame("XYLine Chart", chart);
+        ChartFrame frameGeo = new ChartFrame("XYLine Chart", chart);
         frameGeo.setSize(700,500);
         frameGeo.setLocation(700,0);
         frameGeo.setVisible(true);
     }
 
-    private static JFreeChart createChart(XYDataset dataset) {
+    protected static JFreeChart createChart(XYDataset dataset) {
     	
         JFreeChart chart = ChartFactory.createScatterPlot(
             "Title",                  // chart title

@@ -87,12 +87,16 @@
     <target name="graphs3d">
         <java classname="jorgedizpico.cluster.Graphs3D" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
+        	<arg value="${data.csvFile}"/>
+        	<arg value="${exp}"/>
         </java>
     </target>
 	
     <target name="graphs2d">
-        <java classname="jorgedizpico.cluster.Graphs2d" failonerror="true" fork="yes">
+        <java classname="jorgedizpico.cluster.Graphs2D" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
+        	<arg value="${data.csvFile}"/>
+        	<arg value="${exp}"/>
         </java>
     </target>
 	
