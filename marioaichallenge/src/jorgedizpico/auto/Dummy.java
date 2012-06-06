@@ -42,6 +42,7 @@ public class Dummy implements State, Iterable<Chain>, Serializable {
 			if (accum > roll) {
 				for (State st : ch.flippedCopy())
 					stack.push(st);
+				break;
 			}
 		}
 		return null;

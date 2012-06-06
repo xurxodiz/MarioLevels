@@ -59,12 +59,10 @@ public class Builder {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		if (xx-x != I_LEN) return false;
-		
-		xx = lvl.placePipe(x+1, y, I_PIPE_HEIGHT);
+		lvl.placePipe(x, y, I_PIPE_HEIGHT);
 		
 		if (piranha[0] == PIRANHA)
-			lvl.placePiranha(x+1, y);
+			lvl.placePiranha(x, y);
 		
 		return updateX(xx);
 	}
@@ -72,7 +70,7 @@ public class Builder {
 	public boolean createCannon(int... flags) {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);
-		lvl.placeCannon(xx-1, y, I_CANNON_HEIGHT);
+		lvl.placeCannon(x, y, I_CANNON_HEIGHT);
 		return updateX(xx);
 	}
 	
@@ -80,10 +78,10 @@ public class Builder {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);	
 		
-		int[] enemy = maySwap(new int[]{enemyType[0], -1});
+		int[] rnd = maySwap(new int[]{enemyType[0], -1});
 
-		for (int i = 1; x+i <= xx; i++)
-			switch (enemy[i-1]){
+		for (int i = 0; x+i < xx; i++)
+			switch (rnd[i]){
 				case ENEMY_GOOMBA:
 					lvl.placeGoomba(x+i, y-1); 		
 					break;
@@ -124,10 +122,10 @@ public class Builder {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		blocks = maySwap(blocks);
+		int[] rnd = maySwap(blocks);
 		
-		for (int i = 1; x+i <= xx; i++)
-			switch (blocks[i-1]) {
+		for (int i = 0; x+i < xx; i++)
+			switch (rnd[i]) {
 				case BLOCK_POWERUP:
 					lvl.placeBlockPowerUp(x+i, y-I_HOVER_HEIGHT);
 					break;
@@ -146,8 +144,8 @@ public class Builder {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		for (int i = x+1; i <= xx; i++)
-			lvl.placeCoin(i, y-I_HOVER_HEIGHT);
+		for (int i = 0; x+i <= xx; i++)
+			lvl.placeCoin(x+i, y-I_HOVER_HEIGHT);
 		
 		return updateX(xx);
 	}
@@ -157,13 +155,15 @@ public class Builder {
 		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
 		if (STAIRS_UP == direction[0])
-			for (int i = 0; i < xx-x; i++)
-				for (int h = 1; h <= i+1; h++)
+			for (int i = 0; x+i < xx; i++)
+				for (int h = 1; h < xx-x+i; h++)
 					lvl.placeRock(x+i, y-h);
+		
 		else // STAIRS_DOWN
-			for (int i = 0; i < xx-x; i++)
+			for (int i = 0; x+i < xx; i++)
 				for (int h = xx-x-i; h > 0; h--)
 					lvl.placeRock(x+i, y-h);
+		
 		return updateX(xx);
 	}
 
@@ -180,7 +180,6 @@ public class Builder {
 	}
 	
 	public void fixLevel() {
-		createEndPlug();
 		lvl.fixWalls();
 	}
 

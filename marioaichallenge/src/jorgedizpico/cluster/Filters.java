@@ -1,16 +1,19 @@
 package jorgedizpico.cluster;
 
+import java.io.File;
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Filters {
 	
-	protected static String[] filteredFields = new String[]{
+	protected static String[] skippedFields = new String[]{
 		"ArmoredTurtlesKilled",
 		"CannonBallKilled",
 		"ChompFlowersKilled",
 		"GreenTurtlesKilled",
 		"RedTurtlesKilled",
-		"EnemyKillByKickingShell",
+		"enemyKillByKickingShell",
 		"kickedShells",
 		"timesOfDeathByArmoredTurtle",
 		"timesOfDeathByCannonBall",
@@ -33,9 +36,39 @@ public class Filters {
     	return (x < -75 || y < -200);
     } 
 	
-	public static boolean isUsefulField(String s) {
-		return !(Arrays.asList(filteredFields).contains(s));
+	public static boolean isSkippedField(String s) {
+		return (Arrays.asList(skippedFields).contains(s));
 		
+	}
+	
+	
+	public static int numSkippedFields() {
+		return skippedFields.length;
+	}
+	
+	
+	public class FieldComparator implements Comparator<Field> {
+		   
+	    public int compare(Field f1, Field f2){
+
+	        String name1 = f1.getName();        
+	        String name2 = f2.getName();
+	       
+	        return name1.compareTo(name2);
+	    }
+	   
+	}
+	
+	public class FileComparator implements Comparator<File> {
+		   
+	    public int compare(File f1, File f2){
+
+	        String name1 = f1.getName();        
+	        String name2 = f2.getName();
+	       
+	        return name1.compareTo(name2);
+	    }
+	   
 	}
 	
 }

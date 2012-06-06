@@ -44,9 +44,9 @@ public class ClusterGenerator {
 					
 			Instances data = DataSource.read(dataFile);
 			    
-			// three clusters, a hundred iterations
-			String[] clOptions = {"-N", "2"};
-			SimpleKMeans cl   = new SimpleKMeans();
+			// number of clusters
+			String[] clOptions = {"-N", "3"};
+			EM cl   = new EM();
 			cl.setOptions(clOptions);
 			
 			DensityBasedClusterer dbc = new MakeDensityBasedClusterer(cl);
@@ -57,8 +57,7 @@ public class ClusterGenerator {
 			eval.evaluateClusterer(new Instances(data));
 			System.out.println(eval.clusterResultsToString()); 
 			
-			writeLogProbabilities(dbc, data, csvFile);
-
+			writeLogDensities(dbc, data, csvFile);
 			
 			System.out.println("Performing cross-validation...");
 		    double logllh = ClusterEvaluation.crossValidateModel(
@@ -74,7 +73,7 @@ public class ClusterGenerator {
 		}
 	}
 	
-	public static void writeLogProbabilities(DensityBasedClusterer dbc, Instances data, String csvFile)
+	public static void writeLogDensities(DensityBasedClusterer dbc, Instances data, String csvFile)
 		throws Exception {
 		
 		FileWriter csvWriter = new FileWriter(new File(csvFile));

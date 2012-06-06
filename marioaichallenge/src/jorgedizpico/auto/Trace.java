@@ -37,10 +37,12 @@ public class Trace implements Iterable<Gene> {
         return i; 
 	}
 	
-	public LakituLevel buildLevel() {
+	public LakituLevel buildLevel(int type) {
 		try { 
 			LakituLevel lvl = new LakituLevel();
 			Builder lkb = new Builder(lvl);			
+			
+			lvl.setType(type);
 			
 			lkb.createStartPlug();
 			

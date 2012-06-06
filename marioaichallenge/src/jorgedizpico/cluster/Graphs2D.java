@@ -47,14 +47,14 @@ public class Graphs2D {
 	        
 	        dataset02.addSeries(data02);
 	        showGraph(dataset02);
-	        
+	        /*
 	        XYSeriesCollection dataset03 = new XYSeriesCollection();
 	        XYSeries data03 = new XYSeries("data 0-3");
 	        for (Double[] d : dataValues)
 	        	data03.add(d[0], d[3]);
 	        
 	        dataset03.addSeries(data03);
-	        showGraph(dataset03);
+	        showGraph(dataset03);*/
 	        
 	        XYSeriesCollection dataset12 = new XYSeriesCollection();
 	        XYSeries data12 = new XYSeries("data 1-2");
@@ -63,7 +63,7 @@ public class Graphs2D {
 	        
 	        dataset12.addSeries(data12);
 	        showGraph(dataset12);
-	        
+	        /*
 	        XYSeriesCollection dataset13 = new XYSeriesCollection();
 	        XYSeries data13 = new XYSeries("data 1-3");
 	        for (Double[] d : dataValues)
@@ -78,7 +78,7 @@ public class Graphs2D {
 	        	data23.add(d[2], d[3]);
 	        
 	        dataset23.addSeries(data23);
-	        showGraph(dataset23);
+	        showGraph(dataset23);*/
 	        
 	        
 		} catch (Exception e) {
@@ -98,7 +98,7 @@ public class Graphs2D {
       	while (null != (nextLine = reader.readNext())) {
       		x = Double.parseDouble(nextLine[0]);
       		y = Double.parseDouble(nextLine[1]);
-      		z = 0;
+      		z = Double.parseDouble(nextLine[2]);
       		t = 0;
 			
 			if (Filters.isOutlierPoint(x,y,z,t))
@@ -113,7 +113,7 @@ public class Graphs2D {
 					z = Math.pow(1.1,z);
 					t = Math.pow(1.1,t);
 				}
-				list.add(new Double[]{x,y});
+				list.add(new Double[]{x,y,z});
 			}
 			i++;
 

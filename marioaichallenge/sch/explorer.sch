@@ -16,10 +16,6 @@ flat 			= FLAT flat, 5
 				| FLAT hub , 95
 				;
 
-coins 			= COINS , 20
-				| COINS coins , 80
-				;
-
 pipe 			= PIPE , 2
 				| PIPEPIRANHA 
 				;

@@ -6,17 +6,19 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Random;
 
-import weka.clusterers.Clusterer;
+import weka.clusterers.DensityBasedClusterer;
 import weka.core.Instance;
-import weka.core.SparseInstance;
+import weka.core.Instances;
+import weka.core.converters.ConverterUtils.DataSource;
 
 import jorgedizpico.auto.Executor;
 import jorgedizpico.auto.Trace;
-import jorgedizpico.cluster.DataFileParser;
+import jorgedizpico.cluster.Filters;
 
 import dk.itu.mario.MarioInterface.GamePlay;
 import dk.itu.mario.MarioInterface.LevelGenerator;
 import dk.itu.mario.MarioInterface.LevelInterface;
+import dk.itu.mario.level.Level;
 
 public class LakituLevelGenerator implements LevelGenerator {
 	
@@ -29,35 +31,36 @@ public class LakituLevelGenerator implements LevelGenerator {
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
 		try {
 						
-			/*Clusterer cl = readClusters(clusterFile);			
+			DensityBasedClusterer cl = readClusters(clusterFile);
 			Instance inst = makeInstance(playerMetrics);
-			int cluster = cl.clusterInstance(inst);
+			double[] clusters = cl.logDensityPerClusterForInstance(inst);
+
+			int type;
 			
-			switch (cluster) {
+			switch (weka.core.Utils.maxIndex(clusters)) {
 				case 0: // intermediate
-					lvl.setType(Level.TYPE_OVERGROUND);
+					type = Level.TYPE_OVERGROUND;
 					break;
 				case 1: // speeder
-					lvl.setType(Level.TYPE_CASTLE);
+					type = Level.TYPE_CASTLE;
 					break;
-				case 2: // explorer
-					lvl.setType(Level.TYPE_UNDERGROUND);
+				default: // explorer
+					type = Level.TYPE_UNDERGROUND;
 					break;
-			}*/
+			}
 			
-			int cluster = 2;
 			
-			Executor exec = new Executor(cluster);
+			Executor exec = new Executor();
 			// 320 blocks length for the level
 			// start and end platform are 10 each
 			// and chunks are 2 each
 			// [320 - (10+10)] / 2 = 150
-			Trace trace = exec.generateTrace(150);
-			LakituLevel lvl = trace.buildLevel();
+			Trace trace = exec.generateTraceMix(150, clusters);
+			LakituLevel lvl = trace.buildLevel(type);
 			
 			if (null == lvl)
 				throw new Exception("Error while building level from genes.");
-				
+			
 			return lvl;
 			
 		} catch (Exception e) {
@@ -71,14 +74,14 @@ public class LakituLevelGenerator implements LevelGenerator {
 		return null;
 	}
 	
-	public static Clusterer readClusters(String fileName){
+	public DensityBasedClusterer readClusters(String fileName){
 		FileInputStream fis = null;
 	    ObjectInputStream in = null;
-	    Clusterer cl =  null;
+	    DensityBasedClusterer cl =  null;
 		try {
 			fis = new FileInputStream(fileName);
 			in = new ObjectInputStream(fis);
-			cl = (Clusterer)in.readObject();
+			cl = (DensityBasedClusterer)in.readObject();
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -88,19 +91,25 @@ public class LakituLevelGenerator implements LevelGenerator {
 
 	protected Instance makeInstance(GamePlay gp) {
 		try {
+
 			Double d = 0.0;
+			int k = 0;
 			Field[] flds = GamePlay.class.getFields();
-			SparseInstance inst = new SparseInstance(flds.length);
-			Arrays.sort(flds, new DataFileParser().new FieldComparator());
+			Instance inst = new Instance(flds.length - Filters.numSkippedFields());
+			Arrays.sort(flds, new Filters().new FieldComparator());
 			
-			for (int i = 0; i < flds.length; i++){
+			for (int i = 0; i < flds.length; i++) {
+				
+				if (Filters.isSkippedField(flds[i].getName()))
+					continue;
 				
 				if (flds[i].getType() == Integer.TYPE)
 					d = new Double((Integer)flds[i].get(gp));
 				else if (flds[i].getType() == Double.TYPE)
 					d = (Double) flds[i].get(gp);
-					
-				inst.setValue(i, d);
+				
+				inst.setValue(k, d);
+				k++;
 			}
 			
 			return inst;

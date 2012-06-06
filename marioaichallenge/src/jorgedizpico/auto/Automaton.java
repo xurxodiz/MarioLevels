@@ -19,6 +19,7 @@ public class Automaton implements Serializable {
 	
 	public void init() {
 		stack = new Stack<State>();
+		stack.push(getDummy("initial"));
 	}
 
 	public Dummy getDummy(String s) {

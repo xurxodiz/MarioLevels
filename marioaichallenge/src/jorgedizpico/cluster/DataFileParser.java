@@ -29,7 +29,7 @@ public class DataFileParser {
 			writeDataStartHeader(arffWriter);
 			
 			File[] entries = dataFolder.listFiles();
-			Arrays.sort(entries, new DataFileParser().new FileComparator());
+			Arrays.sort(entries, new Filters().new FileComparator());
 			 
 			 for (File playerFolder : entries) {
 				 
@@ -54,11 +54,11 @@ public class DataFileParser {
 	protected static void writeHeader(FileWriter file) throws IOException {
 		Class<? extends GamePlay> cl = GamePlay.class;
 		Field[] flds = cl.getFields();
-		Arrays.sort(flds, new DataFileParser().new FieldComparator());
+		Arrays.sort(flds, new Filters().new FieldComparator());
 		
 		file.write("@relation playerdata\n");
 		for (Field f : flds)
-			if (Filters.isUsefulField(f.getName()))
+			if (!(Filters.isSkippedField(f.getName())))
 				file.write("@ATTRIBUTE\t" + f.getName() + "\tNUMERIC\n");
 	}
 	
@@ -73,40 +73,16 @@ public class DataFileParser {
 		GamePlay gp = (GamePlay)in.readObject();
 		
 		Field[] flds = GamePlay.class.getFields();
-		Arrays.sort(flds, new DataFileParser().new FieldComparator());
+		Arrays.sort(flds, new Filters().new FieldComparator());
 		
 		for (Field f : flds)
-			if (Filters.isUsefulField(f.getName()))
+			if (!(Filters.isSkippedField(f.getName())))
 					file.write(f.get(gp).toString()+",");
 		
 	    file.write("\n");		
 		} catch (Exception e) {
 			System.out.println("Unable to read file " + entry.getAbsolutePath() + ", skipped.");
 		}
-	}
-	
-	public class FieldComparator implements Comparator<Field> {
-		   
-	    public int compare(Field f1, Field f2){
-
-	        String name1 = f1.getName();        
-	        String name2 = f2.getName();
-	       
-	        return name1.compareTo(name2);
-	    }
-	   
-	}
-	
-	class FileComparator implements Comparator<File> {
-		   
-	    public int compare(File f1, File f2){
-
-	        String name1 = f1.getName();        
-	        String name2 = f2.getName();
-	       
-	        return name1.compareTo(name2);
-	    }
-	   
 	}
 
 }
