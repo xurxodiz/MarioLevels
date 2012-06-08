@@ -22,7 +22,7 @@
                                 % Las recomendaciones anteriores se aplican también en este caso.
 
 \title{Este será el título del proyecto} % Título del proyecto
-\department{Computation}        % Departamento.
+\department{Computing}        % Departamento.
 \degree{i}                      % Grado (i: ingeniería, g: gestión, s: sistemas, t: tesis doctoral).
 \author[m]{Jorge Diz Pico}% El parámetro opcional indica el sexo: f para femenino y m para masculino.
 \director[m]{David Camacho}   % Admite también parámetro opcional de sexo.
@@ -42,7 +42,7 @@
 
 \incluir{acknowledgements}
 
-\incluir{summary}
+\incluir{abstract}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INDICES
@@ -62,17 +62,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Se incluye cada capítulo en un fichero .tex independiente.
 % El directorio es el indicado por el comando \dirCapitulos definido al comienzo de este documento.
-\incluir{sections}
-\incluir{figures}
-\incluir{tables}
-\incluir{algorithms}
-\incluir{equations}
-\incluir{glossary}
+\incluir{introduction}
+\incluir{objectives}
+
+\incluir{overview}
+\incluir{profiling}
+\incluir{schematics}
+\incluir{derivation}
+\incluir{execution}
+
+\incluir{results}
+\incluir{conclusions}
 
 \appendix
 
-\incluir{appendix1}
-\incluir{appendix2}
+\incluir{ap_glossary}
+\incluir{ap_usermanual}
+\incluir{ap_schematics}
+\incluir{ap_paper}
 
 \backmatter
 

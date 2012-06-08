@@ -88,7 +88,7 @@
 	\def\@titulaciondoctorado{PHD THESIS}
 	\def\@tutortit{Tutor}
 	\def\@agradecimientos{Acknowledgements}
-	\def\@resumen{Summary}
+	\def\@resumen{Abstract}
 	\def\@palabrasclave{Keywords}
 	\def\@indicecontenidos{Table of contents}    
 	\def\@tabla{Table}
@@ -188,11 +188,15 @@
 
 % Definimos el comando para establecer el tutor
 \newcommand{\tutor}[2][m]{%
-    \ifx#1f
-        \def\@tutor{\textbf{\@tutortit a:} #2}
-    \else
-        \def\@tutor{\textbf{\@tutortit:} #2}
-    \fi
+	\expandafter\ifx\@idioma\@english
+		\def\@tutor{\textbf{\@tutortit:} #2}
+	\else
+	    \ifx#1f
+	        \def\@tutor{\textbf{\@tutortit a:} #2}
+	    \else
+	        \def\@tutor{\textbf{\@tutortit:} #2}
+	    \fi
+	\fi
 }%newcommand
 
 % Definimos el comando para establecer el director
