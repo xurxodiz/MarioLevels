@@ -25,18 +25,19 @@ public class Graphs3D {
     protected static boolean exp = false;
 	
 	
-    protected static Chart chart;
-    protected static Renderer2d messageRenderer;
+    protected InteractiveScatter scatter;
+    protected Chart chart;
+    protected Renderer2d messageRenderer;
 
-    protected static ChartThreadController threadCamera;
-    protected static ChartMouseController mouseCamera;
-    protected static AbstractChartMouseSelector mouseSelection;
+    protected ChartThreadController threadCamera;
+    protected ChartMouseController mouseCamera;
+    protected AbstractChartMouseSelector mouseSelection;
 
-    protected static boolean displayMessage = true;
-    protected static String message;
+    protected boolean displayMessage = true;
+    protected String message;
     
-    public static String MESSAGE_SELECTION_MODE = "Selection mode (hold 'c' to control camera)";
-    public static String MESSAGE_ROTATION_MODE = "Rotation mode (release 'c' to make a selection)";
+    public String MESSAGE_SELECTION_MODE = "Selection mode (hold 'c' to control camera)";
+    public String MESSAGE_ROTATION_MODE = "Rotation mode (release 'c' to make a selection)";
     
 	public static void main(String[] args) {
 		if (args.length < 1) {
@@ -47,19 +48,50 @@ public class Graphs3D {
 			exp = (args[1].equals("exp"));
 		
 		try {
-			Plugs.frame(getChart(args[0]), new Rectangle(0,200,400,400), "Jzy3d Demo");
+			ArrayList<Double[]> points = readPoints(args[0]);
+			
+			Graphs3D graphXYZ = new Graphs3D(points, new int[]{0,1,2});
+			Chart chartXYZ = graphXYZ.newChart();
+			Plugs.frame(chartXYZ, new Rectangle(0,400,800,800), "X-Y-Z");
+			
+			Graphs3D graphXYT = new Graphs3D(points, new int[]{0,1,3});
+			Chart chartXYT = graphXYT.newChart();
+			Plugs.frame(chartXYT, new Rectangle(0,400,800,800), "X-Y-T");
+			
+			Graphs3D graphXZT = new Graphs3D(points, new int[]{0,2,3});
+			Chart chartXZT = graphXZT.newChart();
+			Plugs.frame(chartXZT, new Rectangle(0,400,800,800), "X-Z-T");
+			
+			Graphs3D graphYZT = new Graphs3D(points, new int[]{1,2,3});
+			Chart chartYZT = graphYZT.newChart();
+			Plugs.frame(chartYZT, new Rectangle(0,400,800,800), "Y-Z-T");
+
 		} catch (Exception e) {
 			System.out.println("Unable to draw 3D plot: " + e.getMessage());
 		}
 	}
+	
+	protected Graphs3D(ArrayList<Double[]> points, int[] indexes) {
+		Coord3d[] coords = new Coord3d[points.size()];
+		Color[] colors = new Color[points.size()];
+		double[] c = new double[3];
+		
+		for (int i = 0; i < coords.length; i++) {
+			for (int j = 0; j < indexes.length; j++)
+				c[j] = points.get(i)[indexes[j]];
+			coords[i] = new Coord3d(c[0], c[1], c[2]);
+			colors[i] = Color.RED;
+		}
+		scatter = new InteractiveScatter(coords,colors);
+		scatter.setWidth(5);
+	}
     
-	protected static InteractiveScatter readScatter(String csvFile) throws Exception{
+	protected static ArrayList<Double[]> readPoints(String csvFile) throws Exception{
 	  
-		double x, y, z;
+		double x, y, z, t;
 		int i = 0;
 	
-		ArrayList<Coord3d> points = new ArrayList<Coord3d>();
-		ArrayList<Color> colors = new ArrayList<Color>();
+		ArrayList<Double[]> points = new ArrayList<Double[]>();
 	
 		CSVReader reader = new CSVReader(new FileReader(csvFile));
 		String [] nextLine;
@@ -68,34 +100,31 @@ public class Graphs3D {
 			x = Double.parseDouble(nextLine[0]);
 			y = Double.parseDouble(nextLine[1]);
 			z = Double.parseDouble(nextLine[2]);
+			t = Double.parseDouble(nextLine[3]);
 			
-			if (Filters.isOutlierPoint(x,y,z))
-				System.out.println("outlier [" + i + "]: " + x + "," + y + "," + z + " (skipped)");
+			if (Filters.isOutlierPointXYZT(x,y,z,t))
+				System.out.println("outlier [" + i + "]: " + x + ","
+						+ y + "," + z + "," + t +
+						" (skipped)");
 				
 				else {
 					if (exp) {
 						x = Math.pow(1.1,x);
 						y = Math.pow(1.1,y);
 						z = Math.pow(1.1,z);
+						t = Math.pow(1.1,t);
 					}
-			  		points.add(new Coord3d(x, y, z));
-			        colors.add(Color.RED);
+			  		points.add(new Double[]{x, y, z, t});
 				}
 				i++;
 			
 			}  
 	    	reader.close();
-	    	System.out.println("Total points plotted: " + points.size());
-	    	
-	       InteractiveScatter dots = new InteractiveScatter(points.toArray(new Coord3d[]{}),
-	      		 										  colors.toArray(new Color[]{}));
-	       dots.setWidth(5);
-	       return dots;
+	    	System.out.println("Total points added: " + points.size());
+	       return points;
 	  }
 
-	  public static Chart getChart(String csvFile) throws Exception {
-		  
-		  InteractiveScatter scatter = readScatter(csvFile);
+	  public Chart newChart() {
 	      
 	      chart = new Chart("awt");
 	      chart.getScene().add(scatter);
@@ -146,12 +175,12 @@ public class Graphs3D {
 	      return chart;
 	  }
   
-	protected static void useCam(){
+	protected void useCam(){
 		mouseSelection.releaseChart();
 		chart.addController(mouseCamera);
 	}
 	  
-	protected static void releaseCam(){
+	protected void releaseCam(){
 		chart.removeController(mouseCamera);
 		mouseSelection.attachChart(chart);
 	}

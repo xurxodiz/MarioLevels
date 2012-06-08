@@ -45,7 +45,7 @@ public class ClusterGenerator {
 			Instances data = DataSource.read(dataFile);
 			    
 			// number of clusters
-			String[] clOptions = {"-N", "3"};
+			String[] clOptions = {"-N", "4"};
 			EM cl   = new EM();
 			cl.setOptions(clOptions);
 			

@@ -7,7 +7,6 @@ bin/*
 
 data/*.dat
 data/*.arff
-data/*.exp
 data/*.csv
 
 src/jorgedizpico/grammar/*
