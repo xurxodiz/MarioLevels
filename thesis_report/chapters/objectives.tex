@@ -2,22 +2,205 @@
 \chapter{Objectives}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-What we intend to do.
+so we positioned before the situation for games
+
+and some of the challenges its industry faces nowadays
+
+how do they fare against it?
+
+let's go for a ride
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{State of the Art}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Mondrian.
+What we intend to do.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Problem}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+as we said before
 
-:trollface:
+we kinda need replayability and personalization
+
+there are many ways to do this
+
+let's go over them
+
+\subsection{Procedural Content Generation}
+
+replayability
+
+to offer depth
+
+it greatly depends on the genre, of course
+
+we can do it offering different paths
+
+this is cool for example on roleplaying
+
+solving a quest in different ways
+
+damn i should be able to name an example
+
+or graphic adventures sometimes
+
+even fps, if they ask you to destroy a certain thing
+
+that would be changing the gameplay, in a way
+
+changing what you can do
+
+another slightly different option
+
+for games with a straight goal
+
+like racing, or platforms, or puzzles
+
+is to change the level itself
+
+offer a great number of racetracks, or stages, or an order of tetris pieces or pacman levels
+
+it has an advantage
+
+usually in a role game
+
+a role game has to define all possible options to be expanded
+
+you have to realize and implement that maybe the guard can let you pass with a bribe
+
+instead of killing him
+
+but levels
+
+can easily be defined with some rules
+
+and then let an algorithm run wild within those constraints
+
+this approach can be taken as well, perhaps defining personalities for each guard
+
+but it's difficult
+
+and it's mostly unexplored territory so far
+
+this technique, for defining levels with an algorithm, is englobed in what is called
+
+procedural content generation
+
+not only levels, also enemies
+
+the environment, rather
+
+it has a long history
+
+it started with rogue, probably
+
+then let's cite some examples
+
+well i think the aforementioned tetris, no? (check)
+
+oh yeah diablo
+
+minecraft of course
+
+
+\subsection{Adaptive content}
+
+personalization
+
+like eternal darkness does
+
+
+fable
+
+oh sims too
+
+and spore
+
+
+but that's really simple
+
+just changing the content according to a selection
+
+it's not so far
+
+from changing the game
+
+according to difficulty level
+
+adaptive means more
+
+it's the system being smart
+
+and getting to know
+
+who's at the helm
+
+and, itself, adapting to him
+
+l4d2 does it great
+
+there are not many examples more, to be honest...
+
+well
+
+internet matchings work like that
+
+on xbox live for example
+
+making pairings with people on your level
+
+but the technology is pretty much on its infancy still
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Proposal}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-I do.
+okay so what is the objective of this thesis then
+
+enter the mario ai championship
+
+we have the infinite mario, from notch
+
+on it people experiment with new ai techniques on four different tracks
+
+turing test
+
+agent completion
+
+blah
+
+level generation
+
+we are aiming for the last one
+
+the conditions of the championship are as follows
+
+length of 320x15
+
+player will play a test level
+
+input file will be generated
+
+fed to algorithm
+
+and go!
+
+then they will be evaluated by comparison
+
+we will make a system to enter that competition
+
+our proposal will use clustering to identify the user profile
+
+then, we'll use some grammars that define level prototypes
+
+they have randomness built-in
+
+we will combine them according to the clustering
+
+to create a level
+
+that is, the adaptive generation is taken care of by the clustering
+
+that guides the combination efforts
+
+and the procedural content generation
+
+is taken care by the randomization inherent on the grammars
