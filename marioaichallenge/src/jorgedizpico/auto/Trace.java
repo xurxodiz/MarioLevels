@@ -7,15 +7,15 @@ import java.util.Iterator;
 import jorgedizpico.level.Builder;
 import jorgedizpico.level.LakituLevel;
 
-public class Trace implements Iterable<Gene> {
+public class Trace implements Iterable<Chunk> {
 	
-	protected ArrayList<Gene> trace;
+	protected ArrayList<Chunk> trace;
 	
 	public Trace() {
-		trace = new ArrayList<Gene>();
+		trace = new ArrayList<Chunk>();
 	}
 	
-	public boolean addGene(Gene g) {
+	public boolean addGene(Chunk g) {
 		return trace.add(g);
 	}
 	
@@ -27,13 +27,13 @@ public class Trace implements Iterable<Gene> {
 		return (Trace) trace.clone();
 	}
 	
-	public Gene getGene(int i) {
+	public Chunk getGene(int i) {
 		return trace.get(i);
 	}
 	
 	@Override
-	public Iterator<Gene> iterator() {
-        Iterator<Gene> i = Collections.unmodifiableList(trace).iterator();
+	public Iterator<Chunk> iterator() {
+        Iterator<Chunk> i = Collections.unmodifiableList(trace).iterator();
         return i; 
 	}
 	
@@ -46,7 +46,7 @@ public class Trace implements Iterable<Gene> {
 			
 			lkb.createStartPlug();
 			
-			for (Gene g : trace)
+			for (Chunk g : trace)
 				if (!g.genesis(lkb)) {
 					System.out.println(g);
 					return null;

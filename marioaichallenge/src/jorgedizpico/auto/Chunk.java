@@ -6,7 +6,7 @@ import java.util.Stack;
 import jorgedizpico.level.Builder;
 import static jorgedizpico.level.BuilderFlags.*;
 
-public enum Gene implements State {
+public enum Chunk implements State {
 
 	FLAT("createFlatLand"),
 
@@ -46,7 +46,7 @@ public enum Gene implements State {
 
 	private int[] parameters;
 
-	private Gene(String s, int... p) {
+	private Chunk(String s, int... p) {
 		this.createMethod = s;
 		this.parameters = p;
 	}
@@ -67,7 +67,7 @@ public enum Gene implements State {
 	}
 
 	@Override
-	public Gene execute(Stack<State> stack) {
+	public Chunk execute(Stack<State> stack) {
 		return this;
 	}
 

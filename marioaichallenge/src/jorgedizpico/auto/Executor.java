@@ -43,7 +43,7 @@ public class Executor {
 				traces[i] = new Trace();
 				
 				while (traces[i].size() < length) {
-					Gene g = autos[i].step();
+					Chunk g = autos[i].step();
 					if (null != g) {
 						traces[i].addGene(g);
 					}

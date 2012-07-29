@@ -13,8 +13,8 @@ public class Automaton implements Serializable {
 	
 	protected Stack<State> stack;
 
-	public Gene getGene(String s) {
-		return Enum.valueOf(Gene.class, s);
+	public Chunk getGene(String s) {
+		return Enum.valueOf(Chunk.class, s);
 	}
 	
 	public void init() {
@@ -41,7 +41,7 @@ public class Automaton implements Serializable {
 		}
 	}
 	
-	public Gene step() {
+	public Chunk step() {
 		State st = stack.pop();
 		return st.execute(stack);
 	}

@@ -24,7 +24,7 @@ public class Dummy implements State, Iterable<Chain>, Serializable {
 	}
 
 	@Override
-	public Gene execute(Stack<State> stack) {
+	public Chunk execute(Stack<State> stack) {
 		double roll = new Random().nextDouble();
 		double accum = 0.0;
 		
