@@ -1,9 +1,7 @@
-A project developed for five months as a Master Thesis, but finally forced to drop by my supervisor, a decision I'm not particularly happy about. Now I work on it on my free time.
-
-It implements a module for generating random levels based on player data. It's being integrated on the MarioAIChallenge platform, available at:
+A prototype implementing adaptive procedural content generation for the MarioAIChallenge championship:
 
 http://www.marioai.org/LevelGeneration/source-code
 
 The overall flow involves clustering the user into the pre-found groups, then mixing the grammars associated to each cluster, according to the membership probabilities. Then we traverse the grammar and output a level.
 
-The records for clustering were obtained by virally spreading mario.zip and asking people to play a level and send back the logs.
+The records for clustering were obtained by virally spreading distpackage.zip and asking people to play a level and send back the logs.
