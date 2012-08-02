@@ -1,7 +1,7 @@
 .classpath
 
-DetailedInfo.txt
-player.txt
+./DetailedInfo.txt
+./player.txt
 
 bin/*
 

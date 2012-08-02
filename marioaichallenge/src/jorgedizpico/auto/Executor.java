@@ -3,7 +3,6 @@ package jorgedizpico.auto;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.Random;
-import java.util.Stack;
 
 public class Executor {
 	
@@ -45,7 +44,7 @@ public class Executor {
 				while (traces[i].size() < length) {
 					Chunk g = autos[i].step();
 					if (null != g) {
-						traces[i].addGene(g);
+						traces[i].addChunk(g);
 					}
 				}
 			}
@@ -60,7 +59,7 @@ public class Executor {
 				for (int t = 0; t < traces.length; t++) {
 					accum += _odds[t];
 					if (roll < accum) {
-						mix.addGene(traces[t].getGene(i));
+						mix.addChunk(traces[t].getChunk(i));
 						break;
 					}
 				}

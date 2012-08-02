@@ -32,7 +32,7 @@ public class LakituLevel extends Level implements LevelInterface {
     
     public int capY(int y) {
     	if (y < 0) return 0;
-    	if (y >= width) return height-1;
+    	if (y >= height) return height-1;
     	return y;
     }
     

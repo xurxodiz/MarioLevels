@@ -8,8 +8,6 @@ import java.util.Random;
 
 import weka.clusterers.DensityBasedClusterer;
 import weka.core.Instance;
-import weka.core.Instances;
-import weka.core.converters.ConverterUtils.DataSource;
 
 import jorgedizpico.auto.Executor;
 import jorgedizpico.auto.Trace;
@@ -82,7 +80,8 @@ public class LakituLevelGenerator implements LevelGenerator {
 			fis = new FileInputStream(fileName);
 			in = new ObjectInputStream(fis);
 			cl = (DensityBasedClusterer)in.readObject();
-			
+			fis.close();
+			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

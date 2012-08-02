@@ -13,7 +13,7 @@ public class Automaton implements Serializable {
 	
 	protected Stack<State> stack;
 
-	public Chunk getGene(String s) {
+	public Chunk getChunk(String s) {
 		return Enum.valueOf(Chunk.class, s);
 	}
 	

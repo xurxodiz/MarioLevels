@@ -15,7 +15,7 @@ public class Trace implements Iterable<Chunk> {
 		trace = new ArrayList<Chunk>();
 	}
 	
-	public boolean addGene(Chunk g) {
+	public boolean addChunk(Chunk g) {
 		return trace.add(g);
 	}
 	
@@ -27,7 +27,7 @@ public class Trace implements Iterable<Chunk> {
 		return (Trace) trace.clone();
 	}
 	
-	public Chunk getGene(int i) {
+	public Chunk getChunk(int i) {
 		return trace.get(i);
 	}
 	
@@ -55,10 +55,12 @@ public class Trace implements Iterable<Chunk> {
 			lkb.createEndPlug();
 			
 			lkb.fixLevel();
-			
+
 			return lvl;
 			
 		} catch (Exception e) {
+			System.out.println(e.getCause().getMessage());
+			e.printStackTrace();
 			return null;
 		}
 	}

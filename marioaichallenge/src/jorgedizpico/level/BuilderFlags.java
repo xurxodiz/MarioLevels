@@ -11,15 +11,22 @@ public class BuilderFlags {
 	
 	protected static final int I_LEN = 2;
 	
-	protected static final int I_JUMP_OFFSET = -5;
-	protected static final int I_JUMP_RANGE = 10;
+	protected static final int I_GROUND = 2;
+	
+	/*protected static final int I_JUMP_OFFSET = -5;
+	protected static final int I_JUMP_RANGE = 10;*/
 	
 	protected static final int I_HOVER_HEIGHT = 4;
 	protected static final int I_PIPE_HEIGHT = 2;
 	protected static final int I_CANNON_HEIGHT = 2;
 	
+	public static final int GROUND_UP = 0;
+	public static final int GROUND_DOWN = 1;
+	
 	public static final int STAIRS_UP = 0;
-	public static final int STAIRS_DOWN = 1;	
+	public static final int STAIRS_DOWN = 1;
+	public static final int STAIRS_UPUP = 2;
+	public static final int STAIRS_DOWNDOWN = 3;
 	
 	public static final int ENEMY_GOOMBA = 0;	
 	public static final int ENEMY_REDTURTLE = 1;	

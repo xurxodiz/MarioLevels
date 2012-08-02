@@ -5,7 +5,7 @@ transitions		=  nonterminal *c-wsp "=" *c-wsp options *c-wsp ";" ;
 options			=  concatenation
                    *(*c-wsp "|" *c-wsp concatenation) ;
 
-concatenation	=  (1*(*c-wsp terminal) / nonterminal) *(1*c-wsp nonterminal) [*c-wsp "," *c-wsp weight] ;
+concatenation	=  1*(*c-wsp (terminal / nonterminal)) [*c-wsp "," *c-wsp weight] ;
 
 element			=  nonterminal / terminal ;
 

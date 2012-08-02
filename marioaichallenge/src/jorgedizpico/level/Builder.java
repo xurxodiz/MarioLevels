@@ -50,6 +50,17 @@ public class Builder {
 		return updateX(xx);
 	}
 	
+	public boolean createGround(int... direction) {
+		int y = lvl.getLastGroundHeight(x);
+		if (GROUND_UP == direction[0])
+			y += I_GROUND;
+		else // GROUND_DOWN
+			y -= I_GROUND;
+		
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		return updateX(xx);
+	}
+	
 	public boolean createGap(int... flags) {
 		int xx = lvl.addGap(x, I_LEN);
 		return updateX(xx);
@@ -140,6 +151,125 @@ public class Builder {
 		return updateX(xx);
 	}
 	
+	public boolean createEnemyBlock(int... elems) {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		
+		int[] rndEnemy = maySwap(new int[]{elems[0], -1});
+		int[] rndBlock = maySwap(new int[]{elems[1], elems[2]});
+
+		for (int i = 0; x+i < xx; i++) {
+			switch (rndEnemy[i]){
+				case ENEMY_GOOMBA:
+					lvl.placeGoomba(x+i, y-1); 		
+					break;
+					
+				case ENEMY_REDTURTLE:
+					lvl.placeRedTurtle(x+i, y-1); 	
+					break;
+					
+				case ENEMY_GREENTURTLE:
+					lvl.placeGreenTurtle(x+i, y-1); 
+					break;
+					
+				case ENEMY_SPIKY:
+					lvl.placeSpiky(x+i, y-1);		
+					break;
+					
+				case ENEMY_GOOMBA_WINGED:
+					lvl.placeGoombaWinged(x+i, y-1); 		
+					break;
+					
+				case ENEMY_REDTURTLE_WINGED:
+					lvl.placeRedTurtleWinged(x+i, y-1); 	
+					break;
+					
+				case ENEMY_GREENTURTLE_WINGED:
+					lvl.placeGreenTurtleWinged(x+i, y-1); 
+					break;
+					
+				case ENEMY_SPIKY_WINGED:
+					lvl.placeSpikyWinged(x+i, y-1);		
+					break;
+			};
+			
+			switch (rndBlock[i]) {
+				case BLOCK_POWERUP:
+					lvl.placeBlockPowerUp(x+i, y-I_HOVER_HEIGHT);
+					break;
+				case BLOCK_EMPTY:
+					lvl.placeBlockEmpty(x+i, y-I_HOVER_HEIGHT);
+					break;
+				case BLOCK_COIN:
+					lvl.placeBlockCoin(x+i, y-I_HOVER_HEIGHT);
+					break;
+			}
+			
+		}
+		
+		return updateX(xx);
+	}
+	
+	public boolean createBlockEnemy(int... elems) {
+		int y = lvl.getLastGroundHeight(x);
+		int xx = lvl.addFlatLand(x, I_LEN, y);
+		
+		int[] rndEnemy = maySwap(new int[]{elems[2], -1});
+		int[] rndBlock = maySwap(new int[]{elems[0], elems[1]});
+
+		for (int i = 0; x+i < xx; i++) {
+			
+			switch (rndBlock[i]) {
+				case BLOCK_POWERUP:
+					lvl.placeBlockPowerUp(x+i, y-I_HOVER_HEIGHT);
+					break;
+				case BLOCK_EMPTY:
+					lvl.placeBlockEmpty(x+i, y-I_HOVER_HEIGHT);
+					break;
+				case BLOCK_COIN:
+					lvl.placeBlockCoin(x+i, y-I_HOVER_HEIGHT);
+					break;
+			}
+			
+			switch (rndEnemy[i]){
+				case ENEMY_GOOMBA:
+					lvl.placeGoomba(x+i, y-I_HOVER_HEIGHT-1); 		
+					break;
+					
+				case ENEMY_REDTURTLE:
+					lvl.placeRedTurtle(x+i, y-I_HOVER_HEIGHT-1); 	
+					break;
+					
+				case ENEMY_GREENTURTLE:
+					lvl.placeGreenTurtle(x+i, y-I_HOVER_HEIGHT-1); 
+					break;
+					
+				case ENEMY_SPIKY:
+					lvl.placeSpiky(x+i, y-I_HOVER_HEIGHT-1);		
+					break;
+					
+				case ENEMY_GOOMBA_WINGED:
+					lvl.placeGoombaWinged(x+i, y-I_HOVER_HEIGHT-1); 		
+					break;
+					
+				case ENEMY_REDTURTLE_WINGED:
+					lvl.placeRedTurtleWinged(x+i, y-I_HOVER_HEIGHT-1); 	
+					break;
+					
+				case ENEMY_GREENTURTLE_WINGED:
+					lvl.placeGreenTurtleWinged(x+i, y-I_HOVER_HEIGHT-1); 
+					break;
+					
+				case ENEMY_SPIKY_WINGED:
+					lvl.placeSpikyWinged(x+i, y-I_HOVER_HEIGHT-1);		
+					break;
+			};
+			
+		}
+		
+		return updateX(xx);
+	}
+	
 	public boolean createCoins(int... flags) {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);
@@ -159,9 +289,19 @@ public class Builder {
 				for (int h = 1; h < xx-x+i; h++)
 					lvl.placeRock(x+i, y-h);
 		
-		else // STAIRS_DOWN
+		else if (STAIRS_DOWN == direction[0])
 			for (int i = 0; x+i < xx; i++)
 				for (int h = xx-x-i; h > 0; h--)
+					lvl.placeRock(x+i, y-h);
+		
+		else if (STAIRS_UPUP == direction[0])
+			for (int i = 0; x+i < xx; i++)
+				for (int h = 1; h < xx-x+i-I_LEN; h++)
+					lvl.placeRock(x+i, y-h);
+		
+		else if (STAIRS_DOWNDOWN == direction[0])
+			for (int i = 0; x+i < xx; i++)
+				for (int h = xx-x-i+I_LEN; h > 0; h--)
 					lvl.placeRock(x+i, y-h);
 		
 		return updateX(xx);
