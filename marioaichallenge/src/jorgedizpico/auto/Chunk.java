@@ -92,6 +92,10 @@ public enum Chunk implements State {
 	private String createMethod;
 
 	private int[] parameters;
+	
+	public static Chunk getChunk(String s) {
+		return Enum.valueOf(Chunk.class, s);
+	}
 
 	private Chunk(String s, int... p) {
 		this.createMethod = s;

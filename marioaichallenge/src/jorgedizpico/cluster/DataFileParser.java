@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import java.util.Comparator;
 
 import dk.itu.mario.MarioInterface.GamePlay;
 
@@ -80,6 +79,8 @@ public class DataFileParser {
 					file.write(f.get(gp).toString()+",");
 		
 	    file.write("\n");		
+	    fis.close();
+	    in.close();
 		} catch (Exception e) {
 			System.out.println("Unable to read file " + entry.getAbsolutePath() + ", skipped.");
 		}

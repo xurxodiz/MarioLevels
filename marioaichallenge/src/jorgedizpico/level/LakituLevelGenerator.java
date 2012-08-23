@@ -27,13 +27,50 @@ public class LakituLevelGenerator implements LevelGenerator {
 	
 	@Override
 	public LevelInterface generateLevel(GamePlay playerMetrics) {
+		
+		// 320 blocks length for the level
+		// start and end platform are 10 each
+		// and chunks are 2 each
+		// [320 - (10+10)] / 2 = 150
+		int tracelength = 150;
+		
+		int type = Level.TYPE_OVERGROUND; // default
+		
+		/*
+		 * for deriving just one schematic :
+		 * 
+		 * 
+		 
+		try {
+			 
+			Executor exec = new Executor();
+			Trace trace = exec.generateTraceExplorer(tracelength);
+			LakituLevel lvl = trace.buildLevel(type);
+		 
+			if (null == lvl)
+				throw new Exception("Error while building level from genes.");
+				
+			return lvl;
+		 
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		 
+		 * 
+		 */
+		
+		
+		/*
+		 * for deriving a trace mix :
+		 * 
+		 *
+		
 		try {
 						
 			DensityBasedClusterer cl = readClusters(clusterFile);
 			Instance inst = makeInstance(playerMetrics);
 			double[] clusters = cl.logDensityPerClusterForInstance(inst);
-
-			int type;
 			
 			switch (weka.core.Utils.maxIndex(clusters)) {
 				case 0: // intermediate
@@ -46,25 +83,67 @@ public class LakituLevelGenerator implements LevelGenerator {
 					type = Level.TYPE_UNDERGROUND;
 					break;
 			}
-			
-			
+		
 			Executor exec = new Executor();
-			// 320 blocks length for the level
-			// start and end platform are 10 each
-			// and chunks are 2 each
-			// [320 - (10+10)] / 2 = 150
-			Trace trace = exec.generateTraceMix(150, clusters);
+			Trace trace = exec.generateTraceMix(tracelength, clusters);
+			LakituLevel lvl = trace.buildLevel(type);
+			
+			if (null == lvl)
+				throw new Exception("Error while building level from genes.");
+				
+			return lvl;
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		*
+		*/
+		
+		
+		/*
+		 * for deriving with phase transitions
+		 * 
+		 *  
+		 */
+		
+		try {
+			
+			DensityBasedClusterer cl = readClusters(clusterFile);
+			Instance inst = makeInstance(playerMetrics);
+			double[] clusters = cl.logDensityPerClusterForInstance(inst);
+			
+			switch (weka.core.Utils.maxIndex(clusters)) {
+				case 0: // intermediate
+					type = Level.TYPE_OVERGROUND;
+					break;
+				case 1: // speeder
+					type = Level.TYPE_CASTLE;
+					break;
+				default: // explorer
+					type = Level.TYPE_UNDERGROUND;
+					break;
+			}
+		
+			Executor exec = new Executor();
+			Trace trace = exec.generateTracePhase(tracelength, clusters);
 			LakituLevel lvl = trace.buildLevel(type);
 			
 			if (null == lvl)
 				throw new Exception("Error while building level from genes.");
 			
 			return lvl;
-			
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+		
+		/*
+		 * 
+		 */
+	
 	}
 
 	@Override

@@ -11,7 +11,17 @@ public class Dummy implements State, Iterable<Chain>, Serializable {
 	
 	private static final long serialVersionUID = 39L;
 	
-	private ArrayList<Chain> transitions = new ArrayList<Chain>();
+	protected ArrayList<Chain> transitions = new ArrayList<Chain>();
+	
+	protected String name;
+	
+	public Dummy(String name) {
+		this.name = name;
+	}
+	
+	public String toString() {
+		return name;
+	}
 	
 	public boolean addChain(Chain ch) {
 		return transitions.add(ch);

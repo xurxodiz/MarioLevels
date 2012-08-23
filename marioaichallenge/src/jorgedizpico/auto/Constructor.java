@@ -102,7 +102,7 @@ public class Constructor implements Visitor {
 	
 	@Override
 	public Object visit(Rule$terminal rule) {
-		return auto.getChunk(rule.spelling);
+		return Chunk.getChunk(rule.spelling);
 	}
 	
 	@Override

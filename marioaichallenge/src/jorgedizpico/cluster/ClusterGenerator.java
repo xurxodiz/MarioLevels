@@ -7,16 +7,11 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import weka.clusterers.ClusterEvaluation;
-import weka.clusterers.Clusterer;
 import weka.clusterers.DensityBasedClusterer;
 import weka.clusterers.EM;
-import weka.clusterers.FilteredClusterer;
 import weka.clusterers.MakeDensityBasedClusterer;
-import weka.clusterers.SimpleKMeans;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
-import weka.filters.unsupervised.attribute.Remove;
-
 
 public class ClusterGenerator {
 	
@@ -45,7 +40,7 @@ public class ClusterGenerator {
 			Instances data = DataSource.read(dataFile);
 			    
 			// number of clusters
-			String[] clOptions = {"-N", "4"};
+			String[] clOptions = {"-N", "2"};
 			EM cl   = new EM();
 			cl.setOptions(clOptions);
 			

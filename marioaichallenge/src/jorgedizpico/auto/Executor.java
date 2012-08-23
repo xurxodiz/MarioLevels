@@ -6,13 +6,17 @@ import java.util.Random;
 
 public class Executor {
 	
-	protected static String filesAuto[] =
-			new String[]{"sch/speeder.auto",
-						 "sch/explorer.auto",
-						 "sch/explorer.auto"};
+	protected static final int EXPLORER = 0;
+	protected static final int SPEEDER = 1;
+	
+	// set indexes above according to load order here
+	
+	protected static String filesAuto[]
+						= new String[]{
+								 "sch/explorer.auto",
+								 "sch/speeder.auto"};
 	
 	protected Automaton[] autos;
-	protected Trace[] traces;
 
 	public Executor() throws Exception {
 		try {
@@ -33,36 +37,30 @@ public class Executor {
 		}
 	}
 	
+	protected Trace generateTrace(int length, FSM fsm) throws Exception {
+		fsm.init();
+		Trace t = new Trace();
+		while (t.size() < length) {
+			Chunk g = fsm.step();
+			if (null != g)
+				t.addChunk(g);
+		}
+		return t;
+	}
+	
 	public Trace generateTraceMix(int length, double[] odds) throws Exception {
 		try {
-			traces = new Trace[autos.length];
+			double[] _odds = proportion(odds);
 			
-			for (int i = 0; i < autos.length; i++) {
-				autos[i].init();
-				traces[i] = new Trace();
-				
-				while (traces[i].size() < length) {
-					Chunk g = autos[i].step();
-					if (null != g) {
-						traces[i].addChunk(g);
-					}
-				}
-			}
+			Trace[] traces = new Trace[autos.length];
+			traces[0] = generateTrace(length, autos[0]);
+			traces[1] = generateTrace(length, autos[1]);
 			
-			double[] _odds = proportion(odds);			
 			Trace mix = new Trace();
 			
 			for (int i = 0; i < length; i++) {
-				double roll = new Random().nextDouble();
-				double accum = 0.0;
-				
-				for (int t = 0; t < traces.length; t++) {
-					accum += _odds[t];
-					if (roll < accum) {
-						mix.addChunk(traces[t].getChunk(i));
-						break;
-					}
-				}
+				int t = pick(_odds);
+				mix.addChunk(traces[t].getChunk(i));
 			}
 			
 			return mix;
@@ -73,18 +71,40 @@ public class Executor {
 		}
 	}
 	
+	public Trace generateTracePhase(int length, double[] odds) throws Exception {
+		try {
+			
+			FSM phase = new PhaseAutomaton(autos, odds);
+			return generateTrace(length, phase);
+			
+		} catch (Exception e) {
+			System.out.println("Error while generating genotype.");
+			throw e;
+		}
+	}
+	
 	protected double[] proportion(double[] odds) {
 		double[] _odds = new double[odds.length];
-		double accum = 0.0;
+		double accum = 0.0, total = 0.0;
 		
 		for (double d : odds)
-			accum += d;
-		for (int i = 0; i < _odds.length; i++)
-			_odds[i] = odds[i]/accum;
-		
+			total += d;
+		for (int i = 0; i < _odds.length; i++) {
+			accum += odds[i];
+			_odds[i] = accum/total;
+		}
+			
 		return _odds;
 	}
-
+	
+	protected int pick(double[] odds) {
+		double roll = new Random().nextDouble();
+		for (int i = 0; i < odds.length; i++)
+			if (roll < odds[i])
+				return i;
+		// should never happen, so let's play it safe
+		return 0;
+	}
 
 
 }

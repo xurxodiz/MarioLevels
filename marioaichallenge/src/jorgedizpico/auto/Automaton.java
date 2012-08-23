@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Stack;
 
-public class Automaton implements Serializable {
+public class Automaton implements FSM, Serializable {
 	
 	private static final long serialVersionUID = 777L;
 	
@@ -12,10 +12,6 @@ public class Automaton implements Serializable {
 		= new HashMap<String,Dummy>();
 	
 	protected Stack<State> stack;
-
-	public Chunk getChunk(String s) {
-		return Enum.valueOf(Chunk.class, s);
-	}
 	
 	public void init() {
 		stack = new Stack<State>();
@@ -25,7 +21,7 @@ public class Automaton implements Serializable {
 	public Dummy getDummy(String s) {
 		Dummy dummy = dummies.get(s);
 		if (null != dummy) return dummy;
-		dummy = new Dummy();
+		dummy = new Dummy(s);
 		dummies.put(s, dummy);
 		return dummy;
 	}
