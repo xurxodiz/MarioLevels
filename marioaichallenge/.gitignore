@@ -1,8 +1,5 @@
 .classpath
 
-./DetailedInfo.txt
-./player.txt
-
 bin/*
 
 lib/*
