@@ -30,7 +30,7 @@ Some states will produce as output a small slice of the level (called a *chunk*)
 
 An alternative method to the *trace phasing*, also present in the code, is to create two different levels, per the explorer and speeder schematics, and then pick chunks randomly from each, according to the membership percentages. This method is called *trace mixing*.
 
-How was the data collected
+How the data was collected
 --------------------------
 
 The file `mariodistpackage.zip` was spread on social networks, and people were asked to play the test level it generated and mail back the results. Note that this package contains just an unadultered, as-downloaded version of the Mario AI platform along with a helper launch script.
@@ -112,4 +112,4 @@ Both of those libraries are included in the `extra/` folder for reference, but t
 Contact
 --------
 
-Any doubts or questions? I'll be delighted to help! Hit me up on jorge «a» diz «.» es
+Any doubts or questions? I'll be delighted to help! Hit me up on **jorge «a» diz «.» es**

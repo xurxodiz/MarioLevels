@@ -15,33 +15,41 @@
 	
     <target name="clean">
         <delete dir="bin"/>
+    	<delete dir="lib"/>
     	<delete dir="src/jorgedizpico/grammar"/>
-    	<!--<delete file="player.txt"/>
-        <delete file="DetailedInfo.txt"/>-->
-    	<delete file="src/jorgedizpico/res/*.arff"/>
-    	<delete file="src/jorgedizpico/res/*.dat"/>
-    	<delete file="src/jorgedizpico/res/*.csv"/>
-    	<delete file="src/jorgedizpico/res/*.auto"/>
+    	<delete dir="src/jorgedizpico/res"/>
+    	<delete file="player.txt"/>
+        <delete file="DetailedInfo.txt"/>
     </target>
 	
     <target name="init">
-    	<mkdir dir="${res.folder}"/>
-    	<mkdir dir="${grammar.sourceFolder}"/>
+    	
+    	<mkdir dir="lib"/>
+		<zip destfile="lib/jorgediz.jar">
+	    	<zipgroupfileset dir="extra" includes="**.jar"/>
+		</zip>
+    	
         <mkdir dir="bin"/>
+    	<mkdir dir="${grammar.sourceFolder}"/>
+    	<!-- mimics 'src' structure in 'bin': -->
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
+    	<mkdir dir="${res.folder}"/>
+    	
+    	<antcall target="copy-sch"/>
+    </target>
+	
+	
+	<target name="copy-sch">
         <copy todir="${res.folder}">
         	<fileset dir="extra/" casesensitive="yes">
         	  <include name="**/*.sch"/>
         	</fileset>
         </copy>
-		<zip destfile="lib/jorgediz.jar">
-	    	<zipgroupfileset dir="extra" includes="**.jar"/>
-		</zip>
-    </target>
+	</target>
 	
 	
 	<target name="grammar" depends="init">
@@ -56,7 +64,7 @@
 	</target>
 	
 	
-    <target name="build" depends="grammar">
+    <target name="build">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
             <src path="src"/>
@@ -65,7 +73,7 @@
     </target>
 	
 	
-    <target name="schematics">
+    <target name="schematics" depends="copy-sch">
         <java classname="jorgedizpico.auto.Constructor" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
         	<arg value="${res.folder}/${schematics.explorer}"/>
