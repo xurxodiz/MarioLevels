@@ -1,7 +1,0 @@
-A prototype implementing adaptive procedural content generation for the MarioAIChallenge championship:
-
-http://www.marioai.org/LevelGeneration/source-code
-
-The overall flow involves clustering the user into the pre-found groups, then mixing the grammars associated to each cluster, according to the membership probabilities. Then we traverse the grammar and output a level.
-
-The records for clustering were obtained by virally spreading distpackage.zip and asking people to play a level and send back the logs.
