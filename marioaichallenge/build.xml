@@ -18,24 +18,29 @@
     	<delete dir="src/jorgedizpico/grammar"/>
     	<!--<delete file="player.txt"/>
         <delete file="DetailedInfo.txt"/>-->
-    	<delete file="data/*.*"/>
-    	<delete file="gr/*.auto"/>
+    	<delete file="src/jorgedizpico/res/*.arff"/>
+    	<delete file="src/jorgedizpico/res/*.dat"/>
+    	<delete file="src/jorgedizpico/res/*.csv"/>
+    	<delete file="src/jorgedizpico/res/*.auto"/>
     </target>
 	
-	<target name="jarify">
-		<zip destfile="lib/jorgediz.jar">
-	    	<zipgroupfileset dir="ext" includes="*.jar"/>
-		</zip>
-	</target>
-	
     <target name="init">
-    	<mkdir dir="src/jorgedizpico/grammar"/>
+    	<mkdir dir="${res.folder}"/>
+    	<mkdir dir="${grammar.sourceFolder}"/>
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
+        <copy todir="${res.folder}">
+        	<fileset dir="extra/" casesensitive="yes">
+        	  <include name="**/*.sch"/>
+        	</fileset>
+        </copy>
+		<zip destfile="lib/jorgediz.jar">
+	    	<zipgroupfileset dir="extra" includes="**.jar"/>
+		</zip>
     </target>
 	
 	
@@ -46,7 +51,7 @@
 			<arg value="${grammar.sourceFolder}"/>
 			<arg value="-package"/>
 			<arg value="${grammar.packageName}"/>
-			<arg value="${grammar.grammarFile}"/>
+			<arg value="${res.folder}/${grammar.grammarFile}"/>
 		</java>
 	</target>
 	
@@ -63,8 +68,8 @@
     <target name="schematics">
         <java classname="jorgedizpico.auto.Constructor" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
-        	<arg value="${schematics.explorer}"/>
-        	<arg value="${schematics.speeder}"/>
+        	<arg value="${res.folder}/${schematics.explorer}"/>
+        	<arg value="${res.folder}/${schematics.speeder}"/>
         </java>
     </target>
 	
@@ -72,7 +77,7 @@
         <java classname="jorgedizpico.cluster.DataFileParser" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
 			<arg value="${data.dataFolder}"/>
-        	<arg value="${data.dataFile}"/>
+        	<arg value="${res.folder}/${data.dataFile}"/>
         </java>
     </target>
 	
@@ -80,9 +85,9 @@
     <target name="cluster">
         <java classname="jorgedizpico.cluster.ClusterGenerator" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
-			<arg value="${data.dataFile}"/>
-        	<arg value="${data.clusterFile}"/>
-        	<arg value="${data.csvFile}"/>
+			<arg value="${res.folder}/${data.dataFile}"/>
+        	<arg value="${res.folder}/${data.clusterFile}"/>
+        	<arg value="${res.folder}/${data.csvFile}"/>
         </java>
     </target>
 	

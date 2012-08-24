@@ -27,11 +27,10 @@ public class Constructor implements Visitor {
 				Constructor cons = new Constructor();
 				Automaton auto = (Automaton) schematic.accept(cons);
 							
-				String autoName = fileName.substring(0, fileName.lastIndexOf('.')) + ".auto";
-				
-				FileOutputStream fos = new FileOutputStream(autoName);
+				FileOutputStream fos = new FileOutputStream(fileName + ".auto");
 				ObjectOutputStream out =  new ObjectOutputStream(fos);
 				out.writeObject(auto);
+				
 				out.close();
 				fos.close();
 			}

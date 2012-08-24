@@ -16,11 +16,11 @@ public class Automaton implements FSM, Serializable {
 	protected Stack<State> stack;
 	
 	public static Automaton getExplorer() {
-		return getAutomaton("sch/explorer.auto");
+		return getAutomaton("src/jorgedizpico/res/explorer.sch.auto");
 	}
 	
 	public static Automaton getSpeeder() {
-		return getAutomaton("sch/speeder.auto");
+		return getAutomaton("src/jorgedizpico/res/speeder.sch.auto");
 	}
 	
 	protected static Automaton getAutomaton(String file) {
