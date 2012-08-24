@@ -36,78 +36,6 @@ public class LakituLevelGenerator implements LevelGenerator {
 		
 		int type = Level.TYPE_OVERGROUND; // default
 		
-		/*
-		 * for deriving just one schematic :
-		 * 
-		 * 
-		 
-		try {
-			 
-			Executor exec = new Executor();
-			Trace trace = exec.generateTraceExplorer(tracelength);
-			LakituLevel lvl = trace.buildLevel(type);
-		 
-			if (null == lvl)
-				throw new Exception("Error while building level from genes.");
-				
-			return lvl;
-		 
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		 
-		 * 
-		 */
-		
-		
-		/*
-		 * for deriving a trace mix :
-		 * 
-		 *
-		
-		try {
-						
-			DensityBasedClusterer cl = readClusters(clusterFile);
-			Instance inst = makeInstance(playerMetrics);
-			double[] clusters = cl.logDensityPerClusterForInstance(inst);
-			
-			switch (weka.core.Utils.maxIndex(clusters)) {
-				case 0: // intermediate
-					type = Level.TYPE_OVERGROUND;
-					break;
-				case 1: // speeder
-					type = Level.TYPE_CASTLE;
-					break;
-				default: // explorer
-					type = Level.TYPE_UNDERGROUND;
-					break;
-			}
-		
-			Executor exec = new Executor();
-			Trace trace = exec.generateTraceMix(tracelength, clusters);
-			LakituLevel lvl = trace.buildLevel(type);
-			
-			if (null == lvl)
-				throw new Exception("Error while building level from genes.");
-				
-			return lvl;
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-
-		*
-		*/
-		
-		
-		/*
-		 * for deriving with phase transitions
-		 * 
-		 *  
-		 */
-		
 		try {
 			
 			DensityBasedClusterer cl = readClusters(clusterFile);
@@ -126,8 +54,14 @@ public class LakituLevelGenerator implements LevelGenerator {
 					break;
 			}
 		
-			Executor exec = new Executor();
-			Trace trace = exec.generateTracePhase(tracelength, clusters);
+			Executor exec = new Executor(clusters);
+			// other options:
+			// - generateTraceExplorer
+			// - generateTraceSpeeder
+			// - generateTraceMix
+			// (the first two mentioned above ignore odds;
+			// the parameter passed in Executer constructor)
+			Trace trace = exec.generateTracePhase(tracelength);
 			LakituLevel lvl = trace.buildLevel(type);
 			
 			if (null == lvl)
@@ -139,10 +73,6 @@ public class LakituLevelGenerator implements LevelGenerator {
 			e.printStackTrace();
 			return null;
 		}
-		
-		/*
-		 * 
-		 */
 	
 	}
 

@@ -10,8 +10,6 @@
     <path id="marioaichallenge.classpath">
         <pathelement location="bin"/>
     	<fileset dir="lib/"><include name="*.jar"/></fileset>
-    	<fileset dir="lib/org.jzy3d-0.9-dependencies/"><include name="*.jar"/></fileset>
-    	<fileset dir="lib/org.jzy3d-0.9-dependencies/jogl/"><include name="*.jar"/></fileset>
     </path>
 
 	
@@ -24,10 +22,15 @@
     	<delete file="gr/*.auto"/>
     </target>
 	
+	<target name="jarify">
+		<zip destfile="lib/jorgediz.jar">
+	    	<zipgroupfileset dir="ext" includes="*.jar"/>
+		</zip>
+	</target>
 	
     <target name="init">
-        <mkdir dir="bin"/>
     	<mkdir dir="src/jorgedizpico/grammar"/>
+        <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
                 <exclude name="**/*.java"/>
@@ -36,7 +39,7 @@
     </target>
 	
 	
-	<target name="grammar">
+	<target name="grammar" depends="init">
 		<java classname="com.parse2.aparse.Parser" failonerror="true" fork="yes" >
 			<classpath refid="marioaichallenge.classpath"/>
 			<arg value="-destdir"/>
@@ -48,7 +51,7 @@
 	</target>
 	
 	
-    <target name="build">
+    <target name="build" depends="grammar">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}" includeantruntime="false">
             <src path="src"/>
@@ -64,7 +67,6 @@
         	<arg value="${schematics.speeder}"/>
         </java>
     </target>
-	
 	
     <target name="data">
         <java classname="jorgedizpico.cluster.DataFileParser" failonerror="true" fork="yes">
@@ -84,22 +86,6 @@
         </java>
     </target>
 	
-    <target name="graphs3d">
-        <java classname="jorgedizpico.cluster.Graphs3D" failonerror="true" fork="yes">
-            <classpath refid="marioaichallenge.classpath"/>
-        	<arg value="${data.csvFile}"/>
-        	<arg value="${exp}"/>
-        </java>
-    </target>
-	
-    <target name="graphs2d">
-        <java classname="jorgedizpico.cluster.Graphs2D" failonerror="true" fork="yes">
-            <classpath refid="marioaichallenge.classpath"/>
-        	<arg value="${data.csvFile}"/>
-        	<arg value="${exp}"/>
-        </java>
-    </target>
-	
     <target name="play">
         <java classname="dk.itu.mario.engine.Play" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
@@ -114,7 +100,7 @@
     </target>
 	
     <target name="weka">
-        <java jar="lib/weka.jar" failonerror="true" fork="yes">
+        <java jar="ext/weka.jar" failonerror="true" fork="yes">
             <jvmarg value="-Xmx512m" />
         </java>
     </target>

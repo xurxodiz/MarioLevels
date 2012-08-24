@@ -1,5 +1,7 @@
 package jorgedizpico.auto;
 
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Stack;
@@ -12,6 +14,35 @@ public class Automaton implements FSM, Serializable {
 		= new HashMap<String,Dummy>();
 	
 	protected Stack<State> stack;
+	
+	public static Automaton getExplorer() {
+		return getAutomaton("sch/explorer.auto");
+	}
+	
+	public static Automaton getSpeeder() {
+		return getAutomaton("sch/speeder.auto");
+	}
+	
+	protected static Automaton getAutomaton(String file) {
+		FileInputStream fis = null;
+		ObjectInputStream in = null;
+		
+		try {
+			fis = new FileInputStream(file);
+			in = new ObjectInputStream(fis);
+			Automaton auto = (Automaton)in.readObject();
+			
+			fis.close();
+			in.close();
+			
+			return auto;
+						
+		} catch (Exception e) {
+			System.out.println("Unable to read automata.");
+			return null;
+			
+		}
+	}
 	
 	public void init() {
 		stack = new Stack<State>();

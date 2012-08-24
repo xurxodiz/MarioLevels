@@ -6,38 +6,36 @@ import java.util.Random;
 
 public class Executor {
 	
-	protected static final int EXPLORER = 0;
-	protected static final int SPEEDER = 1;
+	protected FSM fsmExplorer = null;
+	protected FSM fsmSpeeder = null;
+	protected FSM fsmPhase = null;
 	
-	// set indexes above according to load order here
-	
-	protected static String filesAuto[]
-						= new String[]{
-								 "sch/explorer.auto",
-								 "sch/speeder.auto"};
-	
-	protected Automaton[] autos;
+	protected double[] odds;
 
-	public Executor() throws Exception {
-		try {
-			FileInputStream fis = null;
-			ObjectInputStream in = null;
-			
-			autos = new Automaton[filesAuto.length];
-			
-			for (int i = 0; i < filesAuto.length; i++) {
-				fis = new FileInputStream(filesAuto[i]);
-				in = new ObjectInputStream(fis);
-				autos[i] = (Automaton)in.readObject();
-			}
-			
-		} catch (Exception e) {
-			System.out.println("Unable to read automata.");
-			throw e;
-		}
+	public Executor(double[] odds) throws Exception {
+		this.odds = proportion(odds);
+		fsmExplorer = Automaton.getExplorer();
+		fsmSpeeder = Automaton.getSpeeder();
+		fsmPhase = new PhaseAutomaton(new Automaton[]
+											{(Automaton)fsmExplorer,
+											 (Automaton)fsmSpeeder},
+									  this.odds);
+
 	}
 	
-	protected Trace generateTrace(int length, FSM fsm) throws Exception {
+	public Trace generateTraceExplorer(int length) {
+		return generateTrace(length, fsmExplorer);
+	}
+	
+	public Trace generateTraceSpeeder(int length) {
+		return generateTrace(length, fsmSpeeder);
+	}
+	
+	public Trace generateTracePhase(int length) {
+		return generateTrace(length, fsmPhase);
+	}
+	
+	protected Trace generateTrace(int length, FSM fsm) {
 		fsm.init();
 		Trace t = new Trace();
 		while (t.size() < length) {
@@ -48,39 +46,20 @@ public class Executor {
 		return t;
 	}
 	
-	public Trace generateTraceMix(int length, double[] odds) throws Exception {
-		try {
-			double[] _odds = proportion(odds);
-			
-			Trace[] traces = new Trace[autos.length];
-			traces[0] = generateTrace(length, autos[0]);
-			traces[1] = generateTrace(length, autos[1]);
-			
-			Trace mix = new Trace();
-			
-			for (int i = 0; i < length; i++) {
-				int t = pick(_odds);
-				mix.addChunk(traces[t].getChunk(i));
-			}
-			
-			return mix;
-			
-		} catch (Exception e) {
-			System.out.println("Error while generating genotype.");
-			throw e;
+	public Trace generateTraceMix(int length) throws Exception {
+		
+		Trace[] traces = new Trace[2];
+		traces[0] = generateTraceExplorer(length);
+		traces[1] = generateTraceSpeeder(length);
+		
+		Trace mix = new Trace();
+		
+		for (int i = 0; i < length; i++) {
+			int t = pick();
+			mix.addChunk(traces[t].getChunk(i));
 		}
-	}
-	
-	public Trace generateTracePhase(int length, double[] odds) throws Exception {
-		try {
-			
-			FSM phase = new PhaseAutomaton(autos, odds);
-			return generateTrace(length, phase);
-			
-		} catch (Exception e) {
-			System.out.println("Error while generating genotype.");
-			throw e;
-		}
+		
+		return mix;
 	}
 	
 	protected double[] proportion(double[] odds) {
@@ -97,7 +76,7 @@ public class Executor {
 		return _odds;
 	}
 	
-	protected int pick(double[] odds) {
+	protected int pick() {
 		double roll = new Random().nextDouble();
 		for (int i = 0; i < odds.length; i++)
 			if (roll < odds[i])

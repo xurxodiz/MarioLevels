@@ -23,18 +23,6 @@ public class Filters {
 		"timesOfDeathByJumpFlower",
 		"timesOfDeathByRedTurtle"
 	};
-
-    public static boolean isOutlierPointXYZT(double x, double y, double z, double t) {
-    	return isOutlierPointX(x)
-    		|| isOutlierPointY(y)
-    		|| isOutlierPointZ(z)
-    		|| isOutlierPointT(t);
-    }
-    
-    public static boolean isOutlierPointX(double x) { return (x < -250); }
-    public static boolean isOutlierPointY(double y) { return (y < -225); }
-    public static boolean isOutlierPointZ(double z) { return (z < -750); }
-    public static boolean isOutlierPointT(double t) { return (t < -225); }
 	
 	public static boolean isSkippedField(String s) {
 		return (Arrays.asList(skippedFields).contains(s));
