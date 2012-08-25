@@ -1,11 +1,9 @@
-package jorgedizpico.auto;
+package jorgedizpico.level;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-import jorgedizpico.level.Builder;
-import jorgedizpico.level.LakituLevel;
 
 public class Trace implements Iterable<Chunk> {
 	

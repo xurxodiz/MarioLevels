@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 
+import jorgedizpico.level.Chunk;
+
 public class PhaseAutomaton implements FSM, Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,7 +22,10 @@ public class PhaseAutomaton implements FSM, Serializable {
 			throw new Exception("Unable to create phase automaton.");
 		
 		for (Automaton a : autos)
-			this.dummies.add(a.dummies);
+			if (null == a)
+				throw new Exception("Invalid automaton provided");
+			else
+				this.dummies.add(a.dummies);
 		
 		this.odds = proportion(odds);
 		//System.out.println(this.odds[0] + "," + this.odds[1]);

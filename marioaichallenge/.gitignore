@@ -4,5 +4,11 @@ bin/*
 
 /lib
 
-src/jorgedizpico/grammar/*
+src/jorgedizpico/grammar/Displayer.java
+src/jorgedizpico/grammar/Parser*.java
+src/jorgedizpico/grammar/Rule*.java
+src/jorgedizpico/grammar/Terminal*.java
+src/jorgedizpico/grammar/Visitor.java
+src/jorgedizpico/grammar/XmlDisplayer.java
+
 src/jorgedizpico/res/*

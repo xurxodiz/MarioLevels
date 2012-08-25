@@ -41,7 +41,7 @@ Instruction booklet
 Those are the ant commands available:
 
 * `ant clean` restores the project to clean slate, removing all automatically generated files
-* `ant init` creates the initial folder structure after cleaning
+* `ant init` creates the initial folder structure after cleaning, this should only be used in a fresh install since it creates the external dependencies jar files
 * `ant grammar` creates the Java files needed to parse the schematics (but doesn't parse)
 * `ant build` compiles all sources
 * `ant schematics` uses the compiled Java parsing files to read the schematics and output the automata files
@@ -65,13 +65,13 @@ LevelSceneTest acts as linking point. The platform, here, invokes LakituLevelGen
 
 LakituLevelGenerator reads the stored clusters and uses Weka to find membersip percentages of the user data. Then, calls Executor with those percentages and asks for a phase-generated trace (see above, *How it works*).
 
-Executor loads up the Automata on construction, specifically the PhaseAutomata that has to be built from the base speeder and explorer automata. Then, it inits and traverses the PhaseAutomata as any other finite state machine (as per the FSM interface), building up a Trace.
+Executor loads up the Automata on construction, specifically the PhaseAutomata that has to be built from the base speeder and explorer Automata. Then, it inits and traverses the PhaseAutomata as any other finite state machine (as per the FSM interface), building up a Trace. 
 
 At each step, the PhaseAutomata picks an automata to check if it has the next State. This picking is done weighted by the membership odds provided on construction. When it finds the first automata to have it, it executes the State.
 
-A State can be either a basic Chunk, in which case it is returned and added to the Trace, or a Dummy. Dummies simply pick one of its derivation Chains and dump them on the stack. The Chain is chosen according to the weights specified by the schematic when the Automata is built. Let's clarify: the Dummies and their derivation Chains are kept by the Automata, that are created by the Constructor class when called by `ant schematics` (see above for more on Ant commands).
+A State can be either a basic Chunk, the base constituent of Traces, or a Dummy. Dummies simply pick one of its derivation Chains and dump them on the stack. The Chain is chosen according to the weights specified by the schematic when the Automata is built. Let's clarify: the Dummies and their derivation Chains are kept by the Automata, that are created by the Constructor class when called by `ant schematics` (see above for more on Ant commands).
 
-The Automata's steps keep being Executed until we get a Trace of the desired length. Then, LakituLevelGenerator calls the Builder module to process all Chunks in it and create a LakituLevel out of it, which is finally returned and displayed by the platform to be played :)
+The Automata's steps keep being Executed until we get a Trace of the desired length. Then, LakituLevelGenerator calls the Builder module to process all Chunks. Each Chunk contains a call to a specific level building function. By calling all functions sequentially, we create a LakituLevel out of the Trace, to be finally returned and displayed by the platform to be played :)
 
 ### Schematic and automata
 
@@ -107,7 +107,7 @@ External libraries
 
 The Lakitu Level Generator depends on [aParse](http://www.parse2.com/) for schematic parsing into automata and [weka](http://www.cs.waikato.ac.nz/ml/weka/) for clustering purposes.
 
-Both of those libraries are included in the `extra/` folder for reference, but then compiled into a single file in `lib/jorgedizpico.jar` for distribution purposes.
+Both of those libraries are included in the `extra/` folder for reference, but then compiled into a single file in `lib/jorgedizpico.jar` for distribution purposes (when executing `ant init`).
 
 Contact
 --------

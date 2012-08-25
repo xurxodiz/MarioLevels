@@ -16,7 +16,8 @@ public class BuilderFlags {
 	/*protected static final int I_JUMP_OFFSET = -5;
 	protected static final int I_JUMP_RANGE = 10;*/
 	
-	protected static final int I_HOVER_HEIGHT = 4;
+	protected static final int I_HOVER_BLOCKS = 4;
+	protected static final int I_HOVER_COINS = 2;
 	protected static final int I_PIPE_HEIGHT = 2;
 	protected static final int I_CANNON_HEIGHT = 2;
 	

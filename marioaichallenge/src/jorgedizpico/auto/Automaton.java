@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Stack;
 
+import jorgedizpico.level.Chunk;
+
 public class Automaton implements FSM, Serializable {
 	
 	private static final long serialVersionUID = 777L;

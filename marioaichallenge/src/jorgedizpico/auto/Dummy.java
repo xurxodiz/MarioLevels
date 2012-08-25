@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Stack;
 
+import jorgedizpico.level.Chunk;
+
 public class Dummy implements State, Iterable<Chain>, Serializable {
 	
 	private static final long serialVersionUID = 39L;

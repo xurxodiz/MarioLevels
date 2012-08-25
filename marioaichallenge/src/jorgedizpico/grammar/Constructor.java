@@ -1,11 +1,16 @@
-package jorgedizpico.auto;
+package jorgedizpico.grammar;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import jorgedizpico.auto.Automaton;
+import jorgedizpico.auto.Chain;
+import jorgedizpico.auto.Dummy;
+import jorgedizpico.auto.State;
 import jorgedizpico.grammar.*;
+import jorgedizpico.level.Chunk;
 
 public class Constructor implements Visitor {
 	

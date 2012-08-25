@@ -9,28 +9,28 @@
 	
     <path id="marioaichallenge.classpath">
         <pathelement location="bin"/>
-    	<fileset dir="lib/"><include name="*.jar"/></fileset>
+    	<fileset dir="lib/">
+    		<include name="jorgedizpico.jar"/>
+    	</fileset>
     </path>
 
 	
     <target name="clean">
         <delete dir="bin"/>
     	<delete dir="lib"/>
-    	<delete dir="src/jorgedizpico/grammar"/>
     	<delete dir="src/jorgedizpico/res"/>
-    	<delete file="player.txt"/>
-        <delete file="DetailedInfo.txt"/>
+    	<!--<delete file="player.txt"/>
+        <delete file="DetailedInfo.txt"/>-->
     </target>
 	
     <target name="init">
     	
     	<mkdir dir="lib"/>
-		<zip destfile="lib/jorgediz.jar">
+		<zip destfile="lib/jorgedizpico.jar">
 	    	<zipgroupfileset dir="extra" includes="**.jar"/>
 		</zip>
     	
         <mkdir dir="bin"/>
-    	<mkdir dir="${grammar.sourceFolder}"/>
     	<!-- mimics 'src' structure in 'bin': -->
         <copy includeemptydirs="false" todir="bin">
             <fileset dir="src">
@@ -40,19 +40,27 @@
     	<mkdir dir="${res.folder}"/>
     	
     	<antcall target="copy-sch"/>
+    	<antcall target="copy-abnf"/>
     </target>
 	
+	<target name="copy-abnf">
+        <copy todir="${res.folder}">
+        	<fileset dir="extra/" casesensitive="yes">
+        		<include name="**/*.abnf"/>
+        	</fileset>
+        </copy>
+	</target>
 	
 	<target name="copy-sch">
         <copy todir="${res.folder}">
         	<fileset dir="extra/" casesensitive="yes">
-        	  <include name="**/*.sch"/>
+        	 	<include name="**/*.sch"/>
         	</fileset>
         </copy>
 	</target>
 	
 	
-	<target name="grammar" depends="init">
+	<target name="grammar" depends="copy-abnf">
 		<java classname="com.parse2.aparse.Parser" failonerror="true" fork="yes" >
 			<classpath refid="marioaichallenge.classpath"/>
 			<arg value="-destdir"/>
@@ -74,7 +82,7 @@
 	
 	
     <target name="schematics" depends="copy-sch">
-        <java classname="jorgedizpico.auto.Constructor" failonerror="true" fork="yes">
+        <java classname="jorgedizpico.grammar.Constructor" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
         	<arg value="${res.folder}/${schematics.explorer}"/>
         	<arg value="${res.folder}/${schematics.speeder}"/>
@@ -90,7 +98,7 @@
     </target>
 	
 	
-    <target name="cluster">
+    <target name="cluster" depends="data">
         <java classname="jorgedizpico.cluster.ClusterGenerator" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
 			<arg value="${res.folder}/${data.dataFile}"/>

@@ -10,7 +10,6 @@ import weka.clusterers.DensityBasedClusterer;
 import weka.core.Instance;
 
 import jorgedizpico.auto.Executor;
-import jorgedizpico.auto.Trace;
 import jorgedizpico.cluster.Filters;
 
 import dk.itu.mario.MarioInterface.GamePlay;
@@ -20,7 +19,7 @@ import dk.itu.mario.level.Level;
 
 public class LakituLevelGenerator implements LevelGenerator {
 	
-	public static String clusterFile = "data/cluster.dat";
+	public static String clusterFile = "src/jorgedizpico/res/cluster.dat";
 	
   	protected static Random rand = new Random();
   	protected LakituLevel lvl;
@@ -61,7 +60,8 @@ public class LakituLevelGenerator implements LevelGenerator {
 			// - generateTraceMix
 			// (the first two mentioned above ignore odds;
 			// the parameter passed in Executer constructor)
-			Trace trace = exec.generateTracePhase(tracelength);
+			//Trace trace = exec.generateTracePhase(tracelength);
+			Trace trace = exec.generateTraceSpeeder(tracelength);
 			LakituLevel lvl = trace.buildLevel(type);
 			
 			if (null == lvl)

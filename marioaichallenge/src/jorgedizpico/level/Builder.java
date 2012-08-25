@@ -138,13 +138,13 @@ public class Builder {
 		for (int i = 0; x+i < xx; i++)
 			switch (rnd[i]) {
 				case BLOCK_POWERUP:
-					lvl.placeBlockPowerUp(x+i, y-I_HOVER_HEIGHT);
+					lvl.placeBlockPowerUp(x+i, y-I_HOVER_BLOCKS);
 					break;
 				case BLOCK_EMPTY:
-					lvl.placeBlockEmpty(x+i, y-I_HOVER_HEIGHT);
+					lvl.placeBlockEmpty(x+i, y-I_HOVER_BLOCKS);
 					break;
 				case BLOCK_COIN:
-					lvl.placeBlockCoin(x+i, y-I_HOVER_HEIGHT);
+					lvl.placeBlockCoin(x+i, y-I_HOVER_BLOCKS);
 					break;
 			}
 
@@ -195,13 +195,13 @@ public class Builder {
 			
 			switch (rndBlock[i]) {
 				case BLOCK_POWERUP:
-					lvl.placeBlockPowerUp(x+i, y-I_HOVER_HEIGHT);
+					lvl.placeBlockPowerUp(x+i, y-I_HOVER_BLOCKS);
 					break;
 				case BLOCK_EMPTY:
-					lvl.placeBlockEmpty(x+i, y-I_HOVER_HEIGHT);
+					lvl.placeBlockEmpty(x+i, y-I_HOVER_BLOCKS);
 					break;
 				case BLOCK_COIN:
-					lvl.placeBlockCoin(x+i, y-I_HOVER_HEIGHT);
+					lvl.placeBlockCoin(x+i, y-I_HOVER_BLOCKS);
 					break;
 			}
 			
@@ -221,47 +221,47 @@ public class Builder {
 			
 			switch (rndBlock[i]) {
 				case BLOCK_POWERUP:
-					lvl.placeBlockPowerUp(x+i, y-I_HOVER_HEIGHT);
+					lvl.placeBlockPowerUp(x+i, y-I_HOVER_BLOCKS);
 					break;
 				case BLOCK_EMPTY:
-					lvl.placeBlockEmpty(x+i, y-I_HOVER_HEIGHT);
+					lvl.placeBlockEmpty(x+i, y-I_HOVER_BLOCKS);
 					break;
 				case BLOCK_COIN:
-					lvl.placeBlockCoin(x+i, y-I_HOVER_HEIGHT);
+					lvl.placeBlockCoin(x+i, y-I_HOVER_BLOCKS);
 					break;
 			}
 			
 			switch (rndEnemy[i]){
 				case ENEMY_GOOMBA:
-					lvl.placeGoomba(x+i, y-I_HOVER_HEIGHT-1); 		
+					lvl.placeGoomba(x+i, y-I_HOVER_BLOCKS-1); 		
 					break;
 					
 				case ENEMY_REDTURTLE:
-					lvl.placeRedTurtle(x+i, y-I_HOVER_HEIGHT-1); 	
+					lvl.placeRedTurtle(x+i, y-I_HOVER_BLOCKS-1); 	
 					break;
 					
 				case ENEMY_GREENTURTLE:
-					lvl.placeGreenTurtle(x+i, y-I_HOVER_HEIGHT-1); 
+					lvl.placeGreenTurtle(x+i, y-I_HOVER_BLOCKS-1); 
 					break;
 					
 				case ENEMY_SPIKY:
-					lvl.placeSpiky(x+i, y-I_HOVER_HEIGHT-1);		
+					lvl.placeSpiky(x+i, y-I_HOVER_BLOCKS-1);		
 					break;
 					
 				case ENEMY_GOOMBA_WINGED:
-					lvl.placeGoombaWinged(x+i, y-I_HOVER_HEIGHT-1); 		
+					lvl.placeGoombaWinged(x+i, y-I_HOVER_BLOCKS-1); 		
 					break;
 					
 				case ENEMY_REDTURTLE_WINGED:
-					lvl.placeRedTurtleWinged(x+i, y-I_HOVER_HEIGHT-1); 	
+					lvl.placeRedTurtleWinged(x+i, y-I_HOVER_BLOCKS-1); 	
 					break;
 					
 				case ENEMY_GREENTURTLE_WINGED:
-					lvl.placeGreenTurtleWinged(x+i, y-I_HOVER_HEIGHT-1); 
+					lvl.placeGreenTurtleWinged(x+i, y-I_HOVER_BLOCKS-1); 
 					break;
 					
 				case ENEMY_SPIKY_WINGED:
-					lvl.placeSpikyWinged(x+i, y-I_HOVER_HEIGHT-1);		
+					lvl.placeSpikyWinged(x+i, y-I_HOVER_BLOCKS-1);		
 					break;
 			};
 			
@@ -274,8 +274,8 @@ public class Builder {
 		int y = lvl.getLastGroundHeight(x);
 		int xx = lvl.addFlatLand(x, I_LEN, y);
 		
-		for (int i = 0; x+i <= xx; i++)
-			lvl.placeCoin(x+i, y-I_HOVER_HEIGHT);
+		for (int i = 0; x+i < xx; i++)
+			lvl.placeCoin(x+i, y-I_HOVER_COINS);
 		
 		return updateX(xx);
 	}

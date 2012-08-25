@@ -4,6 +4,9 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.Random;
 
+import jorgedizpico.level.Chunk;
+import jorgedizpico.level.Trace;
+
 public class Executor {
 	
 	protected FSM fsmExplorer = null;
@@ -13,9 +16,17 @@ public class Executor {
 	protected double[] odds;
 
 	public Executor(double[] odds) throws Exception {
+		
 		this.odds = proportion(odds);
+		
 		fsmExplorer = Automaton.getExplorer();
+		if (null == fsmExplorer)
+			throw new Exception("Unable to read Explorer automaton.");
+		
 		fsmSpeeder = Automaton.getSpeeder();
+		if (null == fsmSpeeder)
+			throw new Exception("Unable to read Speeder automaton.");
+		
 		fsmPhase = new PhaseAutomaton(new Automaton[]
 											{(Automaton)fsmExplorer,
 											 (Automaton)fsmSpeeder},
