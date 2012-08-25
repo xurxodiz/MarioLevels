@@ -53,9 +53,9 @@ public class Builder {
 	public boolean createGround(int... direction) {
 		int y = lvl.getLastGroundHeight(x);
 		if (GROUND_UP == direction[0])
-			y += I_GROUND;
-		else // GROUND_DOWN
 			y -= I_GROUND;
+		else // GROUND_DOWN
+			y += I_GROUND;
 		
 		int xx = lvl.addFlatLand(x, I_LEN, y);
 		return updateX(xx);

@@ -44,8 +44,11 @@ public class PhaseAutomaton implements FSM, Serializable {
 		
 		for (int i : sodds) {
 			stx = dummies.get(i).get(st.toString());
-			if (null != stx)
+			if (null != stx) {
+				System.out.println("Using automata: " + i + " for " + stx);
 				return stx.execute(stack);
+				
+			}
 		}	
 
 		// it wasn't found because it's a chunk

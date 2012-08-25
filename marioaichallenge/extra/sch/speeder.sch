@@ -10,82 +10,101 @@ hub				= low hub
 				;
 				
 low				= lelem
-				| lelem low , 10
+				| lelem low , 2
+				;
+				
+high			= helem
+				| helem high , 2
+				;
+				
+go_up			= FLAT GROUND_UP
+				;
+				
+go_down			= FLAT GROUND_DOWN
 				;
 				
 lelem			= FLAT spares FLAT , 4
-				| FLAT GROUND_DOWN spares FLAT GROUND_UP
-				| spare FLAT spare FLAT , 10
-				| FLAT blocks FLAT , 3
+				| go_up spares go_down , 3
+				| FLAT down_blocks FLAT , 3
+				| go_up coins_blocks go_down , 2
 				;
 				
-blocks			= block
-				| block blocks , 4
-				;
-				
-block			= BLOCK_CE , 6
-				| GOOMBA_BLOCK_CE , 6
-				| GREENTURTLE_BLOCK_CE , 3
-				| BLOCK_EE , 9
-				| GOOMBA_BLOCK_EE , 9
-				| GREENTURTLE_BLOCK_EE , 9
-				| BLOCK_PE , 2
-				| GOOMBA_BLOCK_PE , 2
-				| REDTURTLE_BLOCK_PE , 1 # easter egg ;)
-				;
-				
+helem			= go_down spares go_up , 2
+				| go_down up_blocks go_up , 2
+				| FLAT pipe FLAT spares FLAT pipe FLAT, 2
+				| cannon , 0.75
+				;	
 				
 spares			= spare
-				| spare FLAT spares, 3
+				| spare FLAT spares, 2
 				;
 				
-spare			= spare_enemy , 8
-				| spare_block , 7
-				| spare_coins , 6
+spare			= enemy , 8
+				| block , 7
+				| COINS , 6
 				| GAP , 2
 				;
 				
-spare_enemy 	= GOOMBA , 20
+enemy 			= GOOMBA , 20
 				| SPIKY
 				;
 				
-spare_block		= BLOCK_CE , 5
-				| BLOCK_PE , 3
-				| BLOCK_EE , 10
-				| spare_block FLAT spare_block 
+coins_blocks	= blocks
+				| coins
 				;
 				
-spare_coins		= COINS , 4
-				| COINS spare_coins
-				;
-
-high			= relem
-				| relem high , 10
+coins			= COINS
+				| COINS coins , 3.5
 				;
 				
-relem			= FLAT GROUND_UP spares FLAT GROUND_DOWN , 3
-				| FLAT pipe FLAT spare FLAT pipe FLAT, 2
-				| cannon , 0.4
-				| FLAT GROUND_DOWN raised_blocks FLAT GROUND_UP , 3
+block			= BLOCK_EE , 9
+				| BLOCK_CE , 6
+				| BLOCK_PE , 2
 				;	
 				
-raised_blocks	= BLOCK_EE , 3
-				| BLOCK_PE
-				| BLOCK_CE , 2
-				| BLOCK_EE_GOOMBA , 3
-				| BLOCK_PE_GOOMBA
+blocks			= block
+				| block blocks , 3.5
+				;
+
+# blocks that may have enemies on top
+up_blocks		= block
+				| enemy_block
+				| block up_blocks , 3.5
+				| enemy_block up_blocks , 3.5
+				;
+			
+# blocks that may have enemies underneath	
+down_blocks		= block
+				| block_enemy
+				| block down_blocks , 3.5
+				| block_enemy down_blocks , 3.5
+				;
+				
+block_enemy		= GOOMBA_BLOCK_EE , 9
+				| GOOMBA_BLOCK_CE , 6
+				| GOOMBA_BLOCK_PE , 2
+				| GREENTURTLE_BLOCK_EE , 9
+				| GREENTURTLE_BLOCK_CE , 3
+				| REDTURTLE_BLOCK_PE , 1 # easter egg ;)
+				;
+				
+enemy_block		= enemy_block
+				| enemy_block enemy_blocks , 3.5
+				;
+				
+enemy_block		= BLOCK_EE_GOOMBA , 3
 				| BLOCK_CE_GOOMBA , 2
-				| raised_blocks raised_blocks , 7
+				| BLOCK_PE_GOOMBA
 				;
 				
 pipe			= PIPE
-				| PIPE_PIRANHA, 3
+				| PIPE_PIRANHA, 2
 				;
 				
-cannon			= FLAT spare_enemy FLAT spare_enemy FLAT precannon CANNON
+cannon			= FLAT spare FLAT spare_enemy FLAT precannon CANNON
 				;	
 				
-# gaps before a cannon look awesome
+# gaps just before a cannon look awesome
 precannon		= FLAT , 12
 				| GAP 
 				;

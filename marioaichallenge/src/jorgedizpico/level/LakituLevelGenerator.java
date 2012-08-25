@@ -41,16 +41,17 @@ public class LakituLevelGenerator implements LevelGenerator {
 			Instance inst = makeInstance(playerMetrics);
 			double[] clusters = cl.logDensityPerClusterForInstance(inst);
 			
+			System.out.println("explorer: " + clusters[0]);
+			System.out.println("speeder: " + clusters[1]);
+			
 			switch (weka.core.Utils.maxIndex(clusters)) {
-				case 0: // intermediate
-					type = Level.TYPE_OVERGROUND;
-					break;
-				case 1: // speeder
+				case 0: // explorer
 					type = Level.TYPE_CASTLE;
 					break;
-				default: // explorer
-					type = Level.TYPE_UNDERGROUND;
+				default: // speeder
+					type = Level.TYPE_OVERGROUND;
 					break;
+				// underground is ugly, we don't use it
 			}
 		
 			Executor exec = new Executor(clusters);
@@ -61,7 +62,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 			// (the first two mentioned above ignore odds;
 			// the parameter passed in Executor constructor)
 			//Trace trace = exec.generateTracePhase(tracelength);
-			Trace trace = exec.generateTraceExplorer(tracelength);
+			Trace trace = exec.generateTracePhase(tracelength);
 			LakituLevel lvl = trace.buildLevel(type);
 			
 			if (null == lvl)

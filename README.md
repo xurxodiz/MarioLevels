@@ -3,7 +3,7 @@ The Lakitu Level Generator
 
 This prototype implements adaptive (customized for each user) procedural (randomized each time it's run) levels for the Mario game – specifically, for the platform provided by the [Mario AI Championship](http://marioai.org).
 
-It will be submitted to Level Generation Track of the competition, in its edition held at the IEEE Computational Intelligence and Games 2012 in Granada, Spain.
+It will be submitted to Level Generation Track of the competition, in its edition held at the [IEEE Computational Intelligence and Games 2012](http://geneura.ugr.es/cig2012/) in Granada, Spain.
 
 How it works
 ------------

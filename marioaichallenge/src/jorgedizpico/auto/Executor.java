@@ -1,7 +1,5 @@
 package jorgedizpico.auto;
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 import java.util.Random;
 
 import jorgedizpico.level.Chunk;
@@ -74,16 +72,31 @@ public class Executor {
 	}
 	
 	protected double[] proportion(double[] odds) {
+		
+		// ok this merits some explanation
+		// we'll receive numbers like -87 and -120
+		// higher number means higher probability
+		// so what we do is negate them
+		// and swap them
+		// then act like they are weights
+		
+		
 		double[] _odds = new double[odds.length];
 		double accum = 0.0, total = 0.0;
 		
-		for (double d : odds)
+		_odds[0] = -odds[1];
+		_odds[1] = -odds[0];
+		
+		for (double d : _odds)
 			total += d;
 		for (int i = 0; i < _odds.length; i++) {
-			accum += odds[i];
+			accum += _odds[i];
 			_odds[i] = accum/total;
 		}
-			
+		
+		System.out.println("explorer: " + _odds[0]);
+		System.out.println("speeder: " + _odds[1]);
+		
 		return _odds;
 	}
 	

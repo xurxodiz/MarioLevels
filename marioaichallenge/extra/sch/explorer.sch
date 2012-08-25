@@ -10,86 +10,107 @@ hub				= low hub
 				;
 				
 low				= lelem
-				| lelem low , 10
+				| lelem low , 2
 				;
 				
-lelem			= FLAT spares FLAT , 4
-				| FLAT GROUND_DOWN spares FLAT GROUND_UP
-				| spare FLAT spare FLAT , 10
-				| FLAT blocks FLAT , 3
+high			= helem
+				| helem high , 2
 				;
 				
+go_up			= FLAT GROUND_UP
+				;
+				
+go_down			= FLAT GROUND_DOWN
+				;
+				
+lelem			= FLAT rows FLAT , 4
+				| go_up coins go_up rows go_down coins go_down , 3
+				| go_up coins_blocks go_down , 2
+				;
+				
+helem			= go_down zigzag_blocks FLAT go_up , 4
+				| pipe rows pipe, 2
+				| cannon , 0.5
+				;	
+				
+rows			= zigzag_blocks , 10
+				| coins_blocks  , 6
+				| spares , 4
+				;
+				
+enemy		 	= GOOMBA , 20
+				| GREENTURTLE , 15
+				| REDTURTLE , 5
+				;
+				
+coins			= COINS
+				| COINS coins , 2
+				;			
+				
+block			= BLOCK_EE , 4
+				| BLOCK_CC
+				| BLOCK_CE , 9
+				| BLOCK_PE , 3
+				;
+
 blocks			= block
 				| block blocks , 4
 				;
 				
-block			= BLOCK_CE , 6
-				| GOOMBA_BLOCK_CE , 6
-				| GREENTURTLE_BLOCK_CE , 3
-				| BLOCK_EE , 9
-				| GOOMBA_BLOCK_EE , 9
-				| GREENTURTLE_BLOCK_EE , 9
-				| BLOCK_PE , 2
-				| GOOMBA_BLOCK_PE , 2
-				| REDTURTLE_BLOCK_PE , 1 # easter egg ;)
+coins_blocks	= blocks_enemies , 2
+				| coins
 				;
 				
+block_enemy		= GOOMBA_BLOCK_EE , 5
+				| GOOMBA_BLOCK_CE , 7
+				| GOOMBA_BLOCK_CC , 6
+				| GREENTURTLE_BLOCK_EE , 3
+				| GREENTURTLE_BLOCK_CC , 2
+				| GREENTURTLE_BLOCK_CE , 4
+				| REDTURTLE_BLOCK_PE , 0.3 # easter egg ;)
+				;
+				
+blocks_enemies	= block_enemy
+				| block_enemy blocks_enemies , 4
+				| FLAT blocks_enemies , 0.5
+				;
+				
+enemy_block		= BLOCK_EE_GOOMBA
+				| BLOCK_CE_GOOMBA , 3
+				| BLOCK_CC_GOOMBA , 2
+				| BLOCK_PE_GOOMBA , 2
+				;
 				
 spares			= spare
-				| spare FLAT spares, 3
+				| spare spares , 5
 				;
 				
-spare			= spare_enemy , 8
-				| spare_block , 7
-				| spare_coins , 6
-				| GAP , 2
+spare			= block_enemy
+				| enemy_block
+				| block
+				| COINS
+				| enemy
+				| GAP , 0.2
+				| pipe , 0.1
 				;
 				
-spare_enemy 	= GOOMBA , 20
-				| SPIKY
+zigzag_blocks	= all_block
+				| all_block zigzag_blocks , 4
+				;
+all_block		= enemy_block , 3
+				| block_enemy , 3
+				| block
+				| FLAT , 0.5
+				;
+			
+pipe			= PIPE , 3
+				| PIPE_PIRANHA
 				;
 				
-spare_block		= BLOCK_CE , 5
-				| BLOCK_PE , 3
-				| BLOCK_EE , 10
-				| spare_block FLAT spare_block 
-				;
-				
-spare_coins		= COINS , 4
-				| COINS spare_coins
-				;
-
-high			= relem
-				| relem high , 10
-				;
-				
-relem			= FLAT GROUND_UP spares FLAT GROUND_DOWN , 3
-				| FLAT pipe FLAT spare FLAT pipe FLAT, 2
-				| cannon , 0.4
-				| FLAT GROUND_DOWN raised_blocks FLAT GROUND_UP , 3
+cannon			= FLAT rows FLAT precannon CANNON
 				;	
 				
-raised_blocks	= BLOCK_EE , 3
-				| BLOCK_PE
-				| BLOCK_CE , 2
-				| BLOCK_EE_GOOMBA , 3
-				| BLOCK_PE_GOOMBA
-				| BLOCK_CE_GOOMBA , 2
-				| raised_blocks raised_blocks , 7
-				;
-				
-pipe			= PIPE
-				| PIPE_PIRANHA, 3
-				;
-				
-cannon			= FLAT spare_cannon FLAT spare_cannon FLAT precannon CANNON
-				;	
-				
-spare_cannon	= spare_enemy
-				| spare_coins
-				;
-				
-# gaps before a cannon look awesome
-precannon		= FLAT , 12
+# gaps just before a cannon look awesome
+precannon		= FLAT , 7
 				| GAP 
 				;

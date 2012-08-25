@@ -9,7 +9,6 @@ import jorgedizpico.auto.Automaton;
 import jorgedizpico.auto.Chain;
 import jorgedizpico.auto.Dummy;
 import jorgedizpico.auto.State;
-import jorgedizpico.grammar.*;
 import jorgedizpico.level.Chunk;
 
 public class Constructor implements Visitor {
