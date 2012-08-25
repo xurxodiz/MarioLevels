@@ -9,15 +9,13 @@
 	
     <path id="marioaichallenge.classpath">
         <pathelement location="bin"/>
-    	<fileset dir="lib/">
-    		<include name="jorgedizpico.jar"/>
-    	</fileset>
+    	<pathelement location="jorgedizpico.jar"/>
     </path>
 
 	
     <target name="clean">
         <delete dir="bin"/>
-    	<delete dir="lib"/>
+    	<delete file="jorgedizpico.jar"/>
     	<delete dir="src/jorgedizpico/res"/>
     	<!--<delete file="player.txt"/>
         <delete file="DetailedInfo.txt"/>-->
@@ -25,9 +23,8 @@
 	
     <target name="init">
     	
-    	<mkdir dir="lib"/>
-		<zip destfile="lib/jorgedizpico.jar">
-	    	<zipgroupfileset dir="extra" includes="**.jar"/>
+		<zip destfile="jorgedizpico.jar">
+	    	<zipgroupfileset dir="extra/lib/" includes="**.jar"/>
 		</zip>
     	
         <mkdir dir="bin"/>
@@ -45,7 +42,7 @@
 	
 	<target name="copy-abnf">
         <copy todir="${res.folder}">
-        	<fileset dir="extra/" casesensitive="yes">
+        	<fileset dir="extra/sch/" casesensitive="yes">
         		<include name="**/*.abnf"/>
         	</fileset>
         </copy>
@@ -53,7 +50,7 @@
 	
 	<target name="copy-sch">
         <copy todir="${res.folder}">
-        	<fileset dir="extra/" casesensitive="yes">
+        	<fileset dir="extra/sch/" casesensitive="yes">
         	 	<include name="**/*.sch"/>
         	</fileset>
         </copy>
@@ -98,7 +95,7 @@
     </target>
 	
 	
-    <target name="cluster" depends="data">
+    <target name="cluster">
         <java classname="jorgedizpico.cluster.ClusterGenerator" failonerror="true" fork="yes">
             <classpath refid="marioaichallenge.classpath"/>
 			<arg value="${res.folder}/${data.dataFile}"/>
@@ -121,7 +118,7 @@
     </target>
 	
     <target name="weka">
-        <java jar="ext/weka.jar" failonerror="true" fork="yes">
+        <java jar="extra/weka.jar" failonerror="true" fork="yes">
             <jvmarg value="-Xmx512m" />
         </java>
     </target>

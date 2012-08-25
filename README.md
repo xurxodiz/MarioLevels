@@ -10,11 +10,11 @@ How it works
 
 ### Preliminar steps
 
-First, the system processes a bunch of user gameplay data and clusterizes them in two groups. This can be done once, offline. The two groups we are looking for are *explorers* (players that beat every enemy and collect every coin) and *speeders* (players that try to rush to the end as quickly as possible).
+First, the system processes a bunch of collected user gameplay data and clusterizes them in two groups. This can be done once, offline. The two groups we are looking for are *explorers* (players that beat every enemy and collect every coin) and *speeders* (players that try to rush to the end as quickly as possible).
 
-As a second, also offline process, two *schematics* (level templates) are parsed into probablistic automata.
+As a second, also offline process, two *schematics* (level templates) are parsed into probablistic automata; each one corresponds to one of the two groups mentioned above.
 
-When a new player arrives he should play a test level. Its records from it will be fed to the system for customized play.
+When a new player arrives he should play a test level; we'll use this records to classify him.
 
 ### Customized play
 
@@ -22,7 +22,7 @@ The records from the test level from the user are fed to the clusterer. It retur
 
 Then, the most likely group is chosen, and the generator starts at the initial state of its corresponding automaton. The automaton is traversed, picking a next state according to the weights determined for it in the schematic.
 
-Now here's the key: at any point that the next state shares a name with a state in the other group's automaton, it's assumed to represent the same concept of level part. Therefore, it's randomly decided to proceed in this automaton or to *phase* into the other and continue deriving there. This decision is not purely random as it is made according to the membership percentages calculated before. A player strongly belonging to one of the groups will have most of its states picked from that particular group.
+Now here's the key: at any point that the next state shares a name with a state in the other group's automaton, it's assumed to represent the same concept of level part. Therefore, it's randomly decided to proceed either in this automaton or to *phase* into the other and continue deriving there. This decision is not purely random as it is made according to the membership percentages calculated before. A player strongly belonging to one of the groups will have most of its states picked from that particular group.
 
 Some states will produce as output a small slice of the level (called a *chunk*). The concatenation, left to righ, of those chunks, is called a *trace*, and it uniquely identifies each level. In the following step, a builder module will construct the level from the trace to be played.
 
@@ -77,11 +77,11 @@ The Automata's steps keep being Executed until we get a Trace of the desired len
 
 To read the schematics, its grammar-defining file `schematics.abnf` is read by aParse, and it outputs Java files to process schematics into the src/jorgedizpico/grammar folder. This is done by the `ant grammar` job.
 
-Now, if you build them (`ant build`) and then call `ant schematics`, you'll invoke the Constructor class. It will visit, iteratively, the tree of each schematic file, reading the rules defined by it and the weights associated, and create a probabilistic automaton out of it. It will then dump it into a file for the main game to load up in customized play. 
+Now, if you build them (`ant build`) and then call `ant schematics`, you'll invoke the Constructor class. It will visit, iteratively, the tree of each schematic file (in `src/jorgedizpico/res/*.sch`), reading the rules defined by it and the weights associated, and create a probabilistic Automaton out of it. It will then dump it into a file for the main game to load up in customized play (in `src/jorgedizpico/res/*.sch.auto`). 
 
 ### Clustering
 
-Gameplay records are stored anonymously in the `data/` folder. There are two kinds of file on each player folder: global statistics (`player.txt`) and detailed activity (`DetailedInfo.txt`). Only the statistics are read by DataFileParser.java in `ant data` to create a centralized file of the records. Some fields are skipped, according to the definitions in Filters.java, since the platform's test levels lack some game features.
+Gameplay records are stored anonymously in the `extra/data/` folder. There are two kinds of file on each player folder: global statistics (`player.txt`) and detailed activity (`DetailedInfo.txt`). Only the statistics are read by DataFileParser.java in `ant data` to create a centralized file of the records. Some fields are skipped, according to the definitions in Filters.java, since the platform's test levels lack some game features.
 
 When `ant cluster` is called, ClusterGenerator.java reads that file and passes it to Weka. Clustering is made with the EM method, looking for two groups (explorers and speeders). Cluster results object is stored into a file for the main system to read afterwards.
 

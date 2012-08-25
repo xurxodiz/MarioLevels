@@ -1,7 +1,0 @@
-StartTime = -17
-RightMove: StTime = -8 EdTime = 479
-RunState: StTime = -17 EdTime = 11
-LittleState: StTime = -17 EdTime = 11
-Totaltime = 28
-Jump:  StTime = 10 EdTime = 11
-Die:  EnemyType = 2

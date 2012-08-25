@@ -13,8 +13,8 @@ import jorgedizpico.auto.Executor;
 import jorgedizpico.cluster.Filters;
 
 import dk.itu.mario.MarioInterface.GamePlay;
-import dk.itu.mario.MarioInterface.LevelGenerator;
 import dk.itu.mario.MarioInterface.LevelInterface;
+import dk.itu.mario.MarioInterface.LevelGenerator;
 import dk.itu.mario.level.Level;
 
 public class LakituLevelGenerator implements LevelGenerator {
@@ -59,9 +59,9 @@ public class LakituLevelGenerator implements LevelGenerator {
 			// - generateTraceSpeeder
 			// - generateTraceMix
 			// (the first two mentioned above ignore odds;
-			// the parameter passed in Executer constructor)
+			// the parameter passed in Executor constructor)
 			//Trace trace = exec.generateTracePhase(tracelength);
-			Trace trace = exec.generateTraceSpeeder(tracelength);
+			Trace trace = exec.generateTraceExplorer(tracelength);
 			LakituLevel lvl = trace.buildLevel(type);
 			
 			if (null == lvl)
