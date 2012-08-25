@@ -27,8 +27,7 @@ public class PhaseAutomaton implements FSM, Serializable {
 			else
 				this.dummies.add(a.dummies);
 		
-		this.odds = proportion(odds);
-		//System.out.println(this.odds[0] + "," + this.odds[1]);
+		this.odds = odds;
 	}
 	
 	public void init() {
@@ -44,11 +43,8 @@ public class PhaseAutomaton implements FSM, Serializable {
 		
 		for (int i : sodds) {
 			stx = dummies.get(i).get(st.toString());
-			if (null != stx) {
-				System.out.println("Using automata: " + i + " for " + stx);
+			if (null != stx)
 				return stx.execute(stack);
-				
-			}
 		}	
 
 		// it wasn't found because it's a chunk
@@ -77,20 +73,6 @@ public class PhaseAutomaton implements FSM, Serializable {
 			}
 		
 		return ix;
-	}
-	
-	protected double[] proportion(double[] odds) {
-		double[] _odds = new double[odds.length];
-		double accum = 0.0, total = 0.0;
-		
-		for (double d : odds)
-			total += d;
-		for (int i = 0; i < _odds.length; i++) {
-			accum += odds[i];
-			_odds[i] = accum/total;
-		}
-			
-		return _odds;
 	}
 
 	protected int max_odds() {

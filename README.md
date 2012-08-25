@@ -92,8 +92,9 @@ File hierarchy
 
 Project is contained in /marioaichallenge. Inside you can find:
 
-* `src/` with all the source code.
-    * except for a linked call function in `LevelSceneTest.Java:63`, all the code from the platform is untouched. 
+* `src/` with all the source code. Platform code is untouched except for:
+    * function called in `LevelSceneTest.Java:63` refers now to `LakituLevelGenerator`, corresponding `import` was added as well
+    * line in `LevelScene.java:488` is commented because of bug in original platform
     * my additions can be found under package `jorgedizpico`. specifically, schematics and clustering data are looked for by the code in `jorgedizpico/res/`
 * `res/` contains some image and sound files provided by the platform
 * `lib/` contains a single jar file with all the external dependencies of the project; it is built by running `ant jarify` from the files in the `ext folder`

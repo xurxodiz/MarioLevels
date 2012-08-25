@@ -40,9 +40,7 @@ public class LakituLevelGenerator implements LevelGenerator {
 			DensityBasedClusterer cl = readClusters(clusterFile);
 			Instance inst = makeInstance(playerMetrics);
 			double[] clusters = cl.logDensityPerClusterForInstance(inst);
-			
-			System.out.println("explorer: " + clusters[0]);
-			System.out.println("speeder: " + clusters[1]);
+			clusters = proportion(clusters);
 			
 			switch (weka.core.Utils.maxIndex(clusters)) {
 				case 0: // explorer
@@ -127,6 +125,34 @@ public class LakituLevelGenerator implements LevelGenerator {
 			return null;
 		}
 		
+	}
+	
+	protected double[] proportion(double[] odds) {
+		
+		// ok this merits some explanation
+		// we'll receive numbers like -87 and -120
+		// higher number means higher probability
+		// so what we do is negate them
+		// and swap them
+		// then act like they are weights
+		
+		
+		double[] _odds = new double[odds.length];
+		double accum = 0.0, total = 0.0;
+		
+		_odds[0] = -odds[1];
+		_odds[1] = -odds[0];
+		
+		for (double d : _odds)
+			total += d;
+		for (int i = 0; i < _odds.length; i++) {
+			accum += _odds[i];
+			_odds[i] = accum/total;
+		}
+		
+
+		
+		return _odds;
 	}
 	
 }
