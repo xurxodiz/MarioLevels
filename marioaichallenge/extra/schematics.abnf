@@ -9,9 +9,9 @@ concatenation	=  1*(*c-wsp (terminal / nonterminal)) [*c-wsp "," *c-wsp weight] 
 
 element			=  nonterminal / terminal ;
 
-nonterminal		=  LOWCASE *(LOWCASE) ;
+nonterminal		=  LOWCASE *("_" / LOWCASE) ;
 
-terminal		=  UPCASE *(UPCASE) ;
+terminal		=  UPCASE *("_" / UPCASE) ;
 
 weight			=  1*(DIGIT) ["." 1*DIGIT] ;
 
