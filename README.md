@@ -3,10 +3,10 @@ The Lakitu Level Generator
 
 This prototype implements adaptive (customized for each user) procedural (randomized each time it's run) levels for the Mario game – specifically, for the platform provided by the [Mario AI Championship](http://marioai.org).
 
-It will be submitted to Level Generation Track of the competition, in its edition held at the [IEEE Computational Intelligence and Games 2012](http://geneura.ugr.es/cig2012/) in Granada, Spain.
+It was submitted to Level Generation Track of the competition, in its edition held at the [IEEE Computational Intelligence and Games 2012](http://geneura.ugr.es/cig2012/) in Granada, Spain. In the `slides` folder you can find a tiny presentation that was attached to my entry, explaining how it works.
 
-How it works
-------------
+How does it work?
+-----------------
 
 ### Preliminar steps
 
@@ -30,10 +30,17 @@ Some states will produce as output a small slice of the level (called a *chunk*)
 
 An alternative method to the *trace phasing*, also present in the code, is to create two different levels, per the explorer and speeder schematics, and then pick chunks randomly from each, according to the membership percentages. This method is called *trace mixing*.
 
-How the data was collected
+How was the data collected?
 --------------------------
 
 The file `mariodistpackage.zip` was spread on social networks, and people were asked to play the test level it generated and mail back the results. Note that this package contains just an unadultered, as-downloaded version of the Mario AI platform along with a helper launch script.
+
+What does each schematic favor?
+-------------------------------
+
+*Speeders* reject interaction. Every element that requires extra time to be taken care of is shunned. Therefore, their schematic has more coins (since they can be picked just be running over them) and flatter landscapes. Blocks and enemies are scattered in small doses, and pipes, gaps and cannons (whose full extent of interaction is being jumped over) are more frequent.
+
+*Explorers*, on the other hand, are all about interacting with the level. The landscape is more abrupt, coins (whose interaction is poorer) are more scarce, but enemies and blocks come in longer rows. They also have a higher rate of coin and powerup blocks, as well of turtles related to goombas. Gaps are minimal, as well as pipes. Cannons are quite rare.
 
 Instruction booklet
 -------------------
