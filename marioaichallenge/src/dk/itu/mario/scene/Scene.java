@@ -40,4 +40,10 @@ public abstract class Scene implements SoundListener
     public abstract void tick();
 
     public abstract void render(Graphics og, float alpha);
+
+    public abstract void setScrollMessage(String msg);
+
+    public abstract void setImage(String img);
+    public abstract void setColour(String clr);
+
 }

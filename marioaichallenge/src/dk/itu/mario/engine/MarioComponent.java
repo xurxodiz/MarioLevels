@@ -19,10 +19,12 @@ import javax.swing.*;
 
 
 import dk.itu.mario.level.Level;
+import dk.itu.mario.scene.ImageDecorator;
 import dk.itu.mario.scene.LevelScene;
 import dk.itu.mario.scene.LevelSceneTest;
 import dk.itu.mario.scene.LoseScene;
 import dk.itu.mario.scene.Scene;
+import dk.itu.mario.scene.ScrollMessageDecorator;
 import dk.itu.mario.scene.WinScene;
 
 import dk.itu.mario.engine.sonar.FakeSoundEngine;
@@ -45,7 +47,11 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
 		    private SonarSoundEngine sound;
 		    private boolean focused = false;
 		    private boolean useScale2x = false;
-		    private boolean isCustom = false;
+			private boolean isCustom = false;
+			private long startTime = System.nanoTime();
+			private float time;
+			private float now;
+			private float alpha;
 
 
 		    private Scale2x scale2x = new Scale2x(320, 240);
@@ -167,10 +173,8 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
 		        int fps = 0;
 
 
-		        long startTime = System.nanoTime();
-
-		        float time = (System.nanoTime()- startTime)/1000000000f;
-		        float now = time;
+		        time = (System.nanoTime()- startTime)/1000000000f;
+		        now = time;
 		        float averagePassedTime = 0;
 
 		        boolean naiveTiming = true;
@@ -218,7 +222,7 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
 		                }
 		            }
 
-		            float alpha = (float) (now * TICKS_PER_SECOND - tick);
+		            alpha = (float) (now * TICKS_PER_SECOND - tick);
 		            sound.clientTick(alpha);
 
 		            int x = (int) (Math.sin(now) * 16 + 160);
@@ -348,14 +352,34 @@ public class MarioComponent extends JComponent implements Runnable, KeyListener,
 
 		    }
 
-		    public void lose(){
-		        scene = new LoseScene();
+
+
+			public void lose() {
+				Scene lose = randomLevel;
+				Scene loseWithScrollMessage = new ScrollMessageDecorator(lose);
+				loseWithScrollMessage.setScrollMessage("Game over!");
+				loseWithScrollMessage.render(createVolatileImage(320, 240).getGraphics(), alpha);
+				
+				Scene loseWithImage = new ImageDecorator(lose);
+				loseWithImage.setImage("LOSE");
+				loseWithImage.setColour("#a07070");
+				loseWithImage.render(createVolatileImage(320, 240).getGraphics(), alpha);
+
 		        scene.setSound(sound);
 		        scene.init();
 		    }
 
 		    public void win(){
-		        scene = new WinScene();
+		        Scene win = randomLevel;
+				Scene winWithScrollMessage = new ScrollMessageDecorator(win);
+				winWithScrollMessage.setScrollMessage("Thank you for saving me, Mario!");
+				winWithScrollMessage.render(createVolatileImage(320, 240).getGraphics(), alpha);
+				
+				Scene winWithImage = new ImageDecorator(win);
+				winWithImage.setImage("WIN");
+				winWithImage.setColour("#8080a0");
+				winWithImage.render(createVolatileImage(320, 240).getGraphics(), alpha);
+
 		        scene.setSound(sound);
 		        scene.init();
 		    }
