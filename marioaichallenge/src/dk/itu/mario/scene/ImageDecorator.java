@@ -75,4 +75,9 @@ public class ImageDecorator extends ViewDecorator {
             wasDown = false;
         }
     }
+
+    @Override
+    public void setScrollMessage(String msg) {
+        return;
+    }
 }

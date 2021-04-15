@@ -67,4 +67,15 @@ public class ScrollMessageDecorator extends ViewDecorator{
             wasDown = false;
         }
     }
+
+    @Override
+    public void setImage(String img) {
+        return;
+        
+    }
+
+    @Override
+    public void setColour(String clr) {
+        return; 
+    }
 }

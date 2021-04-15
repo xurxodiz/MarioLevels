@@ -22,10 +22,8 @@ import dk.itu.mario.level.Level;
 import dk.itu.mario.scene.ImageDecorator;
 import dk.itu.mario.scene.LevelScene;
 import dk.itu.mario.scene.LevelSceneTest;
-import dk.itu.mario.scene.LoseScene;
 import dk.itu.mario.scene.Scene;
 import dk.itu.mario.scene.ScrollMessageDecorator;
-import dk.itu.mario.scene.WinScene;
 
 import dk.itu.mario.engine.sonar.FakeSoundEngine;
 import dk.itu.mario.engine.sonar.SonarSoundEngine;

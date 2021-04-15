@@ -714,4 +714,19 @@ public class LevelScene extends Scene implements SpriteContext
 		// TODO Auto-generated method stub
 
 	}
+
+    @Override
+    public void setScrollMessage(String msg) {
+        return;
+    }
+
+    @Override
+    public void setImage(String img) {
+        return;
+    }
+
+    @Override
+    public void setColour(String clr) {
+        return;
+    }
 }
